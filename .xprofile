@@ -2,7 +2,7 @@
 setxkbmap -layout us -variant altgr-intl -option nodeadkeys &
 xset r rate 200 50 &
 dunst &
-feh --bg-scale "/home/fincei/Pictures/wallpapers/conscious.png" &
+feh --bg-center "/home/fincei/Pictures/wallpapers/cyberpunk-devil2.png" &
 monitor-setup &
 picom -b &
 desktop-setup &
