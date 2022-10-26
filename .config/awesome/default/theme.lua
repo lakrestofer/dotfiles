@@ -75,7 +75,7 @@ theme.menu_width  = dpi(100)
 -- Define the image to load
 -- theme.wallpaper = themes_path.."default/background.png"
 -- theme.wallpapers = wallpaper_dir .. "space.jpg"
-theme.wallpapers = wallpaper_dir .. "conscious.png"
+theme.wallpapers = wallpaper_dir .. "cyberpunk-devil2.png"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path.."default/layouts/fairhw.png"

@@ -53,7 +53,7 @@ beautiful.gap_single_client = false
 terminal = "alacritty"
 editor = os.getenv("EDITOR") or "helix"
 editor_cmd = terminal .. " -e " .. editor
-browser = os.getenv("BROWSER") or "brave"
+browser = os.getenv("BROWSER") or "firefox-developer-edition"
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
