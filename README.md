@@ -23,8 +23,8 @@ These are my written instructions for an archbased install
 1. follow arch install guide [here](https://wiki.archlinux.org/title/General_recommendations#System_administration)
 2. setup grub and networking (don't forget to enable systemd unit!)
 3. setup user and permissions
-4. install x11 dependencies and install xmonad
+4. install x11 dependencies and install awesome / install wayland dependencies and install hyprland
 5. install paru
-6. install brave
+6. install firefox
 7. ???
 8. profit
