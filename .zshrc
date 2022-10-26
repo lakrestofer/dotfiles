@@ -24,14 +24,22 @@ alias \
     grep="grep --color=auto" \
     e="$EDITOR" \
     p="sudo pacman" \
-    btw="neofetch" \
     hx="helix" \
     config="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 
 
+
 eval "$(zoxide init zsh --cmd cd)"
+
+
 # Make bat be used as the pager for man
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 # Load some zsh plugins
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+[ -f "/home/fincei/.ghcup/env" ] && source "/home/fincei/.ghcup/env" # ghcup-env
