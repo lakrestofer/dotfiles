@@ -26,7 +26,7 @@ theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
-theme.useless_gap   = dpi(5)
+theme.useless_gap   = 0
 theme.border_width  = dpi(1)
 theme.border_normal = "#000000"
 theme.border_focus  = "#535d6c"
@@ -75,7 +75,7 @@ theme.menu_width  = dpi(100)
 -- Define the image to load
 -- theme.wallpaper = themes_path.."default/background.png"
 -- theme.wallpapers = wallpaper_dir .. "space.jpg"
-theme.wallpapers = wallpaper_dir .. "cyberpunk-devil2.png"
+theme.wallpapers = wallpaper_dir .. "cyberpunk devil.png"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path.."default/layouts/fairhw.png"
