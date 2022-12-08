@@ -93,3 +93,6 @@
   :config
   (setq preview-scale-function 0.5
         org-preview-latex-default-process 'dvisvgm))
+
+(setq browse-url-browser-function 'browse-url-firefox)
+(setq browse-url-firefox-program "firefox-developer-edition")
