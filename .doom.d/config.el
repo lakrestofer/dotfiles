@@ -87,12 +87,31 @@
   (setq org-return-follows-link t)
   (org-roam-db-autosync-mode))
 
-(use-package org-fragtog
+(use-package! org-fragtog
   :after org
   :hook (org-mode . org-fragtog-mode)
   :config
   (setq preview-scale-function 0.5
         org-preview-latex-default-process 'dvisvgm))
 
+
 (setq browse-url-browser-function 'browse-url-firefox)
 (setq browse-url-firefox-program "firefox-developer-edition")
+
+(use-package! websocket
+  :after org-roam)
+
+(use-package! org-roam-ui
+  :after org-roam
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start t))
+
+(use-package! org-drill
+  :after org-roam
+  :bind (("C-c r d" . org-drill-directory)
+         ("C-c r r" . org-drill-resume))
+  :config (setq org-drill-add-random-noise-to-intervals-p t
+                org-drill-adjust-intervals-for-early-and-late-repetitions-p t))
