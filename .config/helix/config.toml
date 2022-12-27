@@ -90,6 +90,7 @@ E = "join_selections"
 I = "keep_selections"
 C-k = "jump_forward"
 C-l = "jump_backward"
+
 [keys.normal.z]
 # unset
 k = "no_op"
@@ -220,6 +221,21 @@ j = "extend_next_word_end"
 J = "extend_next_long_word_end"
 h = "extend_search_next"
 H = "extend_search_prev"
+
+[keys.select.g]
+# unset
+e = "no_op"
+h = "no_op"
+l = "no_op"
+i = "no_op"
+n = "no_op"
+# set
+j = "goto_last_line"
+n = "goto_line_start"
+o = "goto_line_end"
+k = "goto_implementation"
+h = "goto_next_buffer"
+
 
 [keys.insert]
 #unset
