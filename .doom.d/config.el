@@ -91,7 +91,7 @@
   :after org
   :hook (org-mode . org-fragtog-mode)
   :config
-  (setq preview-scale-function 0.5
+  (setq preview-scale-function 0.2
         org-preview-latex-default-process 'dvisvgm))
 
 
