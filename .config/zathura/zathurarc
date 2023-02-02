@@ -15,3 +15,5 @@ map [index] o navigate_index expand
 map I zoom in
 map E zoom out
 map h search next
+
+include catppuccin-mocha
