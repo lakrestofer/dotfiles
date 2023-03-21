@@ -14,6 +14,7 @@ map [index] i navigate_index up
 map [index] o navigate_index expand
 map I zoom in
 map E zoom out
-map h search next
+map h search forward
+map H search backward
 
 include catppuccin-mocha
