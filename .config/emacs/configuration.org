@@ -2,7 +2,7 @@
 This is my configuration for for emacs! It is written using org-babel which places the contents of various code blocks into their coresponding file.
 
 To tangle the contents I use org-babel-tangle (tangles current buffer) (which is bound to C-c C-v t).
-** Design goals
+* Design goals
 this configuration aims to do the following:
 - provide an environment in which I can take dynamic tightly interlinked notes and explore
   - here org-roam provides the bulk of the features I want, not only providing the linking but also an api for metadata access.
@@ -10,134 +10,138 @@ this configuration aims to do the following:
 - serve as a testground for programmable attention. How can I measure my own performance in the tasks i perform in emacs and then use that to facilitate improvements.
 - interact with lsp servers and treesitter for smarter editing of code.
 * Configuration
+** Header
+This will generate a header at the top of the init.el and the early-init.el
+#+begin_src emacs-lisp :tangle init.el  
+;; -*- lexical-binding: t -*-
+;; This file has been generated from dotemacs.org file. DO NOT EDIT.
+;; Sources are available from https://github.com/ChrisTheDevel/dotfiles
+#+end_src
+#+begin_src emacs-lisp :tangle early-init.el  
+;; -*- lexical-binding: t -*-
+;; This file has been generated from dotemacs.org file. DO NOT EDIT.
+;; Sources are available from https://github.com/ChrisTheDevel/dotfiles
+#+end_src
 ** Early init
 In the begining of the emacs startup process (as documented in [[https://www.gnu.org/software/emacs/manual/html_node/elisp/System-Interface.html][the manual]]) the early-init file is loaded.
 Here we set any configs that we want to apply before the rest of the startup takes place. Since the default package manager is loaded here we disable it.
 We also disable some gui elements which we are not interested in.
 A speed-up hack that we also perform is to temporarily remove the limit for the garbage-collector, allowing the startup proccess to run without the garbage collector pausing execution for cleanup.
 #+begin_src emacs-lisp :tangle early-init.el
-  ;; disable some gui elements
-  (menu-bar-mode -1)
-  (scroll-bar-mode -1)
-  (tool-bar-mode -1)
-  (setq package-enable-at-startup nil)
-  ;; disable the startup screen
-  (setq inhibit-startup-message t
-      initial-scratch-message nil)
+    ;; disable some gui elements
+    (menu-bar-mode -1)
+    (scroll-bar-mode -1)
+    (tool-bar-mode -1)
+    ;; disables package.el
+    (setq package-enable-at-startup nil)
 
-  ;; we temporarily allow the gc to leak memory
-  (setq gc-cons-threshold most-positive-fixnum)
-  
-  (add-hook 'emacs-startup-hook (lambda () (setq gc-conf-threshold (* 40 1024 1024))))
-  ;; increase the amount of data that can be read from subprocess in a single go
-  (setq read-process-output-max (* 4 1024 1024)) ;; 1mb
+    ;; disable the startup screen
+    (setq-default inhibit-startup-message t
+          initial-scratch-message "")
+
+    ;; we temporarily allow the gc to leak memory
+    (setq gc-cons-threshold most-positive-fixnum)
+
+    (add-hook 'emacs-startup-hook (lambda () (setq gc-conf-threshold (* 40 1024 1024))))
+    ;; increase the amount of data that can be read from subprocess in a single go
+    (setq read-process-output-max (* 4 1024 1024)) ;; 4 mb
 #+end_src
-** Init
-Here comes the main configuration file
-We begin by bootstraping the package manager that we're using (straight.el) together with a package that places any temporary files separate from our own files
+** init
+*** Bootstrap straight.el
+For managing packages we will use straight.el and use-package
 #+begin_src emacs-lisp :tangle init.el
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 6))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-(straight-use-package 'use-package)
-
-(use-package straight :custom (straight-use-package-by-default t))
-(use-package no-littering)
+  (setq straight-check-for-modifications nil)
+  (setq straight-repository-branch "develop")
+  ;; Install straight.el
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+        (bootstrap-version 6))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+          (url-retrieve-synchronously
+           "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+           'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+  ;; install use package
+  (setq straight-use-package-by-default t)
+  (straight-use-package 'use-package)
+  (use-package no-littering)
 #+end_src
-
-*** Quality of life
-
-next up we init which-keys which makes the default and any provided bindings more discoverable
+*** Theming and visuals
+catppuccin theme
 #+begin_src emacs-lisp :tangle init.el
-  (use-package which-key
-    :defer 0
-    :diminish which-key-mode
-    :config
-    (which-key-mode)
-    (setq which-key-idle-delay 1))
+  (add-to-list 'custom-theme-load-path (concat custom-theme-directory "/themes"))
+  (load-theme 'catppuccin t)
 #+end_src
-
-*** Eye candy
-next we set the theme and other visually enhancing settings/plugins
+set mono and variabled pitch fonts
 #+begin_src emacs-lisp :tangle init.el
-  (use-package solaire-mode
-    :config
-    (solaire-global-mode +1))
-  (use-package doom-themes
-    :config
-    ;; Global settings (defaults)
-    (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-          doom-themes-enable-italic t) ; if nil, italics is universally disabled
-    (load-theme 'doom-one t)
-    (doom-themes-visual-bell-config)
-    (doom-themes-org-config))
-  (pixel-scroll-precision-mode 1)
-  (use-package doom-modeline
-    :ensure t
-    :hook (after-init . doom-modeline-mode))
-  (use-package rainbow-mode)
-#+end_src
-
-We set my fonts
-
-#+begin_src emacs-lisp :tangle init.el
-  ;; fonts
-  (defvar ctd/default-font-size 140)
+  (defvar ctd/default-font-size (* 13 10))
+  (defvar ctd/default-variable-font-size (* 13 10))
   (set-face-attribute 'default nil :font "FiraCode Nerd Font" :height ctd/default-font-size)
   (set-face-attribute 'fixed-pitch nil :font "FiraCode Nerd Font" :height ctd/default-font-size)
-  (set-face-attribute 'variable-pitch nil :font "Cantarell" :height ctd/default-font-size :weight 'regular)
+  (set-face-attribute 'variable-pitch nil :font "Cantarell" :height ctd/default-variable-font-size :weight 'regular)
 #+end_src
-
-*** Completion
-we now introduce packages for completion
+install solaire mode and enable it globally
+this provides some nice contrast between
 #+begin_src emacs-lisp :tangle init.el
-  (use-package ivy
-    :diminish
-    :bind (("C-s" . swiper)
-           :map ivy-minibuffer-map
-           ("TAB" . ivy-alt-done)
-           ("C-l" . ivy-alt-done)
-           ("C-j" . ivy-next-line)
-           ("C-k" . ivy-previous-line)
-           :map ivy-switch-buffer-map
-           ("C-k" . ivy-previous-line)
-           ("C-l" . ivy-done)
-           ("C-d" . ivy-switch-buffer-kill)
-           :map ivy-reverse-i-search-map
-           ("C-k" . ivy-previous-line)
-           ("C-d" . ivy-reverse-i-search-kill))
-    :config
-    (ivy-mode 1))
-
-  (use-package ivy-rich
-    :after ivy
-    :init
-    (ivy-rich-mode 1))
-
-  (use-package counsel
-    :bind (("C-M-j" . 'counsel-switch-buffer))
-    :diminish counsel-mode
-    :config
-    (counsel-mode 1))  
+  (use-package solaire-mode :config (solaire-global-mode))
 #+end_src
-*** Org-roam
-#+begin_src emacs-lisp :tangle init.el  
+some other visual eye candy!
+#+begin_src emacs-lisp :tangle init.el
+  (use-package rainbow-delimiters :hook prog-mode :diminish rainbow-delimiters-mode)
+#+end_src
+we'll make sure that we smoooooooth scroll
+#+begin_src emacs-lisp :tangle init.el
+(pixel-scroll-precision-mode 1)
+(blink-cursor-mode 0)
+#+end_src
+*** Keybinds
+we'll utilize modal editiing
+we'll use meow for this
+#+begin_src emacs-lisp :tangle init.el
+        (defun meow-setup ()
+          "setup meow bindings"
+          (setq meow-cheatsheet-layout meow-cheatsheet-layout-colemak-dh)
+          (meow-normal-define-key
+           '("n" . meow-left)
+           '("e" . meow-next)
+           '("i" . meow-prev)
+           '("o" . meow-right)
+           ;; goto insert mode
+           '("k" . meow-insert)
+           '("a" . meow-append)
+           '("l" . meow-open-below)
+           '("L" . meow-open-above))
+          )
+        ;; then we install the package and load
+        (use-package meow
+          :config
+          (meow-setup)
+          (meow-global-mode 1))
+#+end_src
 
-    (setq org-roam-directory  "~/Documents/seltcana/")
-    (use-package org-roam
+*** Org mode!
+**** Main org mode package
+we first install a a more recent build of org
+#+begin_src emacs-lisp :tangle init.el
+  (use-package org
     :config
-    (org-roam-db-autosync-mode)
-    (setq org-return-follows-link t)
-    :bind (("C-c n f" . org-roam-node-find)
+    (setq org-startup-indented t
+          org-return-follows-link t
+          org-startup-folded 'content)
+    :defer t)
+#+end_src
+**** Org roam
+and then we add org roam!
+#+begin_src emacs-lisp :tangle init.el
+      (use-package org-roam
+        :config
+        (setq org-roam-directory "~/Documents/seltcana")
+        (org-roam-db-autosync-mode)
+         :bind (("C-c n f" . org-roam-node-find)
            ("C-c n r" . org-roam-node-random)		    
            (:map org-mode-map
                    (("C-c n i" . org-roam-node-insert)
@@ -145,211 +149,44 @@ we now introduce packages for completion
                     ("C-c n t" . org-roam-tag-add)
                     ("C-c n a" . org-roam-alias-add)
                     ("C-c n l" . org-roam-buffer-toggle)))))
-  (use-package org-roam-ui
-    :straight
-      (:host github :repo "org-roam/org-roam-ui" :branch "main" :files ("*.el" "out"))
-      :config
-      (setq org-roam-ui-sync-theme t
-            org-roam-ui-follow t
-            org-roam-ui-update-on-save t
-            org-roam-ui-open-on-start t))
-(use-package org-drill)
-
 #+end_src
-*** Org agenda and org-roam
+org fragtog for realtime update of latex fragments
 #+begin_src emacs-lisp :tangle init.el
-  (defun vulpea-project-p ()
-  "Return non-nil if current buffer has any todo entry.
-
-TODO entries marked as done are ignored, meaning the this
-function returns nil if current buffer contains only completed
-tasks."
-  (seq-find                                 ; (3)
-   (lambda (type)
-     (eq type 'todo))
-   (org-element-map                         ; (2)
-       (org-element-parse-buffer 'headline) ; (1)
-       'headline
-     (lambda (h)
-       (org-element-property :todo-type h)))))
-
-(defun vulpea-project-update-tag ()
-    "Update PROJECT tag in the current buffer."
-    (when (and (not (active-minibuffer-window))
-               (vulpea-buffer-p))
-      (save-excursion
-        (goto-char (point-min))
-        (let* ((tags (vulpea-buffer-tags-get))
-               (original-tags tags))
-          (if (vulpea-project-p)
-              (setq tags (cons "project" tags))
-            (setq tags (remove "project" tags)))
-
-          ;; cleanup duplicates
-          (setq tags (seq-uniq tags))
-
-          ;; update tags if changed
-          (when (or (seq-difference tags original-tags)
-                    (seq-difference original-tags tags))
-            (apply #'vulpea-buffer-tags-set tags))))))
-
-(defun vulpea-buffer-p ()
-  "Return non-nil if the currently visited buffer is a note."
-  (and buffer-file-name
-       (string-prefix-p
-        (expand-file-name (file-name-as-directory org-roam-directory))
-        (file-name-directory buffer-file-name))))
-
-(defun vulpea-project-files ()
-    "Return a list of note files containing 'project' tag." ;
-    (seq-uniq
-     (seq-map
-      #'car
-      (org-roam-db-query
-       [:select [nodes:file]
-        :from tags
-        :left-join nodes
-        :on (= tags:node-id nodes:id)
-        :where (like tag (quote "%\"project\"%"))]))))
-
-(defun vulpea-agenda-files-update (&rest _)
-  "Update the value of `org-agenda-files'."
-  (setq org-agenda-files (vulpea-project-files)))
-
-(add-hook 'find-file-hook #'vulpea-project-update-tag)
-(add-hook 'before-save-hook #'vulpea-project-update-tag)
-
-(advice-add 'org-agenda :before #'vulpea-agenda-files-update)
-(advice-add 'org-todo-list :before #'vulpea-agenda-files-update)
-
-;; functions borrowed from `vulpea' library
-;; https://github.com/d12frosted/vulpea/blob/6a735c34f1f64e1f70da77989e9ce8da7864e5ff/vulpea-buffer.el
-
-(defun vulpea-buffer-tags-get ()
-  "Return filetags value in current buffer."
-  (vulpea-buffer-prop-get-list "filetags" "[ :]"))
-
-(defun vulpea-buffer-tags-set (&rest tags)
-  "Set TAGS in current buffer.
-
-If filetags value is already set, replace it."
-  (if tags
-      (vulpea-buffer-prop-set
-       "filetags" (concat ":" (string-join tags ":") ":"))
-    (vulpea-buffer-prop-remove "filetags")))
-
-(defun vulpea-buffer-tags-add (tag)
-  "Add a TAG to filetags in current buffer."
-  (let* ((tags (vulpea-buffer-tags-get))
-         (tags (append tags (list tag))))
-    (apply #'vulpea-buffer-tags-set tags)))
-
-(defun vulpea-buffer-tags-remove (tag)
-  "Remove a TAG from filetags in current buffer."
-  (let* ((tags (vulpea-buffer-tags-get))
-         (tags (delete tag tags)))
-    (apply #'vulpea-buffer-tags-set tags)))
-
-(defun vulpea-buffer-prop-set (name value)
-  "Set a file property called NAME to VALUE in buffer file.
-If the property is already set, replace its value."
-  (setq name (downcase name))
-  (org-with-point-at 1
-    (let ((case-fold-search t))
-      (if (re-search-forward (concat "^#\\+" name ":\\(.*\\)")
-                             (point-max) t)
-          (replace-match (concat "#+" name ": " value) 'fixedcase)
-        (while (and (not (eobp))
-                    (looking-at "^[#:]"))
-          (if (save-excursion (end-of-line) (eobp))
-              (progn
-                (end-of-line)
-                (insert "\n"))
-            (forward-line)
-            (beginning-of-line)))
-        (insert "#+" name ": " value "\n")))))
-
-(defun vulpea-buffer-prop-set-list (name values &optional separators)
-  "Set a file property called NAME to VALUES in current buffer.
-VALUES are quoted and combined into single string using
-`combine-and-quote-strings'.
-If SEPARATORS is non-nil, it should be a regular expression
-matching text that separates, but is not part of, the substrings.
-If nil it defaults to `split-string-default-separators', normally
-\"[ \f\t\n\r\v]+\", and OMIT-NULLS is forced to t.
-If the property is already set, replace its value."
-  (vulpea-buffer-prop-set
-   name (combine-and-quote-strings values separators)))
-
-(defun vulpea-buffer-prop-get (name)
-  "Get a buffer property called NAME as a string."
-  (org-with-point-at 1
-    (when (re-search-forward (concat "^#\\+" name ": \\(.*\\)")
-                             (point-max) t)
-      (buffer-substring-no-properties
-       (match-beginning 1)
-       (match-end 1)))))
-
-(defun vulpea-buffer-prop-get-list (name &optional separators)
-  "Get a buffer property NAME as a list using SEPARATORS.
-If SEPARATORS is non-nil, it should be a regular expression
-matching text that separates, but is not part of, the substrings.
-If nil it defaults to `split-string-default-separators', normally
-\"[ \f\t\n\r\v]+\", and OMIT-NULLS is forced to t."
-  (let ((value (vulpea-buffer-prop-get name)))
-    (when (and value (not (string-empty-p value)))
-      (split-string-and-unquote value separators))))
-
-(defun vulpea-buffer-prop-remove (name)
-  "Remove a buffer property called NAME."
-  (org-with-point-at 1
-    (when (re-search-forward (concat "\\(^#\\+" name ":.*\n?\\)")
-                             (point-max) t)
-      (replace-match ""))))
-#+end_src
-
-#+begin_src emacs-lisp :tangle init.el
-  (use-package org-bullets
-    :ensure t
-    :config
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-#+end_src
-
-org-fragtog for realtime compilation of latex blocks in org mode files
-
-#+begin_src emacs-lisp :tangle init.el
-  (set-default 'preview-scale-function 1.5)
   (set-default 'org-preview-latex-default-process 'dvisvgm)
-  (use-package org-fragtog)
-  (add-hook 'org-mode-hook 'org-fragtog-mode)
-  (setq org-startup-indented t)
+  (use-package org-fragtog
+  :hook org-mode)
 #+end_src
-
-*** Code
-We now include the treesitter packages together with eglot to provide a combined ide facilities.
-
-We also include the company lib such that we can get inbuffer completion menus
+*** Some tools
 #+begin_src emacs-lisp :tangle init.el
-    (use-package tree-sitter-langs)
-    (use-package tree-sitter
-      :config
-      (global-tree-sitter-mode)
-      (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-    (use-package eglot)
-    (use-package company
-      :hook (prog-mode text-mode)
-      :custom
-      (company-minimum-prefix-length 1)
-      (company-idle-delay 0.0))
-    (use-package yasnippet)
-    (use-package yasnippet-snippets)
-    (use-package flycheck
-      :init (global-flycheck-mode))
-    (use-package rainbow-delimiters)
-    (use-package paredit)
+  (use-package magit :defer t)
 #+end_src
-
-We also include some packages for language modes
+*** Treesitter
 #+begin_src emacs-lisp :tangle init.el
-  (use-package rust-mode)
+  (use-package tree-sitter-langs)
+  (use-package tree-sitter :config
+    (global-tree-sitter-mode)
+    (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 #+end_src
+*** Some other nice setting
+#+begin_src emacs-lisp :tangle init.el
+  (delete-selection-mode 1)
+  (setq-default visible-bell nil             ; No visual bell      
+              ring-bell-function 'ignore)  ; No bell
+  (setq-default initial-major-mode 'text-mode   ; Initial mode is text
+              default-major-mode 'text-mode)  ; Default mode is text
+  (setq-default indent-tabs-mode nil        ; Stop using tabs to indent
+              tab-always-indent 'complete ; Indent first then try completion
+              tab-width 4)                
+#+end_src
+*** Completion frameworks
+vertico for interactive completion
+and corfu for in buffer completion
+#+begin_src emacs-lisp :tangle init.el
+  (use-package vertico :init (vertico-mode))
+  (use-package corfu :init (global-corfu-mode))
+#+end_src
+* Local variables                                                  :noexport:
+we add this to make interaction with this document more... Interactive. No more needing to remember pesky org-babel commands
+# Local Variables:
+# eval: (add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Tangle?")(org-babel-tangle))) nil t)
+# End:
