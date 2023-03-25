@@ -71,19 +71,24 @@ For managing packages we will use straight.el and use-package
   (use-package no-littering)
 #+end_src
 *** Theming and visuals
-catppuccin theme
+**** Theme
+doom themes
 #+begin_src emacs-lisp :tangle init.el
-  (add-to-list 'custom-theme-load-path (concat custom-theme-directory "/themes"))
-  (load-theme 'catppuccin t)
+  (use-package doom-themes
+    :config
+    (setq doom-themes-enable-bold t
+          doom-themes-enable-italic t)
+    (load-theme 'doom-material t)
+    (doom-themes-org-config))
 #+end_src
+**** Font
 set mono and variabled pitch fonts
 #+begin_src emacs-lisp :tangle init.el
-  (defvar ctd/default-font-size (* 13 10))
-  (defvar ctd/default-variable-font-size (* 13 10))
+  (defvar ctd/default-font-size (* 10 10))
+  (defvar ctd/default-variable-font-size (* 10 10))
   (set-face-attribute 'default nil :font "FiraCode Nerd Font" :height ctd/default-font-size)
-  (set-face-attribute 'fixed-pitch nil :font "FiraCode Nerd Font" :height ctd/default-font-size)
-  (set-face-attribute 'variable-pitch nil :font "Cantarell" :height ctd/default-variable-font-size :weight 'regular)
-#+end_src
+ #+end_src
+**** Some other visual improvements
 install solaire mode and enable it globally
 this provides some nice contrast between
 #+begin_src emacs-lisp :tangle init.el
@@ -95,40 +100,108 @@ some other visual eye candy!
 #+end_src
 we'll make sure that we smoooooooth scroll
 #+begin_src emacs-lisp :tangle init.el
-(pixel-scroll-precision-mode 1)
-(blink-cursor-mode 0)
+  ;; requires emacs v29
+  ;; (pixel-scroll-precision-mode 1)
+  (blink-cursor-mode 0)
 #+end_src
 *** Keybinds
 we'll utilize modal editiing
 we'll use meow for this
-#+begin_src emacs-lisp :tangle init.el
-        (defun meow-setup ()
-          "setup meow bindings"
-          (setq meow-cheatsheet-layout meow-cheatsheet-layout-colemak-dh)
-          (meow-normal-define-key
-           '("n" . meow-left)
-           '("e" . meow-next)
-           '("i" . meow-prev)
-           '("o" . meow-right)
-           ;; goto insert mode
-           '("k" . meow-insert)
-           '("a" . meow-append)
-           '("l" . meow-open-below)
-           '("L" . meow-open-above))
-          )
-        ;; then we install the package and load
-        (use-package meow
-          :config
-          (meow-setup)
-          (meow-global-mode 1))
-#+end_src
+#+begin_src emacs-lisp
+  (defun meow-setup ()
+    "setup meow bindings"
+    (setq meow-cheatsheet-layout meow-cheatsheet-layout-colemak-dh)
+    (meow-motion-overwrite-define-key
+     '("<escape>" . ignore))
+    (meow-leader-define-key
+     '("1" . meow-digit-argument)
+     '("2" . meow-digit-argument)
+     '("3" . meow-digit-argument)
+     '("4" . meow-digit-argument)
+     '("5" . meow-digit-argument)
+     '("6" . meow-digit-argument)
+     '("7" . meow-digit-argument)
+     '("8" . meow-digit-argument)
+     '("9" . meow-digit-argument)
+     '("0" . meow-digit-argument))
+    (meow-normal-define-key
+     '("0" . meow-expand-0)
+     '("1" . meow-expand-1)
+     '("2" . meow-expand-2)
+     '("3" . meow-expand-3)
+     '("4" . meow-expand-4)
+     '("5" . meow-expand-5)
+     '("6" . meow-expand-6)
+     '("7" . meow-expand-7)
+     '("8" . meow-expand-8)
+     '("9" . meow-expand-9)
+     '("-" . negative-argument)
+     '(";" . meow-reverse)
+     '("," . meow-inner-of-thing)
+     '("." . meow-bounds-of-thing)
+     '("[" . meow-beginning-of-thing)
+     '("]" . meow-end-of-thing)
+     '("/" . meow-visit)
+     '("f" . meow-find)
+     '("u" . meow-undo)
+     ;; neio navigation + selection
+     '("n" . meow-left)
+     '("e" . meow-next)
+     '("i" . meow-prev)
+     '("o" . meow-right)
+     '("N" . meow-left-expand)
+     '("E" . meow-next-expand)
+     '("I" . meow-prev-expand)
+     '("O" . meow-right-expand)
+     '("g" . meow-cancel-selection)
+     '("G" . meow-grab)
+     '("z" . meow-pop-selection)
+     ;; word/symbol based navigation
+     '("b" . meow-back-word)
+     '("B" . meow-back-symbol)
+     '("w" . meow-next-word)
+     '("W" . meow-next-symbol)
+     '("m" . meow-mark-word)
+     '("M" . meow-mark-symbol   )
+     ;; edit
+     '("c" . meow-change)
+     '("d" . meow-kill)
+     '("x" . meow-delete    )
+     '("X" . meow-backward-delete)
+     '("y" . meow-save) ;; yank in vim/helix land
+     '("p" . meow-yank) ;; paste in vim/helix land
+     ;; goto insert mode
+     '("k" . meow-insert)
+     '("K" . meow-join)
+     '("a" . meow-append)
+     '("V" . meow-line)
+     '("l" . meow-open-below)
+     '("L" . meow-open-above))
+    (meow-leader-define-key '("?" . meow-cheatsheet))
+    )
+  ;; then we install the package and load
+  (use-package meow
+    :config
+    (meow-setup)
+    (meow-global-mode 1))
+#+end_src   
 
+To make the keybinds more discoverable we'll use which key!
+#+begin_src emacs-lisp :tangle init.el
+  (use-package which-key
+    :defer 0
+    :diminish which-key-mode
+    :config
+    (which-key-mode)
+    (setq which-key-idle-delay 1))
+#+end_src
 *** Org mode!
 **** Main org mode package
 we first install a a more recent build of org
 #+begin_src emacs-lisp :tangle init.el
   (use-package org
     :config
+    (add-hook 'org-mode-hook #'visual-line-mode)
     (setq org-startup-indented t
           org-return-follows-link t
           org-startup-folded 'content)
@@ -156,6 +229,13 @@ org fragtog for realtime update of latex fragments
   (use-package org-fragtog
   :hook org-mode)
 #+end_src
+**** Org drill mode
+we utilize this for our spaced repetition needs
+#+begin_src emacs-lisp :tangle init.el
+      (use-package org-drill
+        :bind (("C-c r d" . org-drill-directory)
+               ("C-c r r" . org-drill-resume)))
+#+end_src
 *** Some tools
 #+begin_src emacs-lisp :tangle init.el
   (use-package magit :defer t)
@@ -178,11 +258,21 @@ org fragtog for realtime update of latex fragments
               tab-always-indent 'complete ; Indent first then try completion
               tab-width 4)                
 #+end_src
+*** Code
+we first need to setup a language server
+#+begin_src emacs-lisp :tangle init.el
+  (use-package lsp-mode)
+  (use-package lsp-ui :commands lsp-ui-mode)
+#+end_src
 *** Completion frameworks
 vertico for interactive completion
 and corfu for in buffer completion
 #+begin_src emacs-lisp :tangle init.el
-  (use-package vertico :init (vertico-mode))
+  (use-package vertico
+    :init (vertico-mode)
+    :config
+    (setq completion-styles '(flex basic))
+    )
   (use-package corfu :init (global-corfu-mode))
 #+end_src
 * Local variables                                                  :noexport:
@@ -190,3 +280,4 @@ we add this to make interaction with this document more... Interactive. No more 
 # Local Variables:
 # eval: (add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Tangle?")(org-babel-tangle))) nil t)
 # End:
+        
