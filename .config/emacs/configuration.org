@@ -210,18 +210,25 @@ we first install a a more recent build of org
 **** Org roam
 and then we add org roam!
 #+begin_src emacs-lisp :tangle init.el
-      (use-package org-roam
-        :config
-        (setq org-roam-directory "~/Documents/seltcana")
-        (org-roam-db-autosync-mode)
-         :bind (("C-c n f" . org-roam-node-find)
+  (use-package org-roam
+    :config
+    (setq org-roam-directory "~/Documents/seltcana")
+    (org-roam-db-autosync-mode)
+    ;; add some files to the org agenda list
+    (setq org-agenda-files (mapcar
+                            (lambda (s) (concat (file-name-as-directory org-roam-directory)  s))
+                            '("20230329153943-deadlines.org"
+                              "20230329154123-todo.org"
+                              "20221018104956-inbox.org")))
+
+    :bind (("C-c n f" . org-roam-node-find)
            ("C-c n r" . org-roam-node-random)		    
            (:map org-mode-map
-                   (("C-c n i" . org-roam-node-insert)
-                    ("C-c n o" . org-id-get-create)
-                    ("C-c n t" . org-roam-tag-add)
-                    ("C-c n a" . org-roam-alias-add)
-                    ("C-c n l" . org-roam-buffer-toggle)))))
+                 (("C-c n i" . org-roam-node-insert)
+                  ("C-c n o" . org-id-get-create)
+                  ("C-c n t" . org-roam-tag-add)
+                  ("C-c n a" . org-roam-alias-add)
+                  ("C-c n l" . org-roam-buffer-toggle)))))
 #+end_src
 org fragtog for realtime update of latex fragments
 #+begin_src emacs-lisp :tangle init.el
@@ -235,6 +242,10 @@ we utilize this for our spaced repetition needs
       (use-package org-drill
         :bind (("C-c r d" . org-drill-directory)
                ("C-c r r" . org-drill-resume)))
+#+end_src
+**** org download mode
+#+begin_src emacs-lisp :tangle init.el
+  (use-package org-download)
 #+end_src
 *** Some tools
 #+begin_src emacs-lisp :tangle init.el
