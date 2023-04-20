@@ -51,23 +51,11 @@ render = "none"
 
 [keys.normal]
 # unset keys
-h = "no_op"
-j = "no_op"
-k = "no_op"
-l = "no_op"
-e = "no_op"
-E = "no_op"
-i = "no_op"
-I = "no_op"
-o = "no_op"
 O = "no_op"
 A-o = "no_op"
 A-i = "no_op"
 A-n = "no_op"
-n = "no_op"
 N = "no_op"
-J = "no_op" 
-K = "no_op"
 C-i = "no_op"
 C-o = "no_op"
 # set them
@@ -108,10 +96,8 @@ i = "scroll_down"
 [keys.normal.g]
 # unset
 e = "no_op"
-h = "no_op"
 l = "no_op"
 i = "no_op"
-n = "no_op"
 # set
 j = "goto_last_line"
 n = "goto_line_start"
@@ -125,21 +111,15 @@ i = "no_op"
 k = "select_textobject_inner"
 [keys.normal.C-w]
 #unset
-C-o= "no_op"
-o = "no_op"
 C-h= "no_op"
-h = "no_op"
 C-j= "no_op"
 j = "no_op"
 C-k= "no_op"
 k = "no_op"
-C-l= "no_op"
-l = "no_op"
 H = "no_op"
 J = "no_op"
 K = "no_op"
 L = "no_op"
-n = "no_op"
 #set
 C-l= "wonly"
 l = "wonly"
@@ -165,21 +145,15 @@ v = "vsplit_new"
 
 [keys.normal.space.w]
 #unset
-C-o= "no_op"
-o = "no_op"
 C-h= "no_op"
-h = "no_op"
 C-j= "no_op"
 j = "no_op"
 C-k= "no_op"
 k = "no_op"
-C-l= "no_op"
-l = "no_op"
 H = "no_op"
 J = "no_op"
 K = "no_op"
 L = "no_op"
-n = "no_op"
 #set
 C-l= "wonly"
 l = "wonly"
@@ -204,13 +178,9 @@ C-v = "vsplit_new"
 v = "vsplit_new"
 [keys.select]
 #unset
-h = "no_op"
-j = "no_op"
 k = "no_op"
 l = "no_op"
-e = "no_op"
 E = "no_op"
-n = "no_op"
 N = "no_op"
 #set
 n = "extend_char_left"
@@ -225,10 +195,8 @@ H = "extend_search_prev"
 [keys.select.g]
 # unset
 e = "no_op"
-h = "no_op"
 l = "no_op"
 i = "no_op"
-n = "no_op"
 # set
 j = "goto_last_line"
 n = "goto_line_start"
@@ -239,10 +207,6 @@ h = "goto_next_buffer"
 
 [keys.insert]
 #unset
-C-h = "no_op"
-C-j = "no_op"
-C-n = "no_op"
-C-e = "no_op"
 C-k = "no_op"
 #set
 C-n = "delete_char_backward"
