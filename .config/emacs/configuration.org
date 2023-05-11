@@ -70,6 +70,12 @@ For managing packages we will use straight.el and use-package
   (straight-use-package 'use-package)
   (use-package no-littering)
 #+end_src
+
+to add support for the :diminish and :delight keywords we add the below packages
+#+begin_src emacs-lisp :tangle init.el
+  (use-package diminish)
+  (use-package delight)
+#+end_src
 *** Theming and visuals
 **** Theme
 doom themes
@@ -101,8 +107,14 @@ some other visual eye candy!
 we'll make sure that we smoooooooth scroll
 #+begin_src emacs-lisp :tangle init.el
   ;; requires emacs v29
-  ;; (pixel-scroll-precision-mode 1)
+  (pixel-scroll-precision-mode 1)
   (blink-cursor-mode 0)
+#+end_src
+
+we add some other packages which bring eyecandy with them.
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package page-break-lines :config (global-page-break-lines-mode 1))
 #+end_src
 *** Keybinds
 we'll utilize modal editiing
@@ -195,8 +207,10 @@ To make the keybinds more discoverable we'll use which key!
     (which-key-mode)
     (setq which-key-idle-delay 1))
 #+end_src
-*** Org mode!
-**** Main org mode package
+*** Productivity
+**** Org mode!
+org mode is one of the main reasons to even use emacs. Of course we're going to utilize it
+***** Main org mode package
 we first install a a more recent build of org
 #+begin_src emacs-lisp :tangle init.el
   (use-package org
@@ -207,12 +221,12 @@ we first install a a more recent build of org
           org-startup-folded 'content)
     :defer t)
 #+end_src
-**** Org roam
+***** Org roam
 and then we add org roam!
 #+begin_src emacs-lisp :tangle init.el
   (use-package org-roam
     :config
-    (setq org-roam-directory "~/Documents/seltcana")
+    (setq org-roam-directory "~/Documents/seltcana-org")
     (org-roam-db-autosync-mode)
     ;; add some files to the org agenda list
     (setq org-agenda-files (mapcar
@@ -236,16 +250,36 @@ org fragtog for realtime update of latex fragments
   (use-package org-fragtog
   :hook org-mode)
 #+end_src
-**** Org drill mode
+***** Org drill mode
 we utilize this for our spaced repetition needs
 #+begin_src emacs-lisp :tangle init.el
       (use-package org-drill
         :bind (("C-c r d" . org-drill-directory)
                ("C-c r r" . org-drill-resume)))
 #+end_src
-**** org download mode
+***** org download mode
 #+begin_src emacs-lisp :tangle init.el
   (use-package org-download)
+#+end_src
+**** Project management
+we add some dependencies for the dashboard
+#+begin_src emacs-lisp :tangle init.el
+  (use-package projectile
+    :delight
+    :config
+    (projectile-mode +1))
+#+end_src
+we will also include a dashboard to bring give an instant graphical overview of all projects
+#+begin_src emacs-lisp :tangle init.el
+  (use-package dashboard
+    :delight
+    :config
+    (setq dashboard-center-content t
+          dashboards-items '((recents . 5)
+                             (bookmarks . 5)
+                             (projects . 5)
+                             (agenda . 5)))
+    (dashboard-setup-startup-hook))
 #+end_src
 *** Some tools
 #+begin_src emacs-lisp :tangle init.el
@@ -253,10 +287,6 @@ we utilize this for our spaced repetition needs
 #+end_src
 *** Treesitter
 #+begin_src emacs-lisp :tangle init.el
-  (use-package tree-sitter-langs)
-  (use-package tree-sitter :config
-    (global-tree-sitter-mode)
-    (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 #+end_src
 *** Some other nice setting
 #+begin_src emacs-lisp :tangle init.el
@@ -275,6 +305,39 @@ we first need to setup a language server
   (use-package lsp-mode)
   (use-package lsp-ui :commands lsp-ui-mode)
 #+end_src
+
+**** eglot
+
+
+
+**** Emacs lisp
+I'll add paredit for structural editing of lisp
+#+begin_src emacs-lisp :tangle init.el
+  (use-package paredit
+    :config
+    (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+    (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+    (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+    (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+    (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+    (add-hook 'scheme-mode-hook           #'enable-paredit-mode))
+#+end_src
+
+**** scheme lisp
+#+begin_src emacs-lisp :tangle init.el
+  (use-package racket-mode)
+#+end_src
+
+**** Rust!
+of course we need some rust packages as well
+#+begin_src emacs-lisp :tangle init.el
+  (use-package rust-mode
+    :config
+    (add-hook 'rust-mode-hook
+              (lambda () ((eglot-ensure) ;; enable eglot -> rust-analyzer
+                          (electric-indent-mode 0) ;; disable tab based indentation
+                          (setq indent-tabs-mode nil))))) ;; disable tab based indentation
+#+end_src
 *** Completion frameworks
 vertico for interactive completion
 and corfu for in buffer completion
@@ -285,6 +348,10 @@ and corfu for in buffer completion
     (setq completion-styles '(flex basic))
     )
   (use-package corfu :init (global-corfu-mode))
+#+end_src
+*** Some elisp compilation settings
+#+begin_src emacs-lisp :tangle init.el
+(setq native-compile-prune-cache t)
 #+end_src
 * Local variables                                                  :noexport:
 we add this to make interaction with this document more... Interactive. No more needing to remember pesky org-babel commands
