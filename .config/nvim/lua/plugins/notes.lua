@@ -1,6 +1,6 @@
 
-local augroup = vim.api.nvim_create_augroup("ZkNotesFormat", {})
--- we will be using neorg for our notetaking needs
+--local augroup = vim.api.nvim_create_augroup("ZkNotesFormat", {})
+-- we will be using zk-nvim for our notetaking needs
 return {
   {
     "mickael-menu/zk-nvim",
@@ -33,6 +33,11 @@ return {
       wc.register({
         n = {
           name = "Notes",
+          j = {
+            name = "Journal",
+            n = {function() zk.new({dir = "Journal", title=os.date("%x") }) end, "New journal note"},
+            o = {function() cmd.get("ZkNotes")({dir = "Journal"}) end, "Open journal note"},
+          },
           c = {
             function()
               zk.cd()
@@ -47,7 +52,7 @@ return {
           },
           i = {
             function()
-              zk.get("ZkInsertLink")()
+              cmd.get("ZkInsertLink")()
             end,
             "Insert link to note",
           },
@@ -105,7 +110,7 @@ return {
         },
         i = {
           function()
-            zk.get("ZkInsertLinkAtSelection")()
+            cmd.get("ZkInsertLinkAtSelection")()
           end,
           "Insert link to note",
         },

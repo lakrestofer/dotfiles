@@ -6,6 +6,12 @@ return {
     end,
   },
   {
+    "windwp/nvim-ts-autotag",
+    config = function()
+      require("nvim-ts-autotag").setup()
+    end
+  },
+  {
     "folke/noice.nvim",
     config = function()
       vim.opt.termguicolors = true

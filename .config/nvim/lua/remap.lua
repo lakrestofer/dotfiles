@@ -23,4 +23,7 @@ for k,v in pairs(rebind_map) do
   end
 end
 
+--keymap("n", "ge", "gj", opts)
+--keymap("n", "gi", "gk", opts)
+
 vim.g.mapleader = " " -- Make sure to set `mapleader` before lazy so your mappings are correct
