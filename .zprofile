@@ -4,7 +4,7 @@ export PATH="$PATH:$HOME/.local/rofi"
 
 export EDITOR="helix"
 export TERMINAL="alacritty"
-export BROWSER="brave"
+export BROWSER="firefox-developer-edition"
 
 # If not using a display manager (login) then the below can be used to automatically
 # start a graphical session on login.
