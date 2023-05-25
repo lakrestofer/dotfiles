@@ -10,6 +10,7 @@ return {
         indent = { enable = true },
         context_commentstring = { enable = true, enable_autocmd = false },
         ensure_installed = {
+          "svelte",
           "bash",
           "c",
           "html",
