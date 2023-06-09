@@ -21,10 +21,10 @@ return {
         },
         options = {
           signcolumn = "no", -- disable signcolumn
-          number = false, -- disable number column
-          relativenumber = false, -- disable relative numbers
-          cursorline = false, -- disable cursorline
-          cursorcolumn = false, -- disable cursor column
+          number = true, -- disable number column
+          relativenumber = true, -- disable relative numbers
+          cursorline = true, -- disable cursorline
+          cursorcolumn = true, -- disable cursor column
           foldcolumn = "0", -- disable fold column
           list = false, -- disable whitespace characters
         },
@@ -35,7 +35,7 @@ return {
           },
         },
         on_open = function()
-          vim.cmd([[set wrap linebreak nonumber norelativenumber]])
+          vim.cmd([[set wrap linebreak]])
         end,
       })
       local wc = require("which-key")
