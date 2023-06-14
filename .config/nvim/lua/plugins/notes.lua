@@ -36,7 +36,7 @@ return {
           j = {
             name = "Journal",
             n = {function() zk.new({dir = "Journal", title=os.date("%x") }) end, "New journal note"},
-            o = {function() cmd.get("ZkNotes")({dir = "Journal"}) end, "Open journal note"},
+            o = {function() cmd.get("ZkNotes")({dir = "journal"}) end, "Open journal note"},
           },
           c = {
             function()

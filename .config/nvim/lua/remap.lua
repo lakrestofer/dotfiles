@@ -1,6 +1,5 @@
 -- keymapr
 local opts = {noremap = true, silent = true}
-local term_opts = {silent = true}
 local keymap = vim.api.nvim_set_keymap
 keymap("", "<Space>", "<Nop>", opts)
 
@@ -23,7 +22,7 @@ for k,v in pairs(rebind_map) do
   end
 end
 
---keymap("n", "ge", "gj", opts)
---keymap("n", "gi", "gk", opts)
+keymap("n", "e", "gj", opts)
+keymap("n", "i", "gk", opts)
 
 vim.g.mapleader = " " -- Make sure to set `mapleader` before lazy so your mappings are correct
