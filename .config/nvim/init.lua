@@ -10,7 +10,7 @@ if not vim.loop.fs_stat(lazypath) then
     "clone",
     "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable",
+    "--branch=stable", -- latest stable release
     lazypath,
   })
 end
@@ -18,4 +18,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("settings") -- some good default settings
 require("remap") -- here we set all the bindings which are independent on nvim
+
+vim.g.mapleader = " " -- Make sure to set `mapleader` before lazy so your mappings are correct
+
 require("lazy").setup("plugins") -- we load all the plugins in the plugins folder
