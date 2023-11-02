@@ -5,9 +5,10 @@
     // "width": 1280, // Waybar width
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["wlr/workspaces", "hyprland/window"],
-    "modules-right": ["pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "battery", "clock", "tray"],
-    "wlr/workspaces" : {
+    "modules-left": ["cpu", "memory", "temperature", "hyprland/window"],
+    "modules-center": ["hyprland/workspaces"],
+    "modules-right": ["pulseaudio", "network", "backlight", "battery", "clock", "tray"],
+    "hyprland/workspaces" : {
         "format": "{icon} {name}",
         "on-click": "activate",
         "all-outputs": true,
@@ -69,9 +70,13 @@
         "format-charging": "{capacity}% ",
         "format-plugged": "{capacity}% ",
         "format-alt": "{time} {icon}",
-        // "format-good": "", // An empty format will hide the module
-        // "format-full": "",
-        "format-icons": ["", "", "", "", ""]
+        "format-icons": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ]
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
