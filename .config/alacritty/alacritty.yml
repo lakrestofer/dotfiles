@@ -79,9 +79,9 @@ bell:
   # When set to `command: None`, no command will be executed.
   #
   # Example:
-  command:
-    program: notify-send
-    args: ["Hello, World!"]
+  #command:
+  # program: notify-send
+  # args: ["Hello, World!"]
   #command: None
 
 selection:
