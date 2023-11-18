@@ -71,11 +71,7 @@ For managing packages we will use straight.el and use-package
   (use-package no-littering)
 #+end_src
 
-to add support for the :diminish and :delight keywords we add the below packages
-#+begin_src emacs-lisp :tangle init.el
-  (use-package diminish)
-  (use-package delight)
-#+end_src
+
 *** Theming and visuals
 **** Theme
 doom themes
@@ -101,7 +97,7 @@ this provides some nice contrast between
   (use-package solaire-mode :config (solaire-global-mode))
 #+end_src
 some other visual eye candy!
-#+begin_src emacs-lisp :tangle init.el
+#+begin_src emacs-lisp
   (use-package rainbow-delimiters :hook prog-mode :diminish rainbow-delimiters-mode)
 #+end_src
 we'll make sure that we smoooooooth scroll
@@ -286,6 +282,7 @@ we will also include a dashboard to bring give an instant graphical overview of 
   (use-package magit :defer t)
 #+end_src
 *** Treesitter
+- [ ] setup treesitter
 #+begin_src emacs-lisp :tangle init.el
 #+end_src
 *** Some other nice setting
