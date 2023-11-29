@@ -1,6 +1,6 @@
 export PATH="$PATH:$HOME/.local/bin"
-export PATH="$PATH:$HOME/.local/bin/status_bar"
-export PATH="$PATH:$HOME/.local/rofi"
+export PATH="$PATH:$(go env GOPATH)/bin"
+
 
 export EDITOR="helix"
 export TERMINAL="alacritty"
