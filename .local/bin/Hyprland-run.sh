@@ -2,7 +2,7 @@
 export _JAVA_AWT_WM_NONREPARENTING=1
 export XCURSOR_SIZE=24
 export QT_QPA_PLATFORM="wayland;xcb"
-export SDL_VIDEODRIVER=wayland
+export SDL_VIDEODRIVER="wayland,x11"
 export MOZ_ENABLE_WAYLAND=1 firefox
 export XDG_CURRENT_DESKTOP=Unity
 export XDG_SESSION_TYPE=wayland
