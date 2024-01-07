@@ -204,7 +204,6 @@ o = "goto_line_end"
 k = "goto_implementation"
 h = "goto_next_buffer"
 
-
 [keys.insert]
 #unset
 C-k = "no_op"
