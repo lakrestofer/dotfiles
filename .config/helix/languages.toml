@@ -1,2 +1,6 @@
 [language-server.rust-analyzer]
 config.cargo.buildScripts.enable = true
+
+[[language]]
+name = "c"
+indent = { tab-width = 8, unit = " "}
