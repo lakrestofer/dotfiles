@@ -33,6 +33,8 @@ eval "$(zoxide init zsh --cmd cd)"
 # Load some zsh plugins
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+#source /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -53,4 +55,6 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-conda deactivate
+if (( $+commands[conda] )); then # only run conda deactivate if conda is installed it exists
+    conda deactivate
+fi
