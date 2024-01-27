@@ -24,7 +24,11 @@ alias \
     grep="grep --color=auto" \
     e="helix" \
     p="sudo pacman" \
-    config="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
+    config="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"\
+    ga="git add"\
+    gc="git commit"\
+    gp="git push"\
+    z="zathura"
 
 eval "$(zoxide init zsh --cmd cd)"
 
