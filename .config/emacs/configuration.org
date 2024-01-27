@@ -1,32 +1,36 @@
 * My emacs literate config - Foreword
-This is my configuration for for emacs! It is written using org-babel which places the contents of various code blocks into their coresponding file.
+This is my configuration for for emacs! It is written using org-babel which
+places the contents of various code blocks into their coresponding file.
 
-To tangle the contents I use org-babel-tangle (tangles current buffer) (which is bound to C-c C-v t).
+To tangle the contents I use org-babel-tangle (tangles current buffer) (which is
+bound to C-c C-v t).
 * Design goals
 this configuration aims to do the following:
-- provide an environment in which I can take dynamic tightly interlinked notes and explore
-  - here org-roam provides the bulk of the features I want, not only providing the linking but also an api for metadata access.
-    - here the features of org and the apis that exist around it are quite nice.
-- serve as a testground for programmable attention. How can I measure my own performance in the tasks i perform in emacs and then use that to facilitate improvements.
-- interact with lsp servers and treesitter for smarter editing of code.
+- serve as a backup editor
+- environment for programming in common lisp
 * Configuration
 ** Header
 This will generate a header at the top of the init.el and the early-init.el
 #+begin_src emacs-lisp :tangle init.el  
 ;; -*- lexical-binding: t -*-
-;; This file has been generated from dotemacs.org file. DO NOT EDIT.
-;; Sources are available from https://github.com/ChrisTheDevel/dotfiles
+;; This file has been generated from configuration.org file. DO NOT EDIT.
+;; Sources are available from https://github.com/lakrestofer/dotfiles/tree/main/.config/emacs
 #+end_src
 #+begin_src emacs-lisp :tangle early-init.el  
 ;; -*- lexical-binding: t -*-
 ;; This file has been generated from dotemacs.org file. DO NOT EDIT.
-;; Sources are available from https://github.com/ChrisTheDevel/dotfiles
+;; Sources are available from https://github.com/lakrestofer/dotfiles/tree/main/.config/emacs
 #+end_src
 ** Early init
-In the begining of the emacs startup process (as documented in [[https://www.gnu.org/software/emacs/manual/html_node/elisp/System-Interface.html][the manual]]) the early-init file is loaded.
-Here we set any configs that we want to apply before the rest of the startup takes place. Since the default package manager is loaded here we disable it.
-We also disable some gui elements which we are not interested in.
-A speed-up hack that we also perform is to temporarily remove the limit for the garbage-collector, allowing the startup proccess to run without the garbage collector pausing execution for cleanup.
+In the begining of the emacs startup process (as documented in [[https://
+www.gnu.org/software/emacs/manual/html_node/elisp/System-Interface.html][the
+manual]]) the early-init file is loaded. Here we set any configs that we want
+to apply before the rest of the startup takes place. Since the default package
+manager is loaded here we disable it. We also disable some gui elements which
+we are not interested in. A speed-up hack that we also perform is to temporarily
+remove the limit for the garbage-collector, allowing the startup proccess to run
+without the garbage collector pausing execution for cleanup.
+
 #+begin_src emacs-lisp :tangle early-init.el
     ;; disable some gui elements
     (menu-bar-mode -1)
@@ -46,42 +50,70 @@ A speed-up hack that we also perform is to temporarily remove the limit for the 
     ;; increase the amount of data that can be read from subprocess in a single go
     (setq read-process-output-max (* 4 1024 1024)) ;; 4 mb
 #+end_src
-** init
-*** Bootstrap straight.el
-For managing packages we will use straight.el and use-package
+** Bootstrap
+Here we bootstrap the elpacka package manager
+
 #+begin_src emacs-lisp :tangle init.el
-  (setq straight-check-for-modifications nil)
-  (setq straight-repository-branch "develop")
-  ;; Install straight.el
-  (defvar bootstrap-version)
-  (let ((bootstrap-file
-         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-        (bootstrap-version 6))
-    (unless (file-exists-p bootstrap-file)
-      (with-current-buffer
-          (url-retrieve-synchronously
-           "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-           'silent 'inhibit-cookies)
-        (goto-char (point-max))
-        (eval-print-last-sexp)))
-    (load bootstrap-file nil 'nomessage))
-  ;; install use package
-  (setq straight-use-package-by-default t)
-  (straight-use-package 'use-package)
-  (use-package no-littering)
+  (defvar elpaca-installer-version 0.6)
+  (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
+  (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
+  (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
+  (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
+				:ref nil
+				:files (:defaults "elpaca-test.el" (:exclude "extensions"))
+				:build (:not elpaca--activate-package)))
+  (let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
+	 (build (expand-file-name "elpaca/" elpaca-builds-directory))
+	 (order (cdr elpaca-order))
+	 (default-directory repo))
+    (add-to-list 'load-path (if (file-exists-p build) build repo))
+    (unless (file-exists-p repo)
+      (make-directory repo t)
+      (when (< emacs-major-version 28) (require 'subr-x))
+      (condition-case-unless-debug err
+	  (if-let ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
+		   ((zerop (call-process "git" nil buffer t "clone"
+					 (plist-get order :repo) repo)))
+		   ((zerop (call-process "git" nil buffer t "checkout"
+					 (or (plist-get order :ref) "--"))))
+		   (emacs (concat invocation-directory invocation-name))
+		   ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
+					 "--eval" "(byte-recompile-directory \".\" 0 'force)")))
+		   ((require 'elpaca))
+		   ((elpaca-generate-autoloads "elpaca" repo)))
+	      (progn (message "%s" (buffer-string)) (kill-buffer buffer))
+	    (error "%s" (with-current-buffer buffer (buffer-string))))
+	((error) (warn "%s" err) (delete-directory repo 'recursive))))
+    (unless (require 'elpaca-autoloads nil t)
+      (require 'elpaca)
+      (elpaca-generate-autoloads "elpaca" repo)
+      (load "./elpaca-autoloads")))
+  (add-hook 'after-init-hook #'elpaca-process-queues)
+  (elpaca `(,@elpaca-order))
+
+  ;; Install use-package support
+  (elpaca elpaca-use-package
+    ;; Enable :elpaca use-package keyword.
+    (elpaca-use-package-mode)
+    ;; Assume :elpaca t unless otherwise specified.
+    (setq elpaca-use-package-by-default t))
+
+  ;; Block until current queue processed.
+  (elpaca-wait)
 #+end_src
 
-
-*** Theming and visuals
-**** Theme
-doom themes
+We also load in the no-littering package directly.
 #+begin_src emacs-lisp :tangle init.el
-  (use-package doom-themes
-    :config
-    (setq doom-themes-enable-bold t
-          doom-themes-enable-italic t)
-    (load-theme 'doom-material t)
-    (doom-themes-org-config))
+  (use-package no-littering)
+  ; since elpacka downloads packages asynchronously we need to block manually here
+  (elpaca-wait)
+#+end_src
+
+** Theming and visuals
+**** Theme
+For now we set a builtin theme
+#+begin_src emacs-lisp :tangle init.el
+  (load-theme 'wombat)
 #+end_src
 **** Font
 set mono and variabled pitch fonts
@@ -91,268 +123,59 @@ set mono and variabled pitch fonts
   (set-face-attribute 'default nil :font "FiraCode Nerd Font" :height ctd/default-font-size)
  #+end_src
 **** Some other visual improvements
-install solaire mode and enable it globally
-this provides some nice contrast between
-#+begin_src emacs-lisp :tangle init.el
-  (use-package solaire-mode :config (solaire-global-mode))
-#+end_src
-some other visual eye candy!
-#+begin_src emacs-lisp
-  (use-package rainbow-delimiters :hook prog-mode :diminish rainbow-delimiters-mode)
-#+end_src
-we'll make sure that we smoooooooth scroll
 #+begin_src emacs-lisp :tangle init.el
   ;; requires emacs v29
   (pixel-scroll-precision-mode 1)
   (blink-cursor-mode 0)
 #+end_src
 
-we add some other packages which bring eyecandy with them.
+** Which key
 
-#+begin_src emacs-lisp :tangle init.el
-(use-package page-break-lines :config (global-page-break-lines-mode 1))
-#+end_src
-*** Keybinds
-we'll utilize modal editiing
-we'll use meow for this
-#+begin_src emacs-lisp
-  (defun meow-setup ()
-    "setup meow bindings"
-    (setq meow-cheatsheet-layout meow-cheatsheet-layout-colemak-dh)
-    (meow-motion-overwrite-define-key
-     '("<escape>" . ignore))
-    (meow-leader-define-key
-     '("1" . meow-digit-argument)
-     '("2" . meow-digit-argument)
-     '("3" . meow-digit-argument)
-     '("4" . meow-digit-argument)
-     '("5" . meow-digit-argument)
-     '("6" . meow-digit-argument)
-     '("7" . meow-digit-argument)
-     '("8" . meow-digit-argument)
-     '("9" . meow-digit-argument)
-     '("0" . meow-digit-argument))
-    (meow-normal-define-key
-     '("0" . meow-expand-0)
-     '("1" . meow-expand-1)
-     '("2" . meow-expand-2)
-     '("3" . meow-expand-3)
-     '("4" . meow-expand-4)
-     '("5" . meow-expand-5)
-     '("6" . meow-expand-6)
-     '("7" . meow-expand-7)
-     '("8" . meow-expand-8)
-     '("9" . meow-expand-9)
-     '("-" . negative-argument)
-     '(";" . meow-reverse)
-     '("," . meow-inner-of-thing)
-     '("." . meow-bounds-of-thing)
-     '("[" . meow-beginning-of-thing)
-     '("]" . meow-end-of-thing)
-     '("/" . meow-visit)
-     '("f" . meow-find)
-     '("u" . meow-undo)
-     ;; neio navigation + selection
-     '("n" . meow-left)
-     '("e" . meow-next)
-     '("i" . meow-prev)
-     '("o" . meow-right)
-     '("N" . meow-left-expand)
-     '("E" . meow-next-expand)
-     '("I" . meow-prev-expand)
-     '("O" . meow-right-expand)
-     '("g" . meow-cancel-selection)
-     '("G" . meow-grab)
-     '("z" . meow-pop-selection)
-     ;; word/symbol based navigation
-     '("b" . meow-back-word)
-     '("B" . meow-back-symbol)
-     '("w" . meow-next-word)
-     '("W" . meow-next-symbol)
-     '("m" . meow-mark-word)
-     '("M" . meow-mark-symbol   )
-     ;; edit
-     '("c" . meow-change)
-     '("d" . meow-kill)
-     '("x" . meow-delete    )
-     '("X" . meow-backward-delete)
-     '("y" . meow-save) ;; yank in vim/helix land
-     '("p" . meow-yank) ;; paste in vim/helix land
-     ;; goto insert mode
-     '("k" . meow-insert)
-     '("K" . meow-join)
-     '("a" . meow-append)
-     '("V" . meow-line)
-     '("l" . meow-open-below)
-     '("L" . meow-open-above))
-    (meow-leader-define-key '("?" . meow-cheatsheet))
-    )
-  ;; then we install the package and load
-  (use-package meow
-    :config
-    (meow-setup)
-    (meow-global-mode 1))
-#+end_src   
+which key is a must
 
-To make the keybinds more discoverable we'll use which key!
 #+begin_src emacs-lisp :tangle init.el
   (use-package which-key
-    :defer 0
-    :diminish which-key-mode
     :config
-    (which-key-mode)
-    (setq which-key-idle-delay 1))
-#+end_src
-*** Productivity
-**** Org mode!
-org mode is one of the main reasons to even use emacs. Of course we're going to utilize it
-***** Main org mode package
-we first install a a more recent build of org
-#+begin_src emacs-lisp :tangle init.el
-  (use-package org
-    :config
-    (add-hook 'org-mode-hook #'visual-line-mode)
-    (setq org-startup-indented t
-          org-return-follows-link t
-          org-startup-folded 'content)
-    :defer t)
-#+end_src
-***** Org roam
-and then we add org roam!
-#+begin_src emacs-lisp :tangle init.el
-  (use-package org-roam
-    :config
-    (setq org-roam-directory "~/Documents/seltcana-org")
-    (org-roam-db-autosync-mode)
-    ;; add some files to the org agenda list
-    (setq org-agenda-files (mapcar
-                            (lambda (s) (concat (file-name-as-directory org-roam-directory)  s))
-                            '("20230329153943-deadlines.org"
-                              "20230329154123-todo.org"
-                              "20221018104956-inbox.org")))
-
-    :bind (("C-c n f" . org-roam-node-find)
-           ("C-c n r" . org-roam-node-random)		    
-           (:map org-mode-map
-                 (("C-c n i" . org-roam-node-insert)
-                  ("C-c n o" . org-id-get-create)
-                  ("C-c n t" . org-roam-tag-add)
-                  ("C-c n a" . org-roam-alias-add)
-                  ("C-c n l" . org-roam-buffer-toggle)))))
-#+end_src
-org fragtog for realtime update of latex fragments
-#+begin_src emacs-lisp :tangle init.el
-  (set-default 'org-preview-latex-default-process 'dvisvgm)
-  (use-package org-fragtog
-  :hook org-mode)
-#+end_src
-***** Org drill mode
-we utilize this for our spaced repetition needs
-#+begin_src emacs-lisp :tangle init.el
-      (use-package org-drill
-        :bind (("C-c r d" . org-drill-directory)
-               ("C-c r r" . org-drill-resume)))
-#+end_src
-***** org download mode
-#+begin_src emacs-lisp :tangle init.el
-  (use-package org-download)
-#+end_src
-**** Project management
-we add some dependencies for the dashboard
-#+begin_src emacs-lisp :tangle init.el
-  (use-package projectile
-    :delight
-    :config
-    (projectile-mode +1))
-#+end_src
-we will also include a dashboard to bring give an instant graphical overview of all projects
-#+begin_src emacs-lisp :tangle init.el
-  (use-package dashboard
-    :delight
-    :config
-    (setq dashboard-center-content t
-          dashboards-items '((recents . 5)
-                             (bookmarks . 5)
-                             (projects . 5)
-                             (agenda . 5)))
-    (dashboard-setup-startup-hook))
-#+end_src
-*** Some tools
-#+begin_src emacs-lisp :tangle init.el
-  (use-package magit :defer t)
-#+end_src
-*** Treesitter
-- [ ] setup treesitter
-#+begin_src emacs-lisp :tangle init.el
-#+end_src
-*** Some other nice setting
-#+begin_src emacs-lisp :tangle init.el
-  (delete-selection-mode 1)
-  (setq-default visible-bell nil             ; No visual bell      
-              ring-bell-function 'ignore)  ; No bell
-  (setq-default initial-major-mode 'text-mode   ; Initial mode is text
-              default-major-mode 'text-mode)  ; Default mode is text
-  (setq-default indent-tabs-mode nil        ; Stop using tabs to indent
-              tab-always-indent 'complete ; Indent first then try completion
-              tab-width 4)                
-#+end_src
-*** Code
-we first need to setup a language server
-#+begin_src emacs-lisp :tangle init.el
-  (use-package lsp-mode)
-  (use-package lsp-ui :commands lsp-ui-mode)
+    (which-key-mode))
 #+end_src
 
-**** eglot
+** Tree sitter
+We want emacs to use tree sitter based parsing whenever possible
 
-
-
-**** Emacs lisp
-I'll add paredit for structural editing of lisp
 #+begin_src emacs-lisp :tangle init.el
-  (use-package paredit
-    :config
-    (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
-    (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
-    (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
-    (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
-    (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
-    (add-hook 'scheme-mode-hook           #'enable-paredit-mode))
+    (setq treesit-language-source-alist
+	  '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+	    (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+  ;	  (rust "https://gitub.com/tree-sitter/tree-sitter-rust")
+	    (go "https://github.com/tree-sitter/tree-sitter-go")
+	    (html "https://github.com/tree-sitter/tree-sitter-html")
+	    (yaml "https://github.com/ikatyang/tree-sitter-yaml")
+	    (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+	    (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")))
+    ;; we install the grammar if it is does not exist
+  (mapc
+   (lambda (language)
+     (unless (treesit-language-available-p language)
+       (treesit-install-language-grammar language)))
+   (mapcar #'car treesit-language-source-alist))
 #+end_src
 
-**** scheme lisp
+
+** Lsp
+
+** Common lisp
+
+we add slime mode for better development experience
+
 #+begin_src emacs-lisp :tangle init.el
-  (use-package racket-mode)
+  (use-package slime
+    :init
+    (require 'slime-autoloads)
+    (setq inferior-lisp-program "sbcl"))
+
 #+end_src
 
-**** Rust!
-of course we need some rust packages as well
-#+begin_src emacs-lisp :tangle init.el
-  (use-package rust-mode
-    :config
-    (add-hook 'rust-mode-hook
-              (lambda () ((eglot-ensure) ;; enable eglot -> rust-analyzer
-                          (electric-indent-mode 0) ;; disable tab based indentation
-                          (setq indent-tabs-mode nil))))) ;; disable tab based indentation
-#+end_src
-*** Completion frameworks
-vertico for interactive completion
-and corfu for in buffer completion
-#+begin_src emacs-lisp :tangle init.el
-  (use-package vertico
-    :init (vertico-mode)
-    :config
-    (setq completion-styles '(flex basic))
-    )
-  (use-package corfu :init (global-corfu-mode))
-#+end_src
-*** Some elisp compilation settings
-#+begin_src emacs-lisp :tangle init.el
-(setq native-compile-prune-cache t)
-#+end_src
-* Local variables                                                  :noexport:
-we add this to make interaction with this document more... Interactive. No more needing to remember pesky org-babel commands
+# This footer will promt the user to tangle on save
 # Local Variables:
 # eval: (add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Tangle?")(org-babel-tangle))) nil t)
 # End:
-        
