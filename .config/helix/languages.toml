@@ -4,3 +4,16 @@ config.cargo.buildScripts.enable = true
 [[language]]
 name = "c"
 indent = { tab-width = 8, unit = " "}
+
+[[language]]
+name = "markdown"
+scope = "source.md"
+injection-regex = "md|markdown"
+file-types = ["md", "markdown"]
+roots = [".zk"]
+language-servers = ["zk"]
+
+
+[language-server.zk]
+command = "zk"
+args = ["lsp"]
