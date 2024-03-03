@@ -59,6 +59,6 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-if (( $+commands[conda] )); then # only run conda deactivate if conda is installed it exists
+if (( $+commands[conda] )); then # only run conda deactivate if conda is installed
     conda deactivate
 fi
