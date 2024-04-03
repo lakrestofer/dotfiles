@@ -13,7 +13,19 @@ file-types = ["md", "markdown"]
 roots = [".zk"]
 language-servers = ["zk"]
 
+[[language]]
+name = "rust"
+scope = "source.rs"
+injection-regex = "rs|rust"
+file-types = ["rs"]
+roots = ["cargo.toml"]
+language-servers = ["rust-analyzer"]
 
 [language-server.zk]
 command = "zk"
 args = ["lsp"]
+
+[language-server.gpt]
+command = "helix-gpt"
+# args = ["--triggerCharacters", "  "]
+# args = ["--handler", "openai", "--openaiKey", ""]
