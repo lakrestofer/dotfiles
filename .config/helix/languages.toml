@@ -11,7 +11,14 @@ scope = "source.md"
 injection-regex = "md|markdown"
 file-types = ["md", "markdown"]
 roots = [".zk"]
-language-servers = ["zk"]
+language-servers = ["typos", "zk"]
+auto-format = true
+formatter = { command = "dprint", args = ["fmt", "--stdin", "md"]}
+
+[[language]]
+name = "typescript"
+auto-format = true
+formatter = { command = "npm run prettier" }
 
 [[language]]
 name = "rust"
@@ -25,7 +32,22 @@ language-servers = ["rust-analyzer"]
 command = "zk"
 args = ["lsp"]
 
-[language-server.gpt]
-command = "helix-gpt"
+# [language-server.gpt]
+# command = "helix-gpt"
 # args = ["--triggerCharacters", "  "]
 # args = ["--handler", "openai", "--openaiKey", ""]
+
+
+
+[language-server.typos]
+# typos-lsp must be on your PATH, or otherwise change this to an absolute path to typos-lsp
+command = "typos-lsp"
+# Logging level of the language server. Defaults to error.
+# Run with helix -v to output LSP logs to the editor log (:log-open)
+environment = {"RUST_LOG" = "error"}
+# Custom config. Used together with any workspace config files, taking precedence for
+# settings declared in both. Equivalent to the typos `--config` cli argument.
+# config.config = "~/code/typos-lsp/crates/typos-lsp/tests/typos.toml"
+# How typos are rendered in the editor, can be one of an Error, Warning, Info or Hint.
+# Defaults to Warning.
+config.diagnosticSeverity = "Warning"
