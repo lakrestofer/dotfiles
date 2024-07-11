@@ -22,7 +22,7 @@ alias \
     rm="rm -vI" \
     ls="exa --icons" \
     grep="grep --color=auto" \
-    e="helix" \
+    e="hx" \
     p="sudo pacman" \
     config="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"\
     ga="git add"\
@@ -32,7 +32,7 @@ alias \
 
 eval "$(zoxide init zsh --cmd cd)"
 
-#[ -s /usr/share/nvm/init-nvm.sh ] && source /usr/share/nvm/init-nvm.sh
+[ -s /usr/share/nvm/init-nvm.sh ] && source /usr/share/nvm/init-nvm.sh
 
 # Load some zsh plugins
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
