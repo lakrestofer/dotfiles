@@ -3,8 +3,8 @@ export PATH="$PATH:$(go env GOPATH)/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
 
 
-export EDITOR="helix"
-export VISUAL="helix"
+export EDITOR="hx"
+export VISUAL="hx"
 export TERMINAL="alacritty"
 export BROWSER="firefox-developer-edition"
 
