@@ -16,9 +16,16 @@ auto-format = true
 formatter = { command = "dprint", args = ["fmt", "--stdin", "md"]}
 
 [[language]]
+name = "tsx"
+language-servers = [ "eslint", "emmet-ls", "typescript-language-server", "tailwindcss-ls", "gpt" ] 
+formatter = { command = "prettier", args = [ "--parser", "typescript" ] } 
+auto-format = true 
+
+[[language]]
 name = "typescript"
+language-servers = [ "eslint", "emmet-ls", "typescript-language-server", "tailwindcss-ls", "gpt" ]
+formatter = { command = "prettier", args = [ "--parser", "typescript" ] }
 auto-format = true
-formatter = { command = "npm run prettier" }
 
 [[language]]
 name = "rust"
@@ -26,7 +33,7 @@ scope = "source.rs"
 injection-regex = "rs|rust"
 file-types = ["rs"]
 roots = ["cargo.toml"]
-language-servers = ["rust-analyzer"]
+language-servers = ["rust-analyzer","typos"]
 
 [[language]]
 name = "svelte"
@@ -41,14 +48,28 @@ auto-format = true
 name = "svelte"
 source = { git = "https://github.com/Himujjal/tree-sitter-svelte", rev = "be7f2e7db1fc19f0852265ec60923fc058380739" }
 
+
+[[language]]
+name = "go"
+language-servers = ["gopls", "gpt"]
+
 [language-server.zk]
 command = "zk"
 args = ["lsp"]
 
-# [language-server.gpt]
-# command = "helix-gpt"
-# args = ["--triggerCharacters", "  "]
-# args = ["--handler", "openai", "--openaiKey", ""]
+# === sql begin ===
+[language-server.sql-language-server]
+command = "sql-language-server"
+args = ["up", "--method", "stdio"]
+
+[[language]]
+name = "sql"
+language-servers = [ "sql-language-server" ]
+# === sql end ===
+
+[language-server.gpt]
+command = "helix-gpt"
+args = ["--handler", "copilot", "--copilotApiKey", "-"]
 
 [language-server.eslint]
 args = ["--stdio"]
