@@ -1,13 +1,3 @@
-[colors.bright]
-black = "#5C6370"
-blue = "#61afef"
-cyan = "#56b6c2"
-green = "#98c379"
-magenta = "#c678dd"
-red = "#E06C75"
-white = "#e6efff"
-yellow = "#d19a66"
-
 [colors.normal]
 black = "#282C34"
 blue = "#61AFEF"
