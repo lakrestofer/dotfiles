@@ -22,7 +22,7 @@ alias \
     rm="rm -vI" \
     ls="exa --icons" \
     grep="grep --color=auto" \
-    e="hx" \
+    e="helix" \
     p="sudo pacman" \
     config="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"\
     ga="git add"\
@@ -38,6 +38,10 @@ eval "$(zoxide init zsh --cmd cd)"
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 #source /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
+
+# load any keys (such as my openai key)
+source ~/.keys.zsh
 
 
 export NVM_DIR="$HOME/.nvm"
