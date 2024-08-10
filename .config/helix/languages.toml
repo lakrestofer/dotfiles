@@ -17,13 +17,13 @@ formatter = { command = "dprint", args = ["fmt", "--stdin", "md"]}
 
 [[language]]
 name = "tsx"
-language-servers = [ "eslint", "emmet-ls", "typescript-language-server", "tailwindcss-ls", "gpt" ] 
+language-servers = [ "eslint", "emmet-ls", "typescript-language-server", "tailwindcss-ls"] 
 formatter = { command = "prettier", args = [ "--parser", "typescript" ] } 
 auto-format = true 
 
 [[language]]
 name = "typescript"
-language-servers = [ "eslint", "emmet-ls", "typescript-language-server", "tailwindcss-ls", "gpt" ]
+language-servers = [ "eslint", "emmet-ls", "typescript-language-server", "tailwindcss-ls"]
 formatter = { command = "prettier", args = [ "--parser", "typescript" ] }
 auto-format = true
 
@@ -51,7 +51,7 @@ source = { git = "https://github.com/Himujjal/tree-sitter-svelte", rev = "be7f2e
 
 [[language]]
 name = "go"
-language-servers = ["gopls", "gpt"]
+language-servers = ["gopls"]
 
 [language-server.zk]
 command = "zk"
@@ -69,7 +69,7 @@ language-servers = [ "sql-language-server" ]
 
 [language-server.gpt]
 command = "helix-gpt"
-args = ["--handler", "copilot", "--copilotApiKey", "-"]
+args = ["--handler", "copilot"]
 
 [language-server.eslint]
 args = ["--stdio"]
