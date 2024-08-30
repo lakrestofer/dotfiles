@@ -1,4 +1,4 @@
-import = ["./colorscheme.toml"]
+import = [ "~/.config/alacritty/catppuccin-mocha.toml" ]
 live_config_reload = true
 
 [bell]
@@ -368,4 +368,4 @@ save_to_clipboard = true
 [window]
 decorations = "none"
 dynamic_title = true
-opacity = 1
+opacity = 0.8
