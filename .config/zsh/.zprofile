@@ -2,8 +2,8 @@ export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$(go env GOPATH)/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
 
-export EDITOR="hx"
-export VISUAL="hx"
+export EDITOR="helix"
+export VISUAL="helix"
 export TERMINAL="alacritty"
 export BROWSER="firefox-developer-edition"
 
