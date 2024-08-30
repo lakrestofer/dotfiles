@@ -1,0 +1,43 @@
+[colors]
+
+background = '#2e2a23'
+foreground = '#e0d9c8'
+
+cursor_fg = '#2e2a23'
+cursor_bg = '#e0d9c8' 
+cursor_border = '#e0d9c8' 
+
+ansi = [
+  "#0C0B09", # black
+  "#8d2b2b", # red
+  "#515e53", # green
+  "#615c2d", # yellow
+  "#5b576b", # blue
+  "#856e84", # magneta
+  "#81adb3", # cyan
+  "#F8F6F2", # white
+]
+
+brights = [
+  "#0C0B09", # black
+  "#8d2b2b", # red
+  "#515e53", # green
+  "#615c2d", # yellow
+  "#5b576b", # blue
+  "#856e84", # magneta
+  "#81adb3", # cyan
+  "#F8F6F2", # white
+]
+# brights = [
+#   "#2e2a23", # black
+#   "#8d2b2b", # red
+#   "#515e53", # green
+#   "#615c2d", # yellow
+#   "#5b576b", # blue
+#   "#856e84", # magneta
+#   "#81adb3", # cyan
+#   "#e0d9c8", # white
+# ]
+
+[metadata]
+name = "forbidden"

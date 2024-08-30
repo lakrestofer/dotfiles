@@ -1,0 +1,32 @@
+[colors]
+background = '#fff8f1'
+foreground = '#1f1b13'
+
+cursor_fg = '#fff8f1'
+cursor_bg = '#1f1b13'
+cursor_border = '#1f1b13'
+
+ansi = [
+  '#000000', # black
+  '#ba1a1a', # red
+  '#735c0c', # green 
+  '#695d3f', # yellow
+  '#47664a', # blue
+  '#735c0c', # magenta
+  '#695d3f', # cyan
+  '#7e7667', # white
+]
+
+brights = [
+  '#030303', # black
+  '#be1b1b', # red
+  '#78600c', # green 
+  '#6c6041', # yellow
+  '#49694c', # blue
+  '#78600c', # magenta
+  '#6c6041', # cyan
+  '#817969', # white
+]
+
+[metadata]
+name = "colorscheme"
