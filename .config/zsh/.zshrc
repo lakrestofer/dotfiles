@@ -1,20 +1,23 @@
-autoload -U colors && colors
-PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
+# autoload -U colors && colors
 
-# Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
+
 setopt autocd extendedglob nomatch
 unsetopt beep notify
-bindkey -e
-# End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
-zstyle :compinstall filename '/home/fincei/.zshrc'
+bindkey -e # emacs bindings in terminal
 
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
+# enable completion
+autoload -Uz compinit; compinit
+
+# Load plugin manager zinit
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
+[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+source "${ZINIT_HOME}/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 
 alias \
     cp="cp -iv" \
@@ -30,39 +33,18 @@ alias \
     gp="git push"\
     z="zathura"
 
+# plugins loaded with zinit
+zinit light zsh-users/zsh-autosuggestions
+zinit ice as"command" from"gh-r" \
+          atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
+          atpull"%atclone" src"init.zsh"
+zinit light starship/starship
+# zinit ice pick"async.zsh" src"pure.zsh"
+# zinit light sindresorhus/pure # better promt
+zinit wait lucid light-mode for lukechilds/zsh-nvm # node version manager
+zinit light zsh-users/zsh-syntax-highlighting
+
+# system plugins
 eval "$(zoxide init zsh --cmd cd)"
 
-[ -s /usr/share/nvm/init-nvm.sh ] && source /usr/share/nvm/init-nvm.sh
 
-# Load some zsh plugins
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-#source /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-
-
-# load any keys (such as my openai key)
-source ~/.keys.zsh
-
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/fincei/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/fincei/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/fincei/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/fincei/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-if (( $+commands[conda] )); then # only run conda deactivate if conda is installed
-    conda deactivate
-fi
