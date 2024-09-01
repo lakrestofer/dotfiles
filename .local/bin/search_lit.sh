@@ -1,7 +1,7 @@
 #!/bin/sh
 
-result=$(ls ~/Library/* | wofi --dmenu --lines=5 --width=80% --matching=fuzzy)
+result=$(cd ~/Library && ls | wofi --dmenu --lines=5 --width=80% --matching=fuzzy)
 
-echo $result
+echo "/home/fincei/Library/"$result
 
-[[ $result ]] && xdg-open $result
+[[ $result ]] && xdg-open "/home/fincei/Library/"$result
