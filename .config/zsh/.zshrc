@@ -4,6 +4,7 @@ HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
 
+# set some options
 setopt autocd extendedglob nomatch
 unsetopt beep notify
 bindkey -e # emacs bindings in terminal
@@ -19,6 +20,7 @@ source "${ZINIT_HOME}/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
+# aliases
 alias \
     cp="cp -iv" \
     mv="mv -iv" \
@@ -33,6 +35,10 @@ alias \
     gp="git push"\
     z="zathura"
 
+
+# system plugins
+eval "$(zoxide init zsh --cmd cd)"
+
 # plugins loaded with zinit
 zinit light zsh-users/zsh-autosuggestions
 zinit ice as"command" from"gh-r" \
@@ -43,8 +49,3 @@ zinit light starship/starship
 # zinit light sindresorhus/pure # better promt
 zinit wait lucid light-mode for lukechilds/zsh-nvm # node version manager
 zinit light zsh-users/zsh-syntax-highlighting
-
-# system plugins
-eval "$(zoxide init zsh --cmd cd)"
-
-
