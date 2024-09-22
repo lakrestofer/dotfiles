@@ -3,7 +3,8 @@ config.cargo.buildScripts.enable = true
 
 [[language]]
 name = "c"
-indent = { tab-width = 8, unit = " "}
+auto-format = true
+language-servers = ["typos", "clangd"]
 
 [[language]]
 name = "markdown"
@@ -44,62 +45,24 @@ indent = { tab-width = 2, unit = "  " }
 language-servers = [ "svelteserver", "eslint", "tailwindcss-ls"]
 auto-format = true
 
-[[grammar]]
-name = "svelte"
-source = { git = "https://github.com/Himujjal/tree-sitter-svelte", rev = "be7f2e7db1fc19f0852265ec60923fc058380739" }
-
+[[language]]
+name = "sql"
+language-servers = [ "sql-language-server" ]
 
 [[language]]
 name = "go"
 language-servers = ["gopls"]
 
-[language-server.zk]
-command = "zk"
-args = ["lsp"]
+# === grammars ===
+[[grammar]]
+name = "svelte"
+source = { git = "https://github.com/Himujjal/tree-sitter-svelte", rev = "be7f2e7db1fc19f0852265ec60923fc058380739" }
 
-# === sql begin ===
-[language-server.sql-language-server]
-command = "sql-language-server"
-args = ["up", "--method", "stdio"]
-
-[[language]]
-name = "sql"
-language-servers = [ "sql-language-server" ]
-# === sql end ===
-
-[language-server.gpt]
-command = "helix-gpt"
-args = ["--handler", "copilot"]
-
-[language-server.eslint]
-args = ["--stdio"]
-command = "vscode-eslint-language-server"
-
-[language-server.eslint.config]
-# format = true
-nodePath = ""
-# onIgnoredFiles = "off"
-# packageManager = "yarn"
-quiet = false
-rulesCustomizations = []
-run = "onType"
-# useESLintClass = false
-validate = "on"
-codeAction = { disableRuleComment = { enable = true, location = "separateLine" }, showDocumentation = { enable = true } }
-# codeActionsOnSave = { mode = "all" }
-experimental = {}
-problems = { shortenToSingleLine = false }
-# workingDirectory = { mode = "auto" }
-
-[language-server.typos]
-# typos-lsp must be on your PATH, or otherwise change this to an absolute path to typos-lsp
-command = "typos-lsp"
-# Logging level of the language server. Defaults to error.
-# Run with helix -v to output LSP logs to the editor log (:log-open)
-environment = {"RUST_LOG" = "error"}
-# Custom config. Used together with any workspace config files, taking precedence for
-# settings declared in both. Equivalent to the typos `--config` cli argument.
-# config.config = "~/code/typos-lsp/crates/typos-lsp/tests/typos.toml"
-# How typos are rendered in the editor, can be one of an Error, Warning, Info or Hint.
-# Defaults to Warning.
-config.diagnosticSeverity = "Warning"
+# === language servers ===
+[language-server]
+zk = { command = "zk", args = ["lsp"] }
+sql-language-server = { command = "sql-language-server", args = ["up", "--method", "stdio"] }
+gpt = { command = "helix-gpt", args = ["--handler", "copilot"] }
+eslint = { args = ["--stdio"], command = "vscode-eslint-language-server" }
+typos = { command = "typos-lsp", environment = {"RUST_LOG" = "error"}, config.diagnosticSeverity = "Warning" }
+clangd = { command = "clangd", args = [ "--clang-tidy" ] }
