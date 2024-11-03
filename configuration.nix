@@ -65,7 +65,6 @@ in
     git
     tmux
     alacritty
-    # (pkgs.wrapFirefox (pkgs.firefox-unwrapped.override {pipewireSupport = true;}) {})
     firefox-devedition
   ];
 
