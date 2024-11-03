@@ -1,0 +1,68 @@
+[language-server.rust-analyzer]
+config.cargo.buildScripts.enable = true
+
+[[language]]
+name = "c"
+auto-format = true
+language-servers = ["typos", "clangd"]
+
+[[language]]
+name = "markdown"
+scope = "source.md"
+injection-regex = "md|markdown"
+file-types = ["md", "markdown"]
+roots = [".zk"]
+language-servers = ["typos", "zk"]
+auto-format = true
+formatter = { command = "dprint", args = ["fmt", "--stdin", "md"]}
+
+[[language]]
+name = "tsx"
+language-servers = [ "eslint", "emmet-ls", "typescript-language-server", "tailwindcss-ls"] 
+formatter = { command = "prettier", args = [ "--parser", "typescript" ] } 
+auto-format = true 
+
+[[language]]
+name = "typescript"
+language-servers = [ "eslint", "emmet-ls", "typescript-language-server", "tailwindcss-ls"]
+formatter = { command = "prettier", args = [ "--parser", "typescript" ] }
+auto-format = true
+
+[[language]]
+name = "rust"
+scope = "source.rs"
+injection-regex = "rs|rust"
+file-types = ["rs"]
+roots = ["cargo.toml"]
+language-servers = ["rust-analyzer","typos"]
+
+[[language]]
+name = "svelte"
+scope = "source.svelte"
+injection-regex = "svelte"
+file-types = ["svelte"]
+indent = { tab-width = 2, unit = "  " }
+language-servers = [ "svelteserver", "eslint", "tailwindcss-ls"]
+auto-format = true
+
+[[language]]
+name = "sql"
+language-servers = [ "sql-language-server" ]
+
+[[language]]
+name = "go"
+language-servers = ["gopls"]
+
+# === grammars ===
+[[grammar]]
+name = "svelte"
+source = { git = "https://github.com/Himujjal/tree-sitter-svelte", rev = "be7f2e7db1fc19f0852265ec60923fc058380739" }
+
+# === language servers ===
+[language-server]
+zk = { command = "zk", args = ["lsp"] }
+sql-language-server = { command = "sql-language-server", args = ["up", "--method", "stdio"] }
+gpt = { command = "helix-gpt", args = ["--handler", "copilot"] }
+eslint = { args = ["--stdio"], command = "vscode-eslint-language-server" }
+typos = { command = "typos-lsp", environment = {"RUST_LOG" = "error"}, config.diagnosticSeverity = "Warning" }
+clangd = { command = "clangd", args = [ "--clang-tidy" ] }
