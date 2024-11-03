@@ -14,6 +14,6 @@
     enable = true;
     userEmail = "lakrestofer@gmail.com";
     userName = "lakrestofer";
-  }
+  };
 
 }
