@@ -61,6 +61,7 @@ in
   environment.systemPackages = with pkgs; [
     vim
     emacs
+    helix
     git
     tmux
     alacritty
