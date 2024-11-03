@@ -30,7 +30,6 @@
     isNormalUser = true;
     description = "fincei";
     extraGroups = [ "networkmanager" "wheel" "input" "uinput"];
-    packages = with pkgs; [];
   };
 
   # Allow unfree packages
@@ -58,6 +57,13 @@
     alacritty
     firefox-devedition
     btop
+    fastfetch
+    eza
+    tree
+    zip
+    unzip
+    pciutils
+    usbutils
   ];
 
   # environment variables
@@ -95,7 +101,7 @@ services.kmonad = {
      myKMonadOutput = {
        name = "thinkpadx220";
        device = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
-       config = builtins.readFile ./kmonad/config.kbd;
+       config = builtins.readFile ./home/kmonad/config.kbd;
        defcfg = {
          enable = true;
          fallthrough = true;

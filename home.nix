@@ -8,8 +8,12 @@
   programs.home-manager.enable = true;
   # load application specific configuration files
   imports = [
-    ./helix
+    ./home/helix
   ];
+  # user packages (only installed per user)
+  home.packages = with pkgs; {
+    
+  };
 
   # git
   programs.git = {
