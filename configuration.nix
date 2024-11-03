@@ -24,6 +24,9 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
+  # enable zsh as shell
+  programs.zsh.enable = true;
+  users.defaultUserShell = pkgs.zsh;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.fincei = {
