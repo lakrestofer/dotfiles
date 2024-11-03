@@ -14,10 +14,7 @@
 
 
 (defalias
-  ecm (tap-next esc lmet)   ;; Escape    when tapped, Control when held
-  bcn (tap-next \   rctl)   ;; Backslash when tapped, Control when held
-  tsn (tap-next tab lmet)   ;; Tab       when tapped, Super   when held
-  bsn (tap-next [   rmet)  ;; Bracket   when tapped, Super   when held
+  ecm (tap-next esc lmet)   ;; Escape    when tapped, super when held
 )
 
 (defalias dis displayoff)
@@ -58,7 +55,7 @@
         f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11   f12       end  pgdn
   grv   1    2    3    4    5    6    7    8    9    0    -     =         bspc
   @stab q    w    f    p    b    j    l    u    y    ;    [     ]         ret
-  @ecmc a    r    s    t    g    m    n    e    i    o    '     \
+  @ecm  a    r    s    t    g    m    n    e    i    o    '     \
   lsft  z    x    c    d    v    XX   k    h    ,    .    /               rsft
   wkup  lmet lalt lctl           spc            rctl lalt lmet     back  up   fwd
                                                                    left  down rght
