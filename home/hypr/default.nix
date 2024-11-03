@@ -3,7 +3,7 @@
   config,
   ...
 }: {
-  home.file.".config/helix" = {
+  home.file.".config/hypr" = {
     source = ./configs;
     recursive = true;
   };
