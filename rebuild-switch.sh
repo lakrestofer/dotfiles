@@ -14,7 +14,7 @@ set -e
 
 pushd ~/dotfiles/
 
-if git diff --quiet 'nixos/*.nix'; then
+if git diff --quiet ; then
     echo "No changes detected, exiting."
     popd
     exit 0

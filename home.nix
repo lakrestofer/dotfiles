@@ -9,11 +9,10 @@
   # load application specific configuration files
   imports = [
     ./home/helix
+    ./home/hypr
   ];
   # user packages (only installed per user)
-  home.packages = with pkgs; {
-    
-  };
+  home.packages = with pkgs; [];
 
   # git
   programs.git = {
