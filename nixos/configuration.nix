@@ -60,6 +60,7 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim
+    emacs
     git
     tmux
     alacritty
