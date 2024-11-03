@@ -6,8 +6,10 @@
   home.homeDirectory = "/home/fincei";
   home.stateVersion = "24.05";
   programs.home-manager.enable = true;
-  # === applications ===
-  # helix
+  # load application specific configuration files
+  imports = [
+    ./helix
+  ];
 
   # git
   programs.git = {
@@ -15,5 +17,7 @@
     userEmail = "lakrestofer@gmail.com";
     userName = "lakrestofer";
   };
+
+
 
 }
