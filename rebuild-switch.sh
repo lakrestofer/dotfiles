@@ -12,7 +12,7 @@
 
 set -e
 
-pushd '~/dotfiles'
+pushd ~/dotfiles/
 
 if git diff --quiet 'nixos/*.nix'; then
     echo "No changes detected, exiting."
