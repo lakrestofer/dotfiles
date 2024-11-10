@@ -1,5 +1,8 @@
-import = [ "~/.config/alacritty/catppuccin-mocha.toml" ]
 live_config_reload = true
+
+[general]
+import = [ "~/.config/alacritty/catppuccin-mocha.toml" ]
+
 
 [bell]
 animation = "EaseOutExpo"
