@@ -72,6 +72,22 @@
     usbutils
   ];
 
+  fonts = {
+    packages = with pkgs; [
+      ubuntu_font_family
+      liberation_ttf
+      fira-code
+      fira-code-symbols
+    ];
+    fontconfig = {
+      defaultFonts = {
+        serif = [ "Liberation Serif" ];
+        sansSerif = [ "Ubuntu" ];
+        monospace = [ "Ubuntu Mono" ];
+      };
+    };
+  };
+
   # environment variables
   environment.sessionVariables = {
     EDITOR = "hx";
