@@ -11,6 +11,7 @@
     ./home/helix
     ./home/hypr
     ./home/zsh
+    ./home/alacritty
   ];
   # user packages (only installed per user)
   home.packages = with pkgs; [];
