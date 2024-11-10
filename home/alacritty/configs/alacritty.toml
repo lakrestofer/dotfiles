@@ -13,7 +13,7 @@ draw_bold_text_with_bright_colors = false
 TERM = "alacritty"
 
 [font]
-size = 10.0
+size = 14.0
 
 [font.bold]
 family = "Fira Code"
