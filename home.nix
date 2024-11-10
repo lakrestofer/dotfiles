@@ -10,9 +10,14 @@
   imports = [
     ./home/helix
     ./home/hypr
+    ./home/zsh
   ];
   # user packages (only installed per user)
   home.packages = with pkgs; [];
+
+  programs.zoxide = {
+    enable = true;
+  };
 
   # git
   programs.git = {

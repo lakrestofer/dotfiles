@@ -25,14 +25,9 @@ alias \
     cp="cp -iv" \
     mv="mv -iv" \
     rm="rm -vI" \
-    ls="exa --icons" \
+    ls="eza --icons" \
     grep="grep --color=auto" \
-    e="helix" \
-    p="sudo pacman" \
-    config="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"\
-    ga="git add"\
-    gc="git commit"\
-    gp="git push"\
+    e="hx" \
     z="zathura"
 
 
