@@ -3,5 +3,5 @@
   config,
   ...
 }: {
-  home.file.".zshrc".source = ./zhsrc.zsh
+  home.file.".zshrc".source = ./zshrc.zsh;
 }

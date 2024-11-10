@@ -54,6 +54,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    eza
+    zoxide
     wl-clipboard
     helix
     git
@@ -71,13 +73,16 @@
   ];
 
   # environment variables
-  environment.variables = {
+  environment.sessionVariables = {
     EDITOR = "hx";
     VISUAL = "hx";
     NIXOS_OZONE_WL = "1";
-    BROWSER = "firefox-devedition"
+    BROWSER = "firefox-devedition";
+    XDG_CACHE_HOME = "$HOME/.cache";
+    XDG_CONFIG_HOME = "$HOME/.config";
+    XDG_DATA_HOME = "$HOME/.local/share";
+    XDG_STATE_HOME = "$HOME/.local/state";
   };
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
