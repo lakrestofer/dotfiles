@@ -50,7 +50,6 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     wofi
-    hyprgui
     hyprpaper
     eza
     zoxide
