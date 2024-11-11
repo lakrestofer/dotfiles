@@ -2,19 +2,14 @@
 {
   imports = [./hardware-configuration.nix];
 
-
-
   # Bootloader.
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.useOSProber = false;
 
   # hardware
-  
-
   networking.hostName = "machina"; # Define your hostname.
   #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
 
   # Enable networking
   networking.networkmanager.enable = true;
