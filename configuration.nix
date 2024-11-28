@@ -14,6 +14,10 @@
   hardware = {
     
   };
+  swapDevices = [{
+    device = "/swapfile";
+    size = 16 * 1024; # 16GB
+  }];
   
   networking.hostName = "machina"; # Define your hostname.
 
@@ -56,7 +60,6 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     brightnessctl
-    zed-editor
     wofi
     inputs.hyprpaper.packages.${pkgs.system}.default
     inputs.hyprpolkitagent.packages.${pkgs.system}.default
