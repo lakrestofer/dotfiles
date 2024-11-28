@@ -120,7 +120,7 @@
   programs.hyprpaper = {
     enable = true;
     package = inputs.hyprpaper.packages.${pkgs.stdenv.hostPlatform.system}.hyprpaper;
-  }
+  };
 
 
   # List services that you want to enable:
