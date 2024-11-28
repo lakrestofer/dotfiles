@@ -1,6 +1,9 @@
 { inputs, config, pkgs, ... }:
 {
-  imports = [./hardware-configuration.nix];
+  imports = [
+    ./hardware-configuration.nix
+    ./thinkpad/x220
+  ];
 
   # Bootloader.
   boot.loader.grub.enable = true;
@@ -8,8 +11,11 @@
   boot.loader.grub.useOSProber = false;
 
   # hardware
+  hardware = {
+    
+  }
+  
   networking.hostName = "machina"; # Define your hostname.
-  #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -49,6 +55,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    brightnessctl
     zed-editor
     wofi
     hyprpaper
