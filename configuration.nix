@@ -66,7 +66,7 @@
     eza
     zoxide
     wl-clipboard
-    helix
+    inputs.helix.packages.${pkgs.system}.default
     git
     tmux
     alacritty
