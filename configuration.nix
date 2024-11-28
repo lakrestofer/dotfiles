@@ -118,6 +118,7 @@
   services.pipewire = {
     enable = true;
   };
+  services.dbus.implementation = "broker";
 
 services.kmonad = {
  enable = true;
