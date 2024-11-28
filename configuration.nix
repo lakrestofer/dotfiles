@@ -13,7 +13,7 @@
   # hardware
   hardware = {
     
-  }
+  };
   
   networking.hostName = "machina"; # Define your hostname.
 
