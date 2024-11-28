@@ -58,6 +58,8 @@
     brightnessctl
     zed-editor
     wofi
+    inputs.hyprpaper.packages.${pkgs.system}.default
+    inputs.hyprpolkitagent.packages.${pkgs.system}.default
     eza
     zoxide
     wl-clipboard
@@ -114,14 +116,7 @@
     enable = true;
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
-    withUWSM  = true;
   };
-
-  programs.hyprpaper = {
-    enable = true;
-    package = inputs.hyprpaper.packages.${pkgs.stdenv.hostPlatform.system}.hyprpaper;
-  };
-
 
   # List services that you want to enable:
 
