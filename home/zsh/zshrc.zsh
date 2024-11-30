@@ -20,7 +20,8 @@ alias \
     ls="eza --icons" \
     grep="grep --color=auto" \
     e="hx" \
-    z="zathura"
+    z="zathura" \
+    btw="fastfetch"
 
 # system plugins
 eval "$(zoxide init zsh --cmd cd)"
