@@ -11,6 +11,7 @@
     ./home/helix
     ./home/hypr
     ./home/zsh
+    ./home/scripts
     ./home/alacritty
   ];
   # user packages (only installed per user)
