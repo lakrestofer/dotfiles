@@ -12,7 +12,7 @@ in {
   boot.loader.grub.useOSProber = false;
 
   # hardware
-  hardware.graphics= {
+  hardware.graphics = {
     package = pkgs-unstable.mesa.drivers;
     # driSupport32Bit = true;
     package32 = pkgs-unstable.pkgsi686Linux.mesa.drivers;   
