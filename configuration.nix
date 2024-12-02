@@ -64,7 +64,7 @@
     util-linux
     brightnessctl
     wofi
-    inputs.hyprpaper.packages.${pkgs.system}.default
+    hyprpaper
     eza
     zoxide
     wl-clipboard
