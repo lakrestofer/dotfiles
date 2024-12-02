@@ -65,7 +65,6 @@
     brightnessctl
     wofi
     inputs.hyprpaper.packages.${pkgs.system}.default
-    inputs.hyprpolkitagent.packages.${pkgs.system}.default
     eza
     zoxide
     wl-clipboard
@@ -151,6 +150,10 @@
         user = "fincei";
       };
     };
+  };
+  security.polkit = {
+    enable = true;
+    package = inputs.hyprpolkitagent.packages.${pkgs.system}.default;
   };
 
 services.kmonad = {
