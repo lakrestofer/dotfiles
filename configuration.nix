@@ -12,7 +12,7 @@ in {
   boot.loader.grub.useOSProber = false;
 
   # hardware
-  hardware.opengl = {
+  hardware.graphics= {
     package = pkgs-unstable.mesa.drivers;
     # driSupport32Bit = true;
     package32 = pkgs-unstable.pkgsi686Linux.mesa.drivers;   
@@ -62,6 +62,7 @@ in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    ripgrep
     zathura
     hyprgui
     util-linux
