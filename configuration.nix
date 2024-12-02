@@ -73,6 +73,7 @@ in {
     zoxide
     wl-clipboard
     inputs.helix.packages.${pkgs.system}.default
+    hyprpolkitagent
     git
     tmux
     alacritty
