@@ -1,5 +1,6 @@
-{ inputs, config, pkgs, ... }:
-{
+{ inputs, config, pkgs, ... }: let
+  pkgs-unstable = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+in {
   imports = [
     ./hardware-configuration.nix
     ./thinkpad/x220
@@ -11,8 +12,10 @@
   boot.loader.grub.useOSProber = false;
 
   # hardware
-  hardware = {
-    
+  hardware.opengl = {
+    package = pkgs-unstable.mesa.drivers;
+    # driSupport32Bit = true;
+    package32 = pkgs-unstable.pkgsi686Linux.mesa.drivers;   
   };
   swapDevices = [{
     device = "/swapfile";
@@ -151,10 +154,10 @@
       };
     };
   };
-  security.polkit = {
-    enable = true;
-    package = pkgs.hyprpolkitagent;
-  };
+  # security.polkit = {
+  #   enable = true;
+  #   package = pkgs.hyprpolkitagent;
+  # };
 
 services.kmonad = {
  enable = true;
