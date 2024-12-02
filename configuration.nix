@@ -153,7 +153,7 @@
   };
   security.polkit = {
     enable = true;
-    package = inputs.hyprpolkitagent.packages.${pkgs.system}.default;
+    package = pkgs.hyprpolkitagent;
   };
 
 services.kmonad = {
