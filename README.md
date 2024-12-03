@@ -4,7 +4,7 @@
 - [X] display manager
 - [ ] hyprland
   - [X] start on login using uwsm
-  - [ ] pam security module
+  - [x] pam security module
   - [ ] hypridle
   - [ ] hyprlock
 - [ ] setup zsh
