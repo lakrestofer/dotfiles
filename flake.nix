@@ -13,6 +13,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     # some other applications
     helix.url = "github:helix-editor/helix";
+    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
   };
 
   outputs = { self, kmonad, home-manager, nixpkgs, ... } @ inputs:
@@ -31,7 +32,8 @@
             home-manager.useUserPackages = true;
             home-manager.users.fincei = import ./home.nix;
             home-manager.backupFileExtension = "backup";
-          }
+        }
+        {nixpkgs.overlays = [inputs.hyprpanel.overlay];}
       ];
     };
 

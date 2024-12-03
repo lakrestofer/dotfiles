@@ -5,8 +5,8 @@
 - [ ] hyprland
   - [X] start on login using uwsm
   - [x] pam security module
-  - [ ] hypridle
-  - [ ] hyprlock
+  - [X] hypridle
+  - [X] hyprlock
 - [ ] setup zsh
   - [ ] completion and syntax highlight
   - [ ] setup rust feature packed prompter
