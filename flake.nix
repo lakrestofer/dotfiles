@@ -21,9 +21,10 @@
       url = "github:aylur/ags";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
-  outputs = { self, kmonad, home-manager, nixpkgs, astal, ags, ... } @ inputs:
+  outputs = { self, kmonad, home-manager, nixpkgs, astal, ags, nixos-hardware, ... } @ inputs:
   let
     system = "x86_64-linux";
   in
@@ -34,6 +35,7 @@
       modules = [
         ./configuration.nix # base configuration
         kmonad.nixosModules.default
+        nixos-hardware.nixosModules.lenovo-thinkpad-x220
         home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
