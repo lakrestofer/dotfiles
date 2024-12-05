@@ -62,7 +62,6 @@ in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    hyprpanel
     hypridle
     hyprlock
     ripgrep
@@ -80,7 +79,7 @@ in {
     git
     tmux
     alacritty
-    firefox-devedition
+    firefox-devedition-bin
     btop
     fastfetch
     eza
