@@ -13,10 +13,17 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     # some other applications
     helix.url = "github:helix-editor/helix";
-    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+    astal = {
+      url = "github:aylur/astal";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    ags = {
+      url = "github:aylur/ags";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, kmonad, home-manager, nixpkgs, ... } @ inputs:
+  outputs = { self, kmonad, home-manager, nixpkgs, astal, ags, ... } @ inputs:
   let
     system = "x86_64-linux";
   in
@@ -33,7 +40,6 @@
             home-manager.users.fincei = import ./home.nix;
             home-manager.backupFileExtension = "backup";
         }
-        {nixpkgs.overlays = [inputs.hyprpanel.overlay];}
       ];
     };
 
