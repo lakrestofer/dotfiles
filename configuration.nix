@@ -157,10 +157,7 @@ in {
       };
     };
   };
-  # security.polkit = {
-  #   enable = true;
-  #   package = pkgs.hyprpolkitagent;
-  # };
+  services.fwupd.enable = true;
 
 services.kmonad = {
  enable = true;
