@@ -3,7 +3,6 @@
 in {
   imports = [
     ./hardware-configuration.nix
-    ./thinkpad/x220
   ];
 
   # Bootloader.
@@ -15,7 +14,7 @@ in {
   hardware.graphics = {
     package = pkgs-unstable.mesa.drivers;
     # driSupport32Bit = true;
-    package32 = pkgs-unstable.pkgsi686Linux.mesa.drivers;   
+    # package32 = pkgs-unstable.pkgsi686Linux.mesa.drivers;   
   };
   swapDevices = [{
     device = "/swapfile";

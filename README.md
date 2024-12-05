@@ -7,6 +7,8 @@
   - [x] pam security module
   - [X] hypridle
   - [X] hyprlock
+- [ ] ags
+  - [ ] bar
 - [ ] setup zsh
   - [ ] completion and syntax highlight
   - [ ] setup rust feature packed prompter
