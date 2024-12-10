@@ -27,8 +27,8 @@
 
         # additional libraries and executables to add to gjs' runtime
         extraPackages = [
-          # ags.packages.${system}.battery
-          # pkgs.fzf
+          ags.packages.${system}.battery
+          ags.packages.${system}.agsFull
         ];
       };
     };
@@ -37,7 +37,7 @@
       default = pkgs.mkShell {
         buildInputs = [
           # includes all Astal libraries
-          # ags.packages.${system}.agsFull
+          ags.packages.${system}.agsFull
 
           # includes astal3 astal4 astal-io by default
           (ags.packages.${system}.default.override {
