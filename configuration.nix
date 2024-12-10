@@ -97,8 +97,7 @@ in {
     packages = with pkgs; [
       ubuntu_font_family
       liberation_ttf
-      fira-code
-      fira-code-symbols
+      nerd-fonts.fira-code
     ];
     fontconfig = {
       defaultFonts = {
