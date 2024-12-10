@@ -113,7 +113,7 @@ function FocusedClient() {
     className="Focused"
     visible={focused.as(Boolean)}>
     {focused.as(client => (
-      client && <label label={bind(client, "title").as(String)} />
+      client && <label label={bind(client, "title").as(s => (s.length > 20) ? `${s.slice(0, 20)}...` : s)} />
     ))}
   </box>
 }
