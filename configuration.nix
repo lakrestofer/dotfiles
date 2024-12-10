@@ -97,12 +97,13 @@ in {
     packages = with pkgs; [
       ubuntu_font_family
       noto-fonts
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       noto-fonts-emoji
       liberation_ttf
       nerd-fonts.fira-code
     ];
     fontconfig = {
+      useEmbeddedBitmaps = true;
       defaultFonts = {
         serif = [ "Liberation Serif" ];
         sansSerif = [ "Ubuntu" ];
