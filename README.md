@@ -8,7 +8,21 @@
   - [X] hypridle
   - [X] hyprlock
 - [ ] ags
-  - [ ] bar with ags
+  - [ ] bar with ags (simple one for now)
+    - [ ] load bar on startup
+    - [ ] clock (with date and time)
+    - [ ] battery state
+      - [ ] icon reflects state
+        - [ ] percentage
+        - [ ] charging/not charging
+    - [ ] network
+      - [ ] strength and network name
+    - [ ] volume
+      - [ ] volume strength
+      - [ ] icon reflect state
+    - [ ] workspaces
+    - [ ] systray
+    - [ ] current active client
 - [ ] setup zsh
   - [ ] completion and syntax highlight
   - [ ] setup rust feature packed prompter
