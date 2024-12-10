@@ -22,6 +22,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    # local flakes
+
   };
 
   outputs = { self, kmonad, home-manager, nixpkgs, astal, ags, nixos-hardware, ... } @ inputs:
