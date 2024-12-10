@@ -160,6 +160,7 @@ in {
     };
   };
   services.fwupd.enable = true;
+  services.upower.enable = true;
 
 services.kmonad = {
  enable = true;
