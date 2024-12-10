@@ -8,7 +8,7 @@
   - [X] hypridle
   - [X] hyprlock
 - [ ] ags
-  - [ ] bar
+  - [ ] bar with ags
 - [ ] setup zsh
   - [ ] completion and syntax highlight
   - [ ] setup rust feature packed prompter
