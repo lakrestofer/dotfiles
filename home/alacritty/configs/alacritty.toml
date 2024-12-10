@@ -369,5 +369,5 @@ save_to_clipboard = true
 
 [window]
 decorations = "none"
-dynamic_title = true
+dynamic_title = false
 opacity = 0.8
