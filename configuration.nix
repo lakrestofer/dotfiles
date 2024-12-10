@@ -96,6 +96,9 @@ in {
   fonts = {
     packages = with pkgs; [
       ubuntu_font_family
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
       liberation_ttf
       nerd-fonts.fira-code
     ];
