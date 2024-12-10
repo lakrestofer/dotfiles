@@ -23,7 +23,7 @@
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     # local flakes
-    top_bar.url = "path:/home/ags";
+    top_bar.url = "path:./home/ags";
   };
 
   outputs = { self, kmonad, home-manager, nixpkgs, astal, ags, nixos-hardware, ... } @ inputs:
