@@ -10,8 +10,14 @@ window.Bar {
     box-shadow: none;
     background-color: $bg;
     color: $fg;
-    font-size: 1.1em;
+    font-size: 1.0em;
     font-weight: bold;
+
+    label.quote {
+        font-size: 1.1em;
+        font-weight: bold;
+        font-style: italic;
+    }
 
     button {
         all: unset;
@@ -35,9 +41,12 @@ window.Bar {
         border: 1pt solid transparent;
     }
 
+    .Workspaces label {
+    }
+
     .Workspaces .focused label {
         color: $accent;
-        border-color: $accent;
+        /* border-color: $accent; */
     }
 
     .FocusedClient {

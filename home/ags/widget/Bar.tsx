@@ -41,11 +41,11 @@ function Wifi() {
 function AudioSlider() {
   const speaker = Wp.get_default()?.audio.defaultSpeaker!
   const volume = bind(speaker, "volume");
-  const mute = bind(speaker, "mute");
+  // const mute = bind(speaker, "mute");
 
   return (
     <box>
-      <label label={`Vol: ${mute.as(b => b) ? "mute" : `${volume.as(v => v)} %`}`} />
+      <label label={volume.as(v => `Vol: ${Math.floor(v * 100)}%`)} />
     </box>
   );
 }
@@ -87,15 +87,16 @@ function Media() {
 }
 
 function Workspaces() {
-  const hypr = Hyprland.get_default()
+  const hypr = Hyprland.get_default();
+  const wss = bind(hypr, "workspaces");
+  const fws = bind(hypr, "focusedWorkspace");
 
   return <box className="Workspaces">
-    {bind(hypr, "workspaces").as(wss => wss
+    {wss.as(wss => wss
       .sort((a, b) => a.id - b.id)
-      .map(ws => (
+      .map((ws: Hyprland.Workspace) => (
         <button
-          className={bind(hypr, "focusedWorkspace").as(fw =>
-            ws === fw ? "focused" : "")}
+          className={fws.as(fw => ws === fw ? "focused" : "")}
           onClicked={() => ws.focus()}>
           {ws.id}
         </button>
@@ -117,7 +118,7 @@ function FocusedClient() {
   </box>
 }
 
-function Time({ format = "%H:%M - %A %e." }) {
+function Time({ format = "%Y-%m-%d @ %H:%M:%S" }) {
   const time = Variable<string>("").poll(1000, () =>
     GLib.DateTime.new_now_local().format(format)!)
 
@@ -129,20 +130,20 @@ function Time({ format = "%H:%M - %A %e." }) {
 }
 
 export default function Bar(monitor: Gdk.Monitor) {
-  const { TOP, LEFT, RIGHT } = Astal.WindowAnchor
+  const { BOTTOM, LEFT, RIGHT } = Astal.WindowAnchor
 
   return <window
     className="Bar"
     gdkmonitor={monitor}
     exclusivity={Astal.Exclusivity.EXCLUSIVE}
-    anchor={TOP | LEFT | RIGHT}>
+    anchor={BOTTOM | LEFT | RIGHT}>
     <centerbox>
       <box hexpand halign={Gtk.Align.START}>
         <Workspaces />
         <FocusedClient />
       </box>
       <box>
-        <Media />
+        <label className="quote" label={"may thought govern thought"} />
       </box>
       <box hexpand halign={Gtk.Align.END} >
         <SysTray />
