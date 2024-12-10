@@ -4,9 +4,11 @@ import Battery from "gi://AstalBattery"
 
 const time = Variable("").poll(1000, "date");
 const battery = Battery.get_default();
+const battery_per = Variable(0).poll(1000, () => battery.percentage);
 
 export default function Bar(gdkmonitor: Gdk.Monitor) {
-  const batter_pers = Variable(battery.get_percentage()).poll(500, _ => battery.get_percentage());
+  const is_sus = battery.device_type;
+
 
   return <window
     className="Bar"
@@ -20,20 +22,14 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
       <button
         onClicked="echo hello"
         halign={Gtk.Align.CENTER} >
-        Welcome to AGS!
+        Welcome to This baaaar
       </button>
       <box />
       <button
         onClick={() => print("hello")}
         halign={Gtk.Align.CENTER} >
-        <label label={time()} />
+        <label label={bind(battery_per).as(v => `Bat: ${v}%`)} />
       </button>
-      <box>
-        <button>
-          What about this?
-        </button>
-        <label label={batter_pers(v => `Bat: ${v}%`)} />
-      </box>
     </centerbox>
   </window>
 }
