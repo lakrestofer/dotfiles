@@ -627,11 +627,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-gZYyqr4tx2N89zjbuzLho8EEhmi4jgkRAEP5fRfL0iA=",
-        "path": "/nix/store/j41snp3c3j98vdh9lwvijzvnmy3yb0sv-source/home/ags",
+        "path": "/nix/store/6mk5ynifm8grlfvvj1s1fq5zjyyypfp2-source/home/ags",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/j41snp3c3j98vdh9lwvijzvnmy3yb0sv-source/home/ags",
+        "path": "/nix/store/6mk5ynifm8grlfvvj1s1fq5zjyyypfp2-source/home/ags",
         "type": "path"
       }
     },
