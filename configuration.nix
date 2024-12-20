@@ -75,6 +75,7 @@ in {
     brightnessctl
     wofi
     swww
+    mpvpaper
     hyprpaper
     eza
     zoxide
