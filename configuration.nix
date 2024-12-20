@@ -74,6 +74,7 @@ in {
     util-linux
     brightnessctl
     wofi
+    swww
     hyprpaper
     eza
     zoxide
