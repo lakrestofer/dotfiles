@@ -27,8 +27,12 @@
 
         # additional libraries and executables to add to gjs' runtime
         extraPackages = [
-          ags.packages.${system}.battery
           ags.packages.${system}.hyprland
+          ags.packages.${system}.mpris
+          ags.packages.${system}.battery
+          ags.packages.${system}.wireplumber
+          ags.packages.${system}.network
+          ags.packages.${system}.tray
         ];
       };
     };
