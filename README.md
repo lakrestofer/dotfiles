@@ -9,20 +9,22 @@
   - [X] hyprlock
 - [ ] ags
   - [ ] bar with ags (simple one for now)
-    - [ ] load bar on startup
-    - [ ] clock (with date and time)
-    - [ ] battery state
+    - [x] load bar on startup
+    - [x] clock (with date and time)
+    - [x] battery state
+      - [x] percentage
       - [ ] icon reflects state
-        - [ ] percentage
-        - [ ] charging/not charging
-    - [ ] network
-      - [ ] strength and network name
+      - [ ] charging/not charging
+    - [x] network
+      - [x] network name
+      - [ ] strength
     - [ ] volume
-      - [ ] volume strength
+      - [x] volume strength
+      - [x] mute
       - [ ] icon reflect state
-    - [ ] workspaces
-    - [ ] systray
-    - [ ] current active client
+    - [x] workspaces
+    - [x] systray
+    - [x] current active client
 - [ ] setup zsh
   - [ ] completion and syntax highlight
   - [ ] setup rust feature packed prompter
