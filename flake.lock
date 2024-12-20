@@ -51,11 +51,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-fWNdMyyNSJYu/rXUXjatg+r3+M0/eJFGssEpGhsRNyA=",
-        "path": "/nix/store/d51izpnp92h8qg8bgwbl49s18d8bl8b5-source/home/ags",
+        "path": "/nix/store/dsg00nci47ljvmnwjc9k1j2xlvqfydh4-source/home/ags",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/d51izpnp92h8qg8bgwbl49s18d8bl8b5-source/home/ags",
+        "path": "/nix/store/dsg00nci47ljvmnwjc9k1j2xlvqfydh4-source/home/ags",
         "type": "path"
       }
     },
