@@ -74,8 +74,6 @@ in {
     util-linux
     brightnessctl
     wofi
-    swww
-    mpvpaper
     hyprpaper
     eza
     zoxide
@@ -104,6 +102,7 @@ in {
       noto-fonts-emoji
       liberation_ttf
       fira-code
+      cozette
     ];
     fontconfig = {
       useEmbeddedBitmaps = true;
