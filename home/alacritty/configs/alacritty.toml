@@ -370,4 +370,4 @@ save_to_clipboard = true
 [window]
 decorations = "none"
 dynamic_title = false
-opacity = 0.8
+opacity = 1
