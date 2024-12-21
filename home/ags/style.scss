@@ -1,8 +1,34 @@
 @use "sass:color";
 
-$bg: #212223;
-$fg: #f1f1f1;
-$accent: #378DF7;
+
+/* === Default colors === */
+/* $bg: '#1d2021'; */ /* hard contrast */
+$bg: #282828;
+/* $bg: #32302f; */ /* soft contrast */
+$fg: #ebdbb2;
+
+/* Normal colors */
+$black:   #282828;
+$red:     #cc241d;
+$green:   #98971a;
+$yellow:  #d79921;
+$blue:    #458588;
+$magenta: #b16286;
+$cyan:    #689d6a;
+$white:   #a89984;
+
+/* Bright colors */
+$bright_black:   #928374;
+$bright_red:     #fb4934;
+$bright_green:   #b8bb26;
+$bright_yellow:  #fabd2f;
+$bright_blue:    #83a598;
+$bright_magenta: #d3869b;
+$bright_cyan:    #8ec07c;
+$bright_white:   #ebdbb2;
+
+/* design tokens */
+$accent: $yellow;
 $radius: 7px;
 
 window {
@@ -21,11 +47,13 @@ window.Bar {
         font-size: 1.1em;
         font-weight: bold;
         font-style: italic;
+        color: $accent
     }
 
     button {
         all: unset;
-        background-color: transparent;
+        /* color: $bright_black; */
+        background-color: $black;
 
         &:hover label {
             background-color: color.adjust($fg, $alpha: -0.84);
