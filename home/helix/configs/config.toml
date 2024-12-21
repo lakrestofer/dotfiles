@@ -1,4 +1,4 @@
-theme = "gruvbox_trans"
+theme = "gruvbox"
 
 [editor]
 scrolloff = 3
