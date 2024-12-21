@@ -1,5 +1,5 @@
 [general]
-import = [ "~/.config/alacritty/catppuccin-mocha.toml" ]
+import = [ "~/.config/alacritty/gruvbox.toml" ]
 live_config_reload = true
 
 
@@ -370,4 +370,4 @@ save_to_clipboard = true
 [window]
 decorations = "none"
 dynamic_title = false
-opacity = 1.0
+opacity = 0.8
