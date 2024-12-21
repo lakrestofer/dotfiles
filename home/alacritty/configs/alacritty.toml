@@ -18,19 +18,19 @@ TERM = "alacritty"
 size = 14.0
 
 [font.bold]
-family = "Fira Code"
+family = "CozetteHiDpi"
 style = "Bold"
 
 [font.bold_italic]
-family = "Fira Code"
+family = "CozetteHiDpi"
 style = "Bold Italic"
 
 [font.italic]
-family = "Fira Code"
+family = "CozetteHiDpi"
 style = "Italic"
 
 [font.normal]
-family = "Fira Code"
+family = "CozetteHiDpi"
 style = "Regular"
 
 [hints]
