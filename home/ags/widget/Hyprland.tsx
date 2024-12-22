@@ -1,6 +1,8 @@
 import { bind } from "astal"
 import Hyprland from "gi://AstalHyprland"
 
+const icon = ["ⅰ", "ⅱ", "ⅲ", "ⅳ", "ⅴ", "ⅵ", "ⅶ", "ⅷ", "ⅸ", "ⅹ", "ⅺ", "ⅻ"];
+
 export function Workspaces() {
   const hypr = Hyprland.get_default();
   const wss = bind(hypr, "workspaces");
@@ -13,7 +15,7 @@ export function Workspaces() {
         <button
           className={fws.as(fw => ws === fw ? "focused" : "")}
           onClicked={() => ws.focus()}>
-          {ws.id}
+          {icon[ws.id - 1] || ws.id}
         </button>
       ))
     )}
