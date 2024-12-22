@@ -14,26 +14,19 @@ function percentage_to_icon(p_: number) {
 
 
 export default function Audio() {
-  const show_icon = Variable(true);
-  const toggle_show_icon = () => show_icon.set(!show_icon.get())
-
   const speaker = Wp.get_default()?.audio.defaultSpeaker!
   const speaker_binding = Variable.derive(
-    [bind(show_icon), bind(speaker, "volume"), bind(speaker, "mute")],
-    (i, v, m) => {
-      if (i) {
-        if (m) return icons[0];
-        return percentage_to_icon(v);
-      } else {
-        if (m) return "Vol: mute";
-        return `Vol: ${Math.floor(v * 100)}%`;
-      }
+    [bind(speaker, "volume"), bind(speaker, "mute")],
+    (v, m) => {
+      const icon = m ? icons[0] : percentage_to_icon(v);
+      const text = m ? "mute" : `${Math.floor(v * 100)}%`
+      return `${icon} ${text}`;
     }
   );
 
   return (
-    <button onClick={toggle_show_icon}>
+    <box>
       <label label={bind(speaker_binding)} />
-    </button>
+    </box>
   );
 }

@@ -12,23 +12,24 @@ function percentage_to_icon(p_: number) {
   if (80 <= p && p <= 100) return battery_icons[4];
 }
 
-const percentage_to_label = (p: number) => `Bat: ${Math.floor(p * 100)} %`
+const percentage_to_label = (p: number) => {
+  `Bat: ${Math.floor(p * 100)} %`
+}
 
 export default function BatteryLevel() {
-  const show_icon = Variable(true);
-  const toggle_show_icon = () => show_icon.set(!show_icon.get())
-
   const bat = Battery.get_default()
-  const present = bind(bat, "isPresent")
+
   const percentage = bind(bat, "percentage")
 
+  const label = percentage.as(p => {
+    const icon = percentage_to_icon(p);
+    const level = Math.floor(p * 100);
+    return `${icon} ${level}%`;
+  });
+
   return (
-    <button className="Battery" onClick={toggle_show_icon}
-      visible={present}>
-      {bind(show_icon).as(show_icon => show_icon
-        ? (<label label={percentage.as(percentage_to_icon)} />)
-        : (<label label={percentage.as(percentage_to_label)} />)
-      )}
-    </button >
+    <box>
+      <label label={label} />
+    </box>
   );
 }
