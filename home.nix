@@ -24,6 +24,15 @@
     userName = "lakrestofer";
   };
 
-
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Gruvbox";
+      package = pkgs.gruvbox-gtk-theme;
+    };
+    gtk3 = {
+      extraConfig.gtk-application-prefer-dark-theme = true;
+    };
+  }
 
 }

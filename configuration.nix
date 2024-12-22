@@ -62,7 +62,6 @@ in {
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     inputs.agsbar.packages.${pkgs.system}.default
-    gruvbox-gtk-theme
     nwg-look
     wev
     pulsemixer
