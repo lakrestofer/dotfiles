@@ -32,7 +32,7 @@ $accent: $yellow;
 $radius: 7px;
 
 window {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: bold;
     font-family: "CozetteHiDpi";
 }
@@ -44,7 +44,6 @@ window.Bar {
     color: $fg;
 
     label.quote {
-        font-size: 1.1em;
         font-weight: bold;
         font-style: italic;
         color: $accent
@@ -73,7 +72,8 @@ window.Bar {
         border: 1pt solid transparent;
     }
 
-    .Workspaces label {
+    .Workspaces button {
+        font-size: 25px;
     }
 
     .Workspaces .focused label {
