@@ -74,6 +74,7 @@ in {
     brightnessctl
     wofi
     hyprpaper
+    inputs.hyprpaper.packages.${pkgs.stdenv.hostPlatform.system}.hyprpaper;
     eza
     zoxide
     wl-clipboard
@@ -139,11 +140,11 @@ in {
   };
   services.hypridle = {
     enable = true;
-    package = pkgs.hypridle;
+    package = inputs.hypridle.packages.${pkgs.stdenv.hostPlatform.system}.hypridle;
   };
   programs.hyprlock = {
     enable = true;
-    package = pkgs.hyprlock;
+    package = inputs.hyprlock.packages.${pkgs.stdenv.hostPlatform.system}.hyprlock;
   };
   programs.uwsm = {
     enable = true;
