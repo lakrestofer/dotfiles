@@ -75,7 +75,7 @@
   gtk = {
     enable = true;
     theme = {
-      name = "Gruvbox-default";
+      name = "Gruvbox-B-MB";
       package = pkgs.gruvbox-gtk-theme;
     };
     gtk3 = {
