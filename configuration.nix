@@ -62,6 +62,7 @@ in {
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     inputs.agsbar.packages.${pkgs.system}.default
+    imv
     nwg-look
     wev
     pulsemixer
