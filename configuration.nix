@@ -67,8 +67,6 @@ in {
     pulsemixer
     upower
     typescript-language-server
-    hypridle
-    hyprlock
     ripgrep
     zathura
     hyprgui
@@ -138,6 +136,14 @@ in {
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     withUWSM  = true;
+  };
+  services.hypridle = {
+    enable = true;
+    package = pkgs.hypridle;
+  };
+  programs.hyprlock = {
+    enable = true;
+    package = pkgs.hyprlock;
   };
   programs.uwsm = {
     enable = true;
