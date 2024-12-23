@@ -141,11 +141,13 @@ in {
   };
   services.hypridle = {
     enable = true;
-    package = inputs.hypridle.packages.${pkgs.stdenv.hostPlatform.system}.hypridle;
+    package = pkgs.hypridle;
+    # package = inputs.hypridle.packages.${pkgs.stdenv.hostPlatform.system}.hypridle;
   };
   programs.hyprlock = {
     enable = true;
-    package = inputs.hyprlock.packages.${pkgs.stdenv.hostPlatform.system}.hyprlock;
+    package = pkgs.hyprlock;
+    # package = inputs.hyprlock.packages.${pkgs.stdenv.hostPlatform.system}.hyprlock;
   };
   programs.uwsm = {
     enable = true;
