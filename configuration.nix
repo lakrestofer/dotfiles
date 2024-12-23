@@ -170,6 +170,8 @@ in {
   services.fwupd.enable = true;
   services.upower.enable = true;
 
+  security.pam.services.hyprlock = {}; 
+
 services.kmonad = {
  enable = true;
    keyboards = {
