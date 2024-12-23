@@ -34,5 +34,4 @@
       extraConfig.gtk-application-prefer-dark-theme = true;
     };
   };
-
 }
