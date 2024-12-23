@@ -74,7 +74,7 @@ in {
     brightnessctl
     wofi
     hyprpaper
-    inputs.hyprpaper.packages.${pkgs.stdenv.hostPlatform.system}.hyprpaper;
+    inputs.hyprpaper.packages.${pkgs.stdenv.hostPlatform.system}.hyprpaper
     eza
     zoxide
     wl-clipboard
