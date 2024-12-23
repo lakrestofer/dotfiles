@@ -24,10 +24,12 @@
     userName = "lakrestofer";
   };
 
+
+
   gtk = {
     enable = true;
     theme = {
-      name = "Gruvbox";
+      name = "Gruvbox-default";
       package = pkgs.gruvbox-gtk-theme;
     };
     gtk3 = {
