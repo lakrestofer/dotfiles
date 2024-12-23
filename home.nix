@@ -39,7 +39,7 @@
         {
           monitor = "";
           path = "screenshot";
-          blur_passes = 1;
+          blur_passes = 2;
         }
       ];
       input-field = [
