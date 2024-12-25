@@ -87,12 +87,12 @@
     enable = true;
     font.name = "CozetteHiDpi 10";
     theme = {
-      name = "Gruvbox-Yellow-Dark";
+      name = "Gruvbox-Dark";
       package = pkgs.gruvbox-gtk-theme;
     };
     iconTheme = {
-      name = "Gruvbox-Dark";
-      package = pkgs.gruvbox-gtk-theme;
+      name = "Papirus-Dark";
+      package = pkgs.papirus-icon-theme;
     };
 
     gtk3.extraConfig = {
