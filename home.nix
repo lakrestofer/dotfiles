@@ -85,7 +85,7 @@
   # };
   gtk = {
     enable = true;
-    font.name = "CozetteHiDpi 10";
+    font.name = "CozetteHiDpi Medium 10";
     theme = {
       name = "Gruvbox-Dark";
       package = pkgs.gruvbox-gtk-theme;
