@@ -87,7 +87,7 @@
     enable = true;
     platformTheme.name = "gtk";
     style = {
-      name = "adwaita-dark";
+      name = "gtk2";
     };
   };
   gtk = {
