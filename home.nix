@@ -112,4 +112,7 @@
       '';
     };
   };
+  services.mako = {
+    enable = true;
+  };
 }
