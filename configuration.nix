@@ -61,6 +61,8 @@ in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    nh
+    nautilus
     mako
     # anki-bin
     inputs.agsbar.packages.${pkgs.system}.default
@@ -119,6 +121,7 @@ in {
 
   # environment variables
   environment.sessionVariables = {
+    FLAKE = "/home/fincei/dotfiles";
     EDITOR = "hx";
     VISUAL = "hx";
     NIXOS_OZONE_WL = "1";
