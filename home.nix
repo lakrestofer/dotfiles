@@ -86,6 +86,9 @@
   qt = {
     enable = true;
     platformTheme.name = "gtk";
+    style = {
+      name = "adwaita-dark";
+    };
   };
   gtk = {
     enable = true;
@@ -98,13 +101,11 @@
       name = "Gruvbox-Plus-Dark";
       package = pkgs.gruvbox-plus-icons;
     };
-
     gtk3.extraConfig = {
       Settings = ''
         gtk-application-prefer-dark-theme=1
       '';
     };
-
     gtk4.extraConfig = {
       Settings = ''
         gtk-application-prefer-dark-theme=1
