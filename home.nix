@@ -83,6 +83,9 @@
   #   };
     
   # };
+  qt = {
+    enable = true;
+  };
   gtk = {
     enable = true;
     font.name = "CozetteHiDpi Medium 10";
@@ -91,8 +94,8 @@
       package = pkgs.gruvbox-gtk-theme;
     };
     iconTheme = {
-      name = "Papirus-Dark";
-      package = pkgs.papirus-icon-theme;
+      name = "Gruvbox-Plus-Dark";
+      package = pkgs.gruvbox-plus-icons;
     };
 
     gtk3.extraConfig = {
