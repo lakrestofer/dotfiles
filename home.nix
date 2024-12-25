@@ -85,6 +85,7 @@
   # };
   qt = {
     enable = true;
+    plattformTheme = "gtk";
   };
   gtk = {
     enable = true;
