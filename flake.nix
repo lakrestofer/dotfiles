@@ -50,7 +50,7 @@
         };
         modules = [
           ./hosts/x220 # thinkpad x220 specific configuration
-          ./common.nix.nix # base configuration
+          ./common.nix # base configuration
           kmonad.nixosModules.default
           nixos-hardware.nixosModules.lenovo-thinkpad-x220
           home-manager.nixosModules.home-manager
