@@ -8,10 +8,6 @@ let
   pkgs-unstable = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in
 {
-  imports = [
-    ./hardware-configuration.nix
-  ];
-
   # Bootloader.
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
@@ -19,7 +15,7 @@ in
 
   # hardware
   hardware.graphics = {
-    package = pkgs-unstable.mesa.drivers;
+    package = pkgs-unstable.mesa.drivers; # use the same mesa drivers as hyprland
     # driSupport32Bit = true;
     # package32 = pkgs-unstable.pkgsi686Linux.mesa.drivers;   
   };
@@ -29,8 +25,6 @@ in
       size = 16 * 1024; # 16GB
     }
   ];
-
-  networking.hostName = "machina"; # Define your hostname.
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -214,23 +208,6 @@ in
   services.upower.enable = true;
 
   security.pam.services.hyprlock = { };
-
-  services.kmonad = {
-    enable = true;
-    keyboards = {
-
-      myKMonadOutput = {
-        name = "thinkpadx220";
-        device = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
-        config = builtins.readFile ./home/kmonad/config.kbd;
-        defcfg = {
-          enable = true;
-          fallthrough = true;
-          allowCommands = true;
-        };
-      };
-    };
-  };
 
   system.stateVersion = "24.05"; # Did you read the comment?
 }
