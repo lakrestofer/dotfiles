@@ -61,6 +61,8 @@ in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    nvd
+    nix-output-monitor
     nh
     nautilus
     mako
@@ -86,7 +88,8 @@ in {
     inputs.helix.packages.${pkgs.system}.default
     hyprpolkitagent
     git
-    tmux
+    # tmux
+    zellij
     alacritty
     firefox-devedition-bin
     btop
