@@ -23,6 +23,17 @@ formatter = { command = "prettier", args = [ "--parser", "typescript" ] }
 auto-format = true 
 
 [[language]]
+name = "nix"
+scope = "source.nix"
+injection-regex = "nix"
+file-types = ["nix"]
+shebangs = []
+comment-token = "#"
+language-servers = [ "nil" ]
+# indent = { tab-width = 2, unit = "  " }
+auto-format = true
+
+[[language]]
 name = "typescript"
 language-servers = [ "eslint", "emmet-ls", "typescript-language-server", "tailwindcss-ls"]
 formatter = { command = "prettier", args = [ "--parser", "typescript" ] }
@@ -66,3 +77,13 @@ gpt = { command = "helix-gpt", args = ["--handler", "copilot"] }
 eslint = { args = ["--stdio"], command = "vscode-eslint-language-server" }
 typos = { command = "typos-lsp", environment = {"RUST_LOG" = "error"}, config.diagnosticSeverity = "Warning" }
 clangd = { command = "clangd", args = [ "--clang-tidy" ] }
+nil = {
+  command = "nil",
+  config = {
+    "nil" = {
+      "formatting" = {
+        command = ["nixfmt"]
+      }
+    }
+  }
+}
