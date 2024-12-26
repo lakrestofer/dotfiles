@@ -42,7 +42,7 @@
       pkgs = nixpkgs.legacyPackages.${system};
     in
     {
-      nixosConfigurations.machina = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.amanda = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = {
           inherit inputs;

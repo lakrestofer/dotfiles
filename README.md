@@ -10,6 +10,7 @@
 - [x] bar made with ags
 - [x] gtk theming
 - [x] setup zsh
+- [x] make generic over host
 - copy over scripts
 - [ ] syncthing
 - [ ] uni folder

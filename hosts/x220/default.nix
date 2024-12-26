@@ -4,7 +4,7 @@
     ./hardware-configuration.nix
   ];
 
-  networking.hostName = "machina"; # Define your hostname.
+  networking.hostName = "amanda"; # Define your hostname.
 
   services.kmonad = {
     enable = true;
