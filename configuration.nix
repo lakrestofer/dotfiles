@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, ... }: let
+{ inputs, config, pkgs, agsbar, ... }: let
   pkgs-unstable = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   imports = [
@@ -67,7 +67,8 @@ in {
     nautilus
     mako
     # anki-bin
-    inputs.agsbar.packages.${pkgs.system}.default
+    agsbar
+    # inputs.agsbar.packages.${pkgs.system}.default
     imv
     nwg-look
     wev
