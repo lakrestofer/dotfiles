@@ -26,7 +26,8 @@ git diff -U0
 # rebuild and switch
 echo "rebuilding... log written to nixos-switch.log"
 # sudo nixos-rebuild switch --flake ./ &>nixos-switch.log || (cat nixos-switch.log | grep --color error && exit 1)
-sudo nixos-rebuild switch --flake ./ 2>&1 | tee >(grep --color error >&2) || exit 1
+# sudo nixos-rebuild switch --flake ./ 2>&1 | tee >(grep --color error >&2) || exit 1
+nh os switch || exit 1
 
 # Get current generation metadata
 current=$(nixos-rebuild list-generations | grep current)
