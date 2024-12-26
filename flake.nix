@@ -11,9 +11,11 @@
     # kmonad
     kmonad.url = "git+https://github.com/kmonad/kmonad?submodules=1&dir=nix";
     kmonad.inputs.nixpkgs.follows = "nixpkgs";
+home-manager = {
     # home manager
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    url = "github:nix-community/home-manager";
+    inputs.nixpkgs.follows = "nixpkgs";
+};
     # some other applications
     helix.url = "github:helix-editor/helix";
     astal = {
