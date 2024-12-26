@@ -16,7 +16,7 @@ set -e
 pushd ~/dotfiles/
 
 # edit them
-$EDITOR
+hx .
 
 # if no change, return
 if git diff --quiet ; then
