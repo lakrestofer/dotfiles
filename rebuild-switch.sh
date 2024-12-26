@@ -40,10 +40,9 @@ test -n "$SCOPE" && SCOPE="($SCOPE)" # scope is optional
 SUMMARY=$(gum input --value "$TYPE$SCOPE: " --placeholder "Summary of this change")
 DESCRIPTION=$(gum write --placeholder "Details of this change")
 
-gum confirm "Commit changes?" && git commit -m "$SUMMARY" -m "$DESCRIPTION"
+gum confirm "Commit changes and build?" && git commit -m "$SUMMARY" -m "$DESCRIPTION"
 
-nh os switch || exit 1
-
+nh os switch || git reset HEAD~1 # build, reset git history if build failed
 
 # Back to where you were
 popd
