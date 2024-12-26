@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   # basic options
@@ -15,7 +15,7 @@
     ./home/alacritty
   ];
   # user packages (only installed per user)
-  home.packages = with pkgs; [];
+  home.packages = [ ];
 
   # git
   programs.git = {
@@ -70,8 +70,6 @@
     };
   };
 
-
-
   # gtk = {
   #   enable = true;
   #   theme = {
@@ -81,7 +79,7 @@
   #   gtk3 = {
   #     extraConfig.gtk-application-prefer-dark-theme = true;
   #   };
-    
+
   # };
   qt = {
     enable = true;

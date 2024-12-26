@@ -1,22 +1,8 @@
 #/usr/bin/env zsh
-# A rebuild script that commits on a successful build
-# adapted from <https://gist.githubusercontent.com/0atman/1a5133b842f929ba4c1e195ee67599d5/raw/4e2f3ad34edb07843db9d6abb7c340bba611c07e/nixos-rebuild.sh>
-
-# Would be nice if this script also had some search and edit feature
-# making the script the first point of contact whenever I want
-# to alter my configuration
-# feature list
-# [ ] open rofi/fzf and search for files that we can change
-# [ ] on change of file, run test to check for valid file
-# [ ] on valid config file, rebuild and switch
-
-set -e
+set -e # exit script on error
 
 #navigate to dotfiles
 pushd ~/dotfiles/
-
-# edit them
-hx .
 
 # if no change, return
 if git diff --quiet ; then

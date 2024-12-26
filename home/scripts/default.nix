@@ -1,11 +1,9 @@
-
 {
-  pkgs,
-  config,
   ...
-}: {
+}:
+{
   home.file.".local/bin" = {
-      source = ./scripts;
-      recursive = true;
+    source = ./scripts;
+    recursive = true;
   };
 }

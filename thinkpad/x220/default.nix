@@ -1,5 +1,4 @@
 { config, ... }:
-
 {
   boot = {
     kernelModules = [ "tp_smapi" ];
