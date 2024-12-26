@@ -26,17 +26,29 @@
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     # local flakes
-    agsbar.url = "file:///home/fincei/dotfiles/home/ags";
+    # agsbar.url = "file:///home/fincei/dotfiles/home/ags";
   };
 
-  outputs = { self, kmonad, home-manager, nixpkgs, astal, ags, nixos-hardware, ... } @ inputs:
-  let
+  outputs = {
+    self,
+    kmonad,
+    home-manager,
+    nixpkgs,
+    astal,
+    ags,
+    nixos-hardware,
+    ...
+  } @ inputs: let
     system = "x86_64-linux";
+    pkgs = nixpkgs.legacyPackages.${system};
   in
   {
     nixosConfigurations.machina = nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = { inherit inputs; };
+      specialArgs = { 
+        inherit inputs;
+        agsbar = self.packages.${system}.agsbar;
+      };
       modules = [
         ./configuration.nix # base configuration
         kmonad.nixosModules.default
@@ -49,6 +61,38 @@
         }
       ];
     };
+    packages.${system} = {
+      agsbar = ags.lib.bundle {
+        inherit pkgs;
+        src = ./home/ags;
+        name = "agsbar";
+        entry = "app.ts";
 
+        # additional libraries and executables to add to gjs' runtime
+        extraPackages = [
+          ags.packages.${system}.hyprland
+          ags.packages.${system}.mpris
+          ags.packages.${system}.battery
+          ags.packages.${system}.wireplumber
+          ags.packages.${system}.network
+          ags.packages.${system}.tray
+        ];
+      };
+    };
+    devShells.${system} = {
+      default = pkgs.mkShell {
+        buildInputs = [
+          # includes all Astal libraries
+          ags.packages.${system}.agsFull
+
+          # includes astal3 astal4 astal-io by default
+          (ags.packages.${system}.default.override {
+            extraPackages = [
+              # cherry pick packages
+            ];
+          })
+        ];
+      };
+    };
   };
 }
