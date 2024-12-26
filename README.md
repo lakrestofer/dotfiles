@@ -2,7 +2,7 @@
 
 ## TODO
 - [X] display manager
-- [ ] hyprland
+- [x] hyprland
   - [X] start on login using uwsm
   - [x] pam security module
   - [X] hypridle
