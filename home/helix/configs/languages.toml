@@ -77,13 +77,12 @@ gpt = { command = "helix-gpt", args = ["--handler", "copilot"] }
 eslint = { args = ["--stdio"], command = "vscode-eslint-language-server" }
 typos = { command = "typos-lsp", environment = {"RUST_LOG" = "error"}, config.diagnosticSeverity = "Warning" }
 clangd = { command = "clangd", args = [ "--clang-tidy" ] }
-nil = {
-  command = "nil",
-  config = {
-    "nil" = {
-      "formatting" = {
-        command = ["nixfmt"]
-      }
+[language-server.nil]
+command = "nil",
+config = {
+  "nil" = {
+    "formatting" = {
+      command = ["nixfmt"]
     }
   }
 }
