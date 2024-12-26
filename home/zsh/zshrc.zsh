@@ -4,13 +4,45 @@ HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
 
-# set some options
+# compile zsh files into wordcode
+function zcompile-many() {
+  local f
+  for f; do zcompile -R -- "$f".zwc "$f"; done
+}
+
+#does the plugin directory exist?
+if [[ ! -e ~/.zshplugins ]]; then
+    mkdir ~/.zshplugins
+fi
+
+# Clone and compile to wordcode missing plugins.
+if [[ ! -e ~/.zshplugins/zsh-syntax-highlighting ]]; then
+  git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zshplugins/zsh-syntax-highlighting
+  zcompile-many ~/.zshplugins/zsh-syntax-highlighting/{zsh-syntax-highlighting.zsh,highlighters/*/*.zsh}
+fi
+if [[ ! -e ~/zsh-autosuggestions ]]; then
+  git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions.git ~/.zshplugins/zsh-autosuggestions
+  zcompile-many ~/.zshplugins/zsh-autosuggestions/{zsh-autosuggestions.zsh,src/**/*.zsh}
+fi
+if [[ ! -e ~/powerlevel10k ]]; then
+  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.zshplugins/powerlevel10k
+  make -C ~/.zshplugins/powerlevel10k pkg
+fi
+
+# Activate Powerlevel10k Instant Prompt.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+autoload -Uz compinit && compinit
+[[ ~/.zcompdump.zwc -nt ~/.zcompdump ]] || zcompile-many ~/.zcompdump
+unfunction zcompile-many
+
+ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+
 setopt autocd extendedglob nomatch
 unsetopt beep notify
 bindkey -e # emacs bindings in terminal
-
-# enable completion
-autoload -Uz compinit; compinit
 
 # aliases
 alias \
@@ -24,4 +56,8 @@ alias \
     btw="fastfetch"
 
 # system plugins
+source ~/.zshplugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.zshplugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zshplugins/powerlevel10k/powerlevel10k.zsh-theme
+source ~/.p10k.zsh
 eval "$(zoxide init zsh --cmd cd)"
