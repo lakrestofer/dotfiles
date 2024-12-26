@@ -25,10 +25,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    # local flakes
-    # agsbar.url = "file:///home/fincei/dotfiles/home/ags";
   };
-
   outputs = {
     self,
     kmonad,

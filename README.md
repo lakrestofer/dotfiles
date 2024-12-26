@@ -9,13 +9,10 @@
   - [X] hyprlock
 - [x] bar made with ags
 - [x] gtk theming
-- [ ] setup zsh
-  - [ ] completion and syntax highlight
-  - [ ] setup rust feature packed prompter
+- [x] setup zsh
 - copy over scripts
 - [ ] syncthing
 - [ ] uni folder
-- [ ] zoxide
 
 ## zsh
 - [ ] setup plugin manager
