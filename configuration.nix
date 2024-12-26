@@ -89,6 +89,7 @@ in {
     hyprpolkitagent
     git
     # tmux
+    make
     zellij
     alacritty
     firefox-devedition-bin
