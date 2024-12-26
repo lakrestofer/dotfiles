@@ -20,11 +20,11 @@ if [[ ! -e ~/.zshplugins/zsh-syntax-highlighting ]]; then
   git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zshplugins/zsh-syntax-highlighting
   zcompile-many ~/.zshplugins/zsh-syntax-highlighting/{zsh-syntax-highlighting.zsh,highlighters/*/*.zsh}
 fi
-if [[ ! -e ~/zsh-autosuggestions ]]; then
+if [[ ! -e ~/.zshplugins/zsh-autosuggestions ]]; then
   git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions.git ~/.zshplugins/zsh-autosuggestions
   zcompile-many ~/.zshplugins/zsh-autosuggestions/{zsh-autosuggestions.zsh,src/**/*.zsh}
 fi
-if [[ ! -e ~/powerlevel10k ]]; then
+if [[ ! -e ~/.zshplugins/powerlevel10k ]]; then
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.zshplugins/powerlevel10k
   make -C ~/.zshplugins/powerlevel10k pkg
 fi
