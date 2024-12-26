@@ -67,10 +67,10 @@ in {
     nautilus
     mako
     # anki-bin
-    agsbar
+    agsbar # from the local argument
     # inputs.agsbar.packages.${pkgs.system}.default
+    gum
     imv
-    nwg-look
     wev
     pulsemixer
     upower

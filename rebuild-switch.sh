@@ -1,4 +1,4 @@
-#/usr/bin/env bash
+#/usr/bin/env zsh
 # A rebuild script that commits on a successful build
 # adapted from <https://gist.githubusercontent.com/0atman/1a5133b842f929ba4c1e195ee67599d5/raw/4e2f3ad34edb07843db9d6abb7c340bba611c07e/nixos-rebuild.sh>
 
@@ -12,32 +12,38 @@
 
 set -e
 
+#navigate to dotfiles
 pushd ~/dotfiles/
 
-#if git diff --quiet ; then
-#    echo "No changes detected, exiting."
-#    popd
-#    exit 0
-#fi
+# edit them
+$EDITOR
 
-# show all changed lines
+# if no change, return
+if git diff --quiet ; then
+    echo "No changes detected, exiting."
+    popd
+    exit 0
+fi
+
+# display what changed
 git diff -U0
 
-# rebuild and switch
-echo "rebuilding... log written to nixos-switch.log"
-# sudo nixos-rebuild switch --flake ./ &>nixos-switch.log || (cat nixos-switch.log | grep --color error && exit 1)
-# sudo nixos-rebuild switch --flake ./ 2>&1 | tee >(grep --color error >&2) || exit 1
+if [ -z "$(git status -s -uno | grep -v '^ ' | awk '{print $2}')" ]; then
+    gum confirm "Stage all?" && git add .
+fi
+
+TYPE=$(gum choose "fix" "feat" "docs" "style" "refactor" "test" "chore" "revert")
+SCOPE=$(gum input --placeholder "scope")
+
+test -n "$SCOPE" && SCOPE="($SCOPE)" # scope is optional
+
+SUMMARY=$(gum input --value "$TYPE$SCOPE: " --placeholder "Summary of this change")
+DESCRIPTION=$(gum write --placeholder "Details of this change")
+
+gum confirm "Commit changes?" && git commit -m "$SUMMARY" -m "$DESCRIPTION"
+
 nh os switch || exit 1
 
-# Get current generation metadata
-current=$(nixos-rebuild list-generations | grep current)
-
-# Commit all changes within the generation metadata
-git commit -am "$current"
 
 # Back to where you were
 popd
-
-# Notify all OK!
-echo "NixOS Rebuilt OK!"
-#notify-send -e "NixOS Rebuilt OK!" --icon=software-update-available
