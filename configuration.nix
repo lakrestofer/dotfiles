@@ -1,6 +1,13 @@
-{ inputs, config, pkgs, agsbar, ... }: let
+{
+  inputs,
+  pkgs,
+  agsbar,
+  ...
+}:
+let
   pkgs-unstable = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-in {
+in
+{
   imports = [
     ./hardware-configuration.nix
   ];
@@ -16,11 +23,13 @@ in {
     # driSupport32Bit = true;
     # package32 = pkgs-unstable.pkgsi686Linux.mesa.drivers;   
   };
-  swapDevices = [{
-    device = "/swapfile";
-    size = 16 * 1024; # 16GB
-  }];
-  
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 16 * 1024; # 16GB
+    }
+  ];
+
   networking.hostName = "machina"; # Define your hostname.
 
   # Enable networking
@@ -32,14 +41,21 @@ in {
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   # enable zsh as shell
-  programs.zsh = { enable = true; };
+  programs.zsh = {
+    enable = true;
+  };
   users.defaultUserShell = pkgs.zsh;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.fincei = {
     isNormalUser = true;
     description = "fincei";
-    extraGroups = [ "networkmanager" "wheel" "input" "uinput"];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "input"
+      "uinput"
+    ];
   };
 
   # Allow unfree packages
@@ -52,8 +68,11 @@ in {
   };
 
   nix.settings = {
-    experimental-features = ["nix-command" "flakes"];
-    substituters = ["https://hyprland.cachix.org"];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    substituters = [ "https://hyprland.cachix.org" ];
     trusted-public-keys = [
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
     ];
@@ -149,8 +168,9 @@ in {
   programs.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
-    withUWSM  = true;
+    portalPackage =
+      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+    withUWSM = true;
   };
   services.hypridle = {
     enable = true;
@@ -193,26 +213,24 @@ in {
   services.fwupd.enable = true;
   services.upower.enable = true;
 
-  security.pam.services.hyprlock = {}; 
+  security.pam.services.hyprlock = { };
 
-services.kmonad = {
- enable = true;
-   keyboards = {
-     
-     myKMonadOutput = {
-       name = "thinkpadx220";
-       device = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
-       config = builtins.readFile ./home/kmonad/config.kbd;
-       defcfg = {
-         enable = true;
-         fallthrough = true;
-         allowCommands = true;
-       };
-     };
-   };
-};
+  services.kmonad = {
+    enable = true;
+    keyboards = {
 
+      myKMonadOutput = {
+        name = "thinkpadx220";
+        device = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
+        config = builtins.readFile ./home/kmonad/config.kbd;
+        defcfg = {
+          enable = true;
+          fallthrough = true;
+          allowCommands = true;
+        };
+      };
+    };
+  };
 
   system.stateVersion = "24.05"; # Did you read the comment?
-
 }
