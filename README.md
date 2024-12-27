@@ -11,6 +11,7 @@
 - [x] gtk theming
 - [x] setup zsh
 - [x] make generic over host
+- [ ] install on newer laptop
 - copy over scripts
 - [ ] syncthing
 - [ ] uni folder
