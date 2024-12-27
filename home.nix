@@ -13,6 +13,7 @@
     ./home/zsh
     ./home/scripts
     ./home/alacritty
+    ./home/wallpaper.nix
   ];
   # user packages (only installed per user)
   home.packages = [ ];
