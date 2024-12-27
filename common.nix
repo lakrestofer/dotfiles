@@ -10,7 +10,6 @@ in
 {
   # Bootloader.
   boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.useOSProber = false;
 
   # hardware
@@ -19,12 +18,6 @@ in
     # driSupport32Bit = true;
     # package32 = pkgs-unstable.pkgsi686Linux.mesa.drivers;
   };
-  swapDevices = [
-    {
-      device = "/swapfile";
-      size = 16 * 1024; # 16GB
-    }
-  ];
 
   # Enable networking
   networking.networkmanager.enable = true;
