@@ -8,10 +8,6 @@ let
   pkgs-unstable = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in
 {
-  # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.useOSProber = false;
-
   # hardware
   hardware.graphics = {
     package = pkgs-unstable.mesa.drivers; # use the same mesa drivers as hyprland
