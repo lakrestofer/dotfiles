@@ -4,7 +4,7 @@
     ./hardware-configuration.nix
   ];
 
-  boot.loader.grub.device = "/dev/nvme0n";
+  boot.loader.grub.device = "/dev/nvme0n1";
   networking.hostName = "selbeiskami"; # Define your hostname.
 
   services.kmonad = {
