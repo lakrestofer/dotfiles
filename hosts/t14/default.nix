@@ -3,8 +3,9 @@
   imports = [
     ./hardware-configuration.nix
   ];
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.loader.grub.device = "/dev/nvme0n1";
   networking.hostName = "selbeiskami"; # Define your hostname.
 
   services.kmonad = {
