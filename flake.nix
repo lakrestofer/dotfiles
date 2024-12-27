@@ -82,7 +82,27 @@
           }
         ];
       };
-
+      nixosConfigurations.selbeiskami = nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = {
+          inherit inputs;
+          inherit pkgs;
+          agsbar = self.packages.${system}.agsbar; # we pass the agsbar package output as an input to configuration.org
+        };
+        modules = [
+          ./hosts/t14 # thinkpad x220 specific configuration
+          ./common.nix # base configuration
+          kmonad.nixosModules.default
+          nixos-hardware.nixosModules.lenovo-thinkpad-x220
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.fincei = import ./home.nix;
+            home-manager.backupFileExtension = "backup";
+          }
+        ];
+      };
       packages.${system} = {
         agsbar = ags.lib.bundle {
           inherit pkgs;
