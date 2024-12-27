@@ -86,12 +86,13 @@
         default = pkgs.mkShell {
           buildInputs = [
             # includes all Astal libraries
-            ags.packages.${system}.hyprland
-            ags.packages.${system}.mpris
-            ags.packages.${system}.battery
-            ags.packages.${system}.wireplumber
-            ags.packages.${system}.network
-            ags.packages.${system}.tray
+            ags.packages.${system}.agsFull
+            # ags.packages.${system}.hyprland
+            # ags.packages.${system}.mpris
+            # ags.packages.${system}.battery
+            # ags.packages.${system}.wireplumber
+            # ags.packages.${system}.network
+            # ags.packages.${system}.tray
 
             # includes astal3 astal4 astal-io by default
             (ags.packages.${system}.default.override {
