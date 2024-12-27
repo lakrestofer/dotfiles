@@ -13,9 +13,15 @@ export function Workspaces() {
       .sort((a, b) => a.id - b.id)
       .map((ws: Hyprland.Workspace) => (
         <button
-          className={fws.as(fw => ws === fw ? "focused" : "")}
-          onClicked={() => ws.focus()}>
-          {icon[ws.id - 1] || ws.id}
+          className={fws.as(fw => (ws.id === fw.id) ? "focused" : "")}
+          onClicked={() => ws.focus()}
+          tooltipText={ws.name}
+        >
+          {
+            icon[ws.id - 1] ||
+            (ws.name === "special:special" && "ひで") ||
+            ws.id
+          }
         </button>
       ))
     )}
