@@ -17,7 +17,7 @@ in
   hardware.graphics = {
     package = pkgs-unstable.mesa.drivers; # use the same mesa drivers as hyprland
     # driSupport32Bit = true;
-    # package32 = pkgs-unstable.pkgsi686Linux.mesa.drivers;   
+    # package32 = pkgs-unstable.pkgsi686Linux.mesa.drivers;
   };
   swapDevices = [
     {
@@ -84,7 +84,6 @@ in
     mako
     # anki-bin
     agsbar # from the local argument
-    # inputs.agsbar.packages.${pkgs.system}.default
     gum
     imv
     wev

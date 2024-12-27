@@ -3,19 +3,38 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    # hyprland stuff
-    hyprland.url = "github:hyprwm/Hyprland";
-    hypridle.url = "github:hyprwm/hypridle";
-    hyprlock.url = "github:hyprwm/hyprlock";
-    hyprpaper.url = "github:hyprwm/hyprlock";
-    # kmonad
-    kmonad.url = "git+https://github.com/kmonad/kmonad?submodules=1&dir=nix";
-    kmonad.inputs.nixpkgs.follows = "nixpkgs";
-    # home manager
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    # some other applications
-    helix.url = "github:helix-editor/helix";
+    hyprland = {
+      # hyprland stuff
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hypridle = {
+      url = "github:hyprwm/hypridle";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hyprlock = {
+      url = "github:hyprwm/hyprlock";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hyprpaper = {
+      url = "github:hyprwm/hyprlock";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    kmonad = {
+      # kmonad
+      url = "git+https://github.com/kmonad/kmonad?submodules=1&dir=nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    home-manager = {
+      # home manager
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    helix = {
+      # some other applications
+      url = "github:helix-editor/helix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     astal = {
       url = "github:aylur/astal";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -46,6 +65,7 @@
         inherit system;
         specialArgs = {
           inherit inputs;
+          inherit pkgs;
           agsbar = self.packages.${system}.agsbar; # we pass the agsbar package output as an input to configuration.org
         };
         modules = [
