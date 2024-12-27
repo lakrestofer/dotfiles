@@ -4,7 +4,14 @@
     ./hardware-configuration.nix
   ];
 
+  boot.loader.grub.device = "/dev/sda";
   networking.hostName = "amanda"; # Define your hostname.
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 16 * 1024; # 16GB
+    }
+  ];
 
   services.kmonad = {
     enable = true;
