@@ -35,14 +35,6 @@
       url = "github:helix-editor/helix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    astal = {
-      url = "github:aylur/astal";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    ags = {
-      url = "github:aylur/ags";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
   outputs =
@@ -51,8 +43,6 @@
       kmonad,
       home-manager,
       nixpkgs,
-      astal,
-      ags,
       nixos-hardware,
       ...
     }@inputs:
@@ -66,7 +56,6 @@
         specialArgs = {
           inherit inputs;
           inherit pkgs;
-          agsbar = self.packages.${system}.agsbar; # we pass the agsbar package output as an input to configuration.org
         };
         modules = [
           ./hosts/x220 # thinkpad x220 specific configuration
@@ -87,7 +76,6 @@
         specialArgs = {
           inherit inputs;
           inherit pkgs;
-          agsbar = self.packages.${system}.agsbar; # we pass the agsbar package output as an input to configuration.org
         };
         modules = [
           ./hosts/t14 # thinkpad x220 specific configuration
@@ -103,45 +91,8 @@
           }
         ];
       };
-      packages.${system} = {
-        agsbar = ags.lib.bundle {
-          inherit pkgs;
-          src = ./home/ags;
-          name = "agsbar";
-          entry = "app.ts";
-
-          # additional libraries and executables to add to gjs' runtime
-          extraPackages = [
-            ags.packages.${system}.hyprland
-            ags.packages.${system}.mpris
-            ags.packages.${system}.battery
-            ags.packages.${system}.wireplumber
-            ags.packages.${system}.network
-            ags.packages.${system}.tray
-          ];
-        };
-      };
+      packages.${system} = { };
       # === shells ===
-      devShells.${system} = {
-        default = pkgs.mkShell {
-          buildInputs = [
-            # includes all Astal libraries
-            ags.packages.${system}.agsFull
-            # ags.packages.${system}.hyprland
-            # ags.packages.${system}.mpris
-            # ags.packages.${system}.battery
-            # ags.packages.${system}.wireplumber
-            # ags.packages.${system}.network
-            # ags.packages.${system}.tray
-
-            # includes astal3 astal4 astal-io by default
-            (ags.packages.${system}.default.override {
-              extraPackages = [
-                # cherry pick packages
-              ];
-            })
-          ];
-        };
-      };
+      devShells.${system} = { };
     };
 }
