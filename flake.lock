@@ -4,15 +4,16 @@
       "inputs": {
         "astal": "astal",
         "nixpkgs": [
+          "datni",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1735334779,
-        "narHash": "sha256-NJaycWuFcpbmVKwQ9LdEbUZIvJ6RO4Lxrt6u6ujbNhc=",
+        "lastModified": 1735382109,
+        "narHash": "sha256-snHhAgcH8hACWZFaAqHr5uXH412UrAuA603OK02MxN8=",
         "owner": "aylur",
         "repo": "ags",
-        "rev": "631f462ba4f98a247ba53836d99266cfd8451b25",
+        "rev": "8eded03c8f943ee5cfdfb2e77f993b9f125811a5",
         "type": "github"
       },
       "original": {
@@ -57,6 +58,7 @@
     "astal": {
       "inputs": {
         "nixpkgs": [
+          "datni",
           "ags",
           "nixpkgs"
         ]
@@ -67,26 +69,6 @@
         "owner": "aylur",
         "repo": "astal",
         "rev": "6c84b64efc736e039a8a10774a4a1bf772c37aa2",
-        "type": "github"
-      },
-      "original": {
-        "owner": "aylur",
-        "repo": "astal",
-        "type": "github"
-      }
-    },
-    "astal_2": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1735329054,
-        "narHash": "sha256-YHBIouh51UieVL5KHmdlQGaO/7wEgjpkyXnXLHaPJBo=",
-        "owner": "aylur",
-        "repo": "astal",
-        "rev": "661b14cc893c5be17a4fce8fa269074785f57a36",
         "type": "github"
       },
       "original": {
@@ -107,6 +89,27 @@
       "original": {
         "owner": "ipetkov",
         "repo": "crane",
+        "type": "github"
+      }
+    },
+    "datni": {
+      "inputs": {
+        "ags": "ags",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1735416573,
+        "narHash": "sha256-FVQ7Q66FElFHdMsm7yJ18487lp0vobvl72DQlXIWCaA=",
+        "owner": "lakrestofer",
+        "repo": "datni",
+        "rev": "a105e0b559877fb73459ca5c8646916376e91c0b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lakrestofer",
+        "repo": "datni",
         "type": "github"
       }
     },
@@ -820,8 +823,7 @@
     },
     "root": {
       "inputs": {
-        "ags": "ags",
-        "astal": "astal_2",
+        "datni": "datni",
         "helix": "helix",
         "home-manager": "home-manager",
         "hypridle": "hypridle",
