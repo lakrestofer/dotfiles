@@ -1,5 +1,10 @@
-{ pkgs, ... }:
-
+{ config, pkgs, ... }:
+let
+  # paths
+  helixPath = "${config.home.homeDirectory}/dotfiles/home/helix";
+  # function aliases
+  linkConf = config.lib.file.mkOutOfStoreSymlink;
+in
 {
   # basic options
   home.username = "fincei";
@@ -8,15 +13,19 @@
   programs.home-manager.enable = true;
   # load application specific configuration files
   imports = [
-    ./home/helix
+    # ./home/helix
     ./home/hypr
     ./home/zsh
     ./home/scripts
     ./home/alacritty
     ./home/wallpaper.nix
+    ./home/ghostty
   ];
   # user packages (only installed per user)
   home.packages = [ ];
+  xdg.configFile."helix".source = linkConf helixPath;
+
+  # often changed dotfils
 
   # git
   programs.git = {
