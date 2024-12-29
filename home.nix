@@ -1,7 +1,9 @@
 { config, pkgs, ... }:
 let
   # paths
-  helixPath = "${config.home.homeDirectory}/dotfiles/home/helix";
+  configRoot = "${config.home.homeDirectory}/dotfiles/home";
+  helixPath = "${configRoot}/helix";
+  hyprPath = "${configRoot}/hypr";
   # function aliases
   linkConf = config.lib.file.mkOutOfStoreSymlink;
 in
@@ -13,8 +15,6 @@ in
   programs.home-manager.enable = true;
   # load application specific configuration files
   imports = [
-    # ./home/helix
-    ./home/hypr
     ./home/zsh
     ./home/scripts
     ./home/alacritty
@@ -24,6 +24,7 @@ in
   # user packages (only installed per user)
   home.packages = [ ];
   xdg.configFile."helix".source = linkConf helixPath;
+  xdg.configFile."hypr".source = linkConf hyprPath;
 
   # often changed dotfils
 
@@ -37,47 +38,6 @@ in
   programs.hyprlock = {
     enable = true;
     package = pkgs.hyprlock;
-    settings = {
-      general = {
-        no_fade_in = true;
-        no_fade_out = true;
-        hide_cursor = false;
-        grace = 0;
-        disable_loading_bar = true;
-      };
-      background = [
-        {
-          monitor = "";
-          path = "screenshot";
-          blur_passes = 2;
-        }
-      ];
-      input-field = [
-        {
-          monitor = "";
-          size = "200, 50";
-          outline_thickness = 3;
-          dots_size = 0.33;
-          dots_spacing = 0.15;
-          dots_center = false;
-          dots_rounding = -1;
-          inner_color = "rgba(200, 200, 200, 1.0)";
-          font_color = "rgba(10, 10, 10, 1.0)";
-          fade_on_empty = false;
-          hide_input = false;
-          fail_timeout = 400;
-          fail_transition = 300;
-          capslock_color = "-1";
-          numlock_color = "-1";
-          bothlock_color = -1;
-          invert_numlock = false;
-          swap_font_color = false;
-          position = "0, 100";
-          halign = "center";
-          valign = "bottom";
-        }
-      ];
-    };
   };
 
   # gtk = {
