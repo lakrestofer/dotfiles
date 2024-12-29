@@ -4,6 +4,7 @@ let
   configRoot = "${config.home.homeDirectory}/dotfiles/home";
   helixPath = "${configRoot}/helix";
   hyprPath = "${configRoot}/hypr";
+  ghosttyPath = "${configRoot}/ghostty";
   # function aliases
   linkConf = config.lib.file.mkOutOfStoreSymlink;
 in
@@ -19,12 +20,12 @@ in
     ./home/scripts
     ./home/alacritty
     ./home/wallpaper.nix
-    ./home/ghostty
   ];
   # user packages (only installed per user)
   home.packages = [ ];
   xdg.configFile."helix".source = linkConf helixPath;
   xdg.configFile."hypr".source = linkConf hyprPath;
+  xdg.configFile."ghostty".source = linkConf ghosttyPath;
 
   # often changed dotfils
 
