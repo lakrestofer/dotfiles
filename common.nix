@@ -63,6 +63,7 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
     taplo
     nixfmt-rfc-style
     nil
