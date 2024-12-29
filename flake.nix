@@ -73,7 +73,7 @@
           agsbar = self.packages.${system}.agsbar; # we pass the agsbar package output as an input to configuration.org
         };
         modules = [
-          ./hosts/x220 # thinkpad x220 specific configuration
+          ./hosts/amanda # thinkpad x220 specific configuration
           ./common.nix # base configuration
           kmonad.nixosModules.default
           nixos-hardware.nixosModules.lenovo-thinkpad-x220
