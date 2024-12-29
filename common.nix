@@ -63,7 +63,7 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
+    syncthing
     taplo
     nixfmt-rfc-style
     nil
@@ -131,6 +131,7 @@ in
 
   # environment variables
   environment.sessionVariables = {
+    STNODEFAULTFOLDER = "true";
     FLAKE = "/home/fincei/dotfiles";
     EDITOR = "hx";
     VISUAL = "hx";
@@ -195,6 +196,14 @@ in
   };
   services.fwupd.enable = true;
   services.upower.enable = true;
+
+  services.syncthing = {
+    enable = true;
+    user = "fincei";
+    dataDir = "/home/fincei"; # Default folder for new synced folders, instead of /var/lib/syncthing
+    configDir = "/home/fincei/.config/syncthing"; # Folder
+  };
+  systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true"; # Don't create default ~/Sync folder
 
   security.pam.services.hyprlock = { };
 
