@@ -94,7 +94,7 @@
           agsbar = self.packages.${system}.agsbar; # we pass the agsbar package output as an input to configuration.org
         };
         modules = [
-          ./hosts/t14 # thinkpad x220 specific configuration
+          ./hosts/selbeiskami # thinkpad x220 specific configuration
           ./common.nix # base configuration
           kmonad.nixosModules.default
           # nixos-hardware.nixosModules.lenovo-thinkpad-x220
@@ -106,6 +106,14 @@
             home-manager.backupFileExtension = "backup";
           }
         ];
+      };
+      nixosConfigurations.nucbox = nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = {
+          inherit inputs;
+          inherit pkgs;
+        };
+        modules = [ ./hosts/nucbox ];
       };
       packages.${system} = {
         agsbar = ags.lib.bundle {
