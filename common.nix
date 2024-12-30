@@ -75,6 +75,8 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    taskwarrior-tui
+    taskwarrior3
     zed-editor
     syncthing
     taplo
