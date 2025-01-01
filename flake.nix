@@ -112,6 +112,10 @@
         modules = [ ./hosts/nucbox ];
       };
       packages.${system} = {
+        notes = pkgs.writeShellScriptBin "open_notes" ''
+          cd ~/notes
+          ${pkgs.zk}/bin/zk edit --interactive
+        '';
         agsbar = ags.lib.bundle {
           inherit pkgs;
           src = ./home/ags;

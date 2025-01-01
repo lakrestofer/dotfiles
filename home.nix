@@ -6,6 +6,7 @@ let
   hyprPath = "${configRoot}/hypr";
   alacrittyPath = "${configRoot}/alacritty";
   ghosttyPath = "${configRoot}/ghostty";
+  zathuraPath = "${configRoot}/zathura";
   scriptPath = "${configRoot}/scripts";
   # function aliases
   linkConf = config.lib.file.mkOutOfStoreSymlink;
@@ -27,6 +28,7 @@ in
   xdg.configFile."hypr".source = linkConf hyprPath;
   xdg.configFile."ghostty".source = linkConf ghosttyPath;
   xdg.configFile."alacritty".source = linkConf alacrittyPath;
+  xdg.configFile."zathura".source = linkConf zathuraPath;
   home.file.".local/bin".source = linkConf scriptPath;
 
   # often changed dotfils
