@@ -6,6 +6,7 @@ let
   hyprPath = "${configRoot}/hypr";
   alacrittyPath = "${configRoot}/alacritty";
   ghosttyPath = "${configRoot}/ghostty";
+  scriptPath = "${configRoot}/scripts";
   # function aliases
   linkConf = config.lib.file.mkOutOfStoreSymlink;
 in
@@ -18,7 +19,6 @@ in
   # load application specific configuration files
   imports = [
     ./home/zsh
-    ./home/scripts
     ./home/wallpaper.nix
   ];
   # user packages (only installed per user)
@@ -27,6 +27,7 @@ in
   xdg.configFile."hypr".source = linkConf hyprPath;
   xdg.configFile."ghostty".source = linkConf ghosttyPath;
   xdg.configFile."alacritty".source = linkConf alacrittyPath;
+  home.file.".local/bin".source = linkConf scriptPath;
 
   # often changed dotfils
 
