@@ -1,5 +1,5 @@
 #!/bin/sh
 
 # opens a new terminal with the interactive zk search feature
-cd ~/Documents/notes
+cd ~/notes
 zk edit --interactive
