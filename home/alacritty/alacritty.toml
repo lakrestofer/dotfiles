@@ -17,21 +17,22 @@ TERM = "alacritty"
 [font]
 size = 14.0
 
-[font.bold]
-family = "CozetteHiDpi"
-style = "Bold"
-
-[font.bold_italic]
-family = "CozetteHiDpi"
-style = "Bold Italic"
-
-[font.italic]
-family = "CozetteHiDpi"
-style = "Italic"
-
 [font.normal]
 family = "CozetteHiDpi"
-style = "Regular"
+style = "Medium"
+
+# [font.bold]
+# family = "CozetteHiDpi"
+# style = "Bold"
+
+# [font.bold_italic]
+# family = "CozetteHiDpi"
+# style = "Bold Italic"
+
+# [font.italic]
+# family = "CozetteHiDpi"
+# style = "Italic"
+
 
 [hints]
 alphabet = "ntesiroamglpufyw;q"
