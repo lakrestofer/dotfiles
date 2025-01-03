@@ -1,7 +1,5 @@
-font-family = "CozetteHiDpi Regular"
-font-size = 14
+font-family = "CozetteVector"
 window-decoration = false
 window-theme = "ghostty"
 theme = "GruvboxDark"
-font-synthetic-style = "bold-italic"
 confirm-close-surface = false
