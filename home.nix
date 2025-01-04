@@ -26,7 +26,7 @@ in
   imports = [
     inputs.walker.homeManagerModules.default
     ./home/zsh
-    ./home/wallpaper.nix
+    ./wallpaper
   ];
   # user packages (only installed per user)
   home.packages = [ ];
@@ -42,6 +42,7 @@ in
   # git
   programs.git = {
     enable = true;
+    lfs.enable = true;
     userEmail = "lakrestofer@gmail.com";
     userName = "lakrestofer";
   };
