@@ -62,11 +62,6 @@ in
     };
 
     # If this is not set the default styling is used.
-    style = ''
-      * {
-        color: #dcd7ba;
-      }
-    '';
   };
 
   programs.hyprlock = {
