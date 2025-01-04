@@ -2,6 +2,6 @@
   ...
 }:
 {
-  # home.file."wallpaper".source = ./nixos_flake.png;
-  home.file."wallpaper".source = ./artificial-brain.jpg;
+  home.file."wallpaper.png".source = ./nixos_flake.png;
+  # home.file."wallpaper.png".source = ./artificial-brain.jpg;
 }
