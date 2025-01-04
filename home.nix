@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  inputs,
+  config,
+  pkgs,
+  ...
+}:
 let
   # paths
   configRoot = "${config.home.homeDirectory}/dotfiles/home";
@@ -17,8 +22,9 @@ in
   home.homeDirectory = "/home/fincei";
   home.stateVersion = "24.05";
   programs.home-manager.enable = true;
-  # load application specific configuration files
+  # imports
   imports = [
+    inputs.walker.homeManagerModules.default
     ./home/zsh
     ./home/wallpaper.nix
   ];
@@ -38,6 +44,29 @@ in
     enable = true;
     userEmail = "lakrestofer@gmail.com";
     userName = "lakrestofer";
+  };
+
+  programs.walker = {
+    enable = true;
+    runAsService = true;
+
+    # All options from the config.json can be used here.
+    config = {
+      search.placeholder = ">";
+      ui.fullscreen = true;
+      list = {
+        height = 200;
+      };
+      websearch.prefix = "?";
+      switcher.prefix = "/";
+    };
+
+    # If this is not set the default styling is used.
+    style = ''
+      * {
+        color: #dcd7ba;
+      }
+    '';
   };
 
   programs.hyprlock = {
