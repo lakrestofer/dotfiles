@@ -77,7 +77,6 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     dprint
-    inputs.ghostty.packages.${pkgs.system}.default
     wget
     fzf
     zk
