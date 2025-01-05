@@ -116,7 +116,8 @@ in
     util-linux
     brightnessctl
     wofi
-    hyprpaper
+    swww
+    # hyprpaper
     inputs.hyprpaper.packages.${pkgs.stdenv.hostPlatform.system}.default
     eza
     zoxide
