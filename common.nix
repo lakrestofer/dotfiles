@@ -107,7 +107,7 @@ in
     nh
     nautilus
     mako
-    # anki-bin
+    anki-bin
     agsbar # from the local argument
     gum
     imv
