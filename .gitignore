@@ -1,3 +1,4 @@
 **/*.swp
 
 nixos-switch.log
+.direnv
