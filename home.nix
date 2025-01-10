@@ -30,7 +30,11 @@ in
   # user packages (only installed per user)
   home.packages = [ ];
   xdg.configFile."helix".source = linkConf helixPath;
-  xdg.configFile."hypr".source = linkConf hyprPath;
+  # xdg.configFile."hypr".source = linkConf hyprPath;
+  xdg.configFile."hypr" = {
+    source = ./home/hypr;
+    recursive = true;
+  };
   xdg.configFile."ghostty".source = linkConf ghosttyPath;
   xdg.configFile."alacritty".source = linkConf alacrittyPath;
   xdg.configFile."zathura".source = linkConf zathuraPath;
