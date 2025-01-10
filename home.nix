@@ -1,5 +1,4 @@
 {
-  inputs,
   config,
   pkgs,
   ...
@@ -24,7 +23,6 @@ in
   programs.home-manager.enable = true;
   # imports
   imports = [
-    inputs.walker.homeManagerModules.default
     ./home/zsh
     ./wallpaper
   ];
@@ -45,15 +43,6 @@ in
     lfs.enable = true;
     userEmail = "lakrestofer@gmail.com";
     userName = "lakrestofer";
-  };
-
-  programs.walker = {
-    enable = true;
-    runAsService = true;
-
-    # All options from the config.json can be used here.
-
-    # If this is not set the default styling is used.
   };
 
   programs.hyprlock = {
