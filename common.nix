@@ -171,6 +171,7 @@ in
 
   # environment variables
   environment.sessionVariables = {
+    TERMINAL = "alacritty";
     STNODEFAULTFOLDER = "true";
     FLAKE = "/home/fincei/dotfiles";
     EDITOR = "hx";
