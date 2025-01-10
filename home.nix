@@ -11,6 +11,7 @@ let
   alacrittyPath = "${configRoot}/alacritty";
   ghosttyPath = "${configRoot}/ghostty";
   zathuraPath = "${configRoot}/zathura";
+  walkerPath = "${configRoot}/walker";
   scriptPath = "${configRoot}/scripts";
   # function aliases
   linkConf = config.lib.file.mkOutOfStoreSymlink;
@@ -33,6 +34,7 @@ in
   xdg.configFile."ghostty".source = linkConf ghosttyPath;
   xdg.configFile."alacritty".source = linkConf alacrittyPath;
   xdg.configFile."zathura".source = linkConf zathuraPath;
+  xdg.configFile."walker".source = linkConf walkerPath;
   home.file.".local/bin".source = linkConf scriptPath;
 
   # often changed dotfils
