@@ -35,6 +35,7 @@ in
     isNormalUser = true;
     description = "fincei";
     extraGroups = [
+      "docker"
       "networkmanager"
       "wheel"
       "input"
@@ -80,6 +81,7 @@ in
       package = pkgs.nix-direnv;
     };
   };
+  virtualisation.docker.enable = true;
   environment.localBinInPath = true;
   # List packages installed in system profile. To search, run:
   # $ nix search wget
