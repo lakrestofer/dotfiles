@@ -15,6 +15,7 @@ let
   scriptPath = "${configRoot}/scripts";
   # function aliases
   linkConf = config.lib.file.mkOutOfStoreSymlink;
+  system = "x86_64-linux";
 in
 {
   # basic options
@@ -52,7 +53,7 @@ in
   # hyprland and friends
   wayland.windowManager.hyprland = {
     enable = true;
-    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    package = inputs.hyprland.packages.${system}.hyprland;
     settings = { };
     extraConfig = ''
       ################
