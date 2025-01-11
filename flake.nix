@@ -83,6 +83,9 @@
             home-manager.useUserPackages = true;
             home-manager.users.fincei = import ./home.nix;
             home-manager.backupFileExtension = "backup";
+            home-manager.extraSpecialArgs = {
+              inherit inputs;
+            };
           }
         ];
       };
@@ -102,6 +105,9 @@
             home-manager.useUserPackages = true;
             home-manager.users.fincei = import ./home.nix;
             home-manager.backupFileExtension = "backup";
+            home-manager.extraSpecialArgs = {
+              inherit inputs;
+            };
           }
         ];
       };
