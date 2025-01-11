@@ -6,6 +6,7 @@
 }:
 let
   pkgs-unstable = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+  system = "x86_64-linux";
 in
 {
   # hardware
@@ -86,7 +87,7 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    inputs.walker.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.walker.packages.${system}.default
     nodejs
     slurp
     grim
@@ -127,12 +128,10 @@ in
     brightnessctl
     wofi
     swww
-    # hyprpaper
-    # inputs.hyprpaper.packages.${pkgs.stdenv.hostPlatform.system}.default
     eza
     zoxide
     wl-clipboard
-    inputs.helix.packages.${pkgs.system}.default
+    inputs.helix.packages.${system}.default
     hyprpolkitagent
     git
     # tmux
