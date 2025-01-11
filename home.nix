@@ -31,7 +31,6 @@ in
   # user packages (only installed per user)
   home.packages = [ ];
   xdg.configFile."helix".source = linkConf helixPath;
-  # xdg.configFile."hypr".source = linkConf hyprPath;
   xdg.configFile."hypr" = {
     source = ./home/hypr;
     recursive = true;
@@ -54,16 +53,13 @@ in
   wayland.windowManager.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${system}.hyprland;
-    settings = { };
-    extraConfig = ''
+    settings = {
       ################
       ### MONITORS ###
       ################
-
-      # See https://wiki.hyprland.org/Configuring/Monitors/
-      monitor=,highres,auto,auto
-
-
+      monitor = [ ",highres,auto,auto" ];
+    };
+    extraConfig = ''
       ###################
       ### MY PROGRAMS ###
       ###################
