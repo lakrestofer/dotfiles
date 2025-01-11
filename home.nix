@@ -7,7 +7,6 @@ let
   # paths
   configRoot = "${config.home.homeDirectory}/dotfiles/home";
   helixPath = "${configRoot}/helix";
-  hyprPath = "${configRoot}/hypr";
   alacrittyPath = "${configRoot}/alacritty";
   ghosttyPath = "${configRoot}/ghostty";
   zathuraPath = "${configRoot}/zathura";
@@ -41,8 +40,6 @@ in
   xdg.configFile."walker".source = linkConf walkerPath;
   home.file.".local/bin".source = linkConf scriptPath;
 
-  # often changed dotfils
-
   # git
   programs.git = {
     enable = true;
@@ -51,9 +48,18 @@ in
     userName = "lakrestofer";
   };
 
+  # hyprland and friends
   programs.hyprlock = {
     enable = true;
     package = pkgs.hyprlock;
+  };
+  services.hypridle = {
+    enable = true;
+    package = pkgs.hypridle;
+  };
+  services.hyprpaper = {
+    enable = true;
+    package = pkgs.hyprpaper;
   };
 
   # gtk = {

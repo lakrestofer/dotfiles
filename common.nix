@@ -128,7 +128,7 @@ in
     wofi
     swww
     # hyprpaper
-    inputs.hyprpaper.packages.${pkgs.stdenv.hostPlatform.system}.default
+    # inputs.hyprpaper.packages.${pkgs.stdenv.hostPlatform.system}.default
     eza
     zoxide
     wl-clipboard
@@ -199,11 +199,6 @@ in
     portalPackage =
       inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     withUWSM = true;
-  };
-  services.hypridle = {
-    enable = true;
-    package = pkgs.hypridle;
-    # package = inputs.hypridle.packages.${pkgs.stdenv.hostPlatform.system}.hypridle;
   };
   # programs.hyprlock = {
   #   enable = true;
