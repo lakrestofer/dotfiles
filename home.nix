@@ -53,6 +53,7 @@ in
   wayland.windowManager.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${system}.hyprland;
+    systemd.variables = [ "--all" ];
     settings = {
       ################
       ### MONITORS ###
@@ -149,200 +150,162 @@ in
         ];
         first_launch_animation = "false";
       };
-
-    };
-    extraConfig = ''
-
-      # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
-      dwindle {
-          pseudotile = true # Master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
-          preserve_split = true # You probably want this
-      }
-
-      # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
-      master {
-          new_status = master
-      }
-
-      # https://wiki.hyprland.org/Configuring/Variables/#misc
-      misc {
-          disable_hyprland_logo = true
-          force_default_wallpaper = 0
-          # swallow_regex = ^zathura$
-          # enable_swallow = true
-          vrr = 1
-          mouse_move_enables_dpms = true
-          key_press_enables_dpms = true
-          font_family = "CozetteHiDpi"
-      }
-
-
+      dwindle = {
+        pseudotile = true; # Master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+        preserve_split = true; # You probably want this
+      };
+      master = {
+        new_status = "master";
+      };
+      misc = {
+        disable_hyprland_logo = true;
+        force_default_wallpaper = 0;
+        vrr = 1;
+        mouse_move_enables_dpms = true;
+        key_press_enables_dpms = true;
+        font_family = "CozetteHiDpi";
+      };
       #############
       ### INPUT ###
       #############
-
-      # https://wiki.hyprland.org/Configuring/Variables/#input
-      input {
-          kb_layout = us
-          kb_variant = altgr-intl
-          kb_model =
-          kb_options =
-          kb_rules =
-
-          follow_mouse = 1
-
-          sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
-
-          touchpad {
-              natural_scroll = false
-          }
-          repeat_rate = 50
-          repeat_delay = 200
-      }
-
-      # https://wiki.hyprland.org/Configuring/Variables/#gestures
-      gestures {
-          workspace_swipe = false
-      }
-
-      # Example per-device config
-      # See https://wiki.hyprland.org/Configuring/Keywords/#per-device-input-configs for more
-      device {
-          name = epic-mouse-v1
-          sensitivity = -0.5
-      }
-
-
+      input = {
+        kb_layout = "us";
+        kb_variant = "altgr-intl";
+        follow_mouse = 1;
+        sensitivity = 0;
+        touchpad.natural_scroll = false;
+        repeat_rate = 50;
+        repeat_delay = 200;
+      };
+      gestures = {
+        workspace_swipe = false;
+      };
       ###################
       ### KEYBINDINGS ###
       ###################
-
       # aliases
-      $mainMod = SUPER
-
+      "$mainMod" = "SUPER";
       # - Applications -
-      bind = $mainMod, return, exec, uwsm app -- $terminal
-      bind = $mainMod CTRL, return, exec, $terminal --command /home/fincei/.local/bin/notes.sh
-      bind = $mainMod CTRL, J, exec, $terminal --command /home/fincei/.local/bin/daily.sh
-      bind = $mainMod, W, exec, uwsm app -- $browser
-      bind = $mainMod, space, exec, uwsm app -- $menu # application launcher
-      bind = $mainMod SHIFT,P,exec,grim -g "$(slurp)" - | wl-copy
-
-      # - Manage currently focused application -
-      bind = $mainMod, Q, killactive,
-      # - Manage hyprland - 
-      # bind = $mainMod CTRL, Q, exit
-      bind = $mainMod CTRL, Q, exec, uwsm stop
-      # - Layout - 
-      bind = $mainMod, V, togglefloating,
-      bind = $mainMod, P, pseudo, # dwindle
-      bind = $mainMod, J, togglesplit, # dwindle
-      bind = $mainMod, F, fullscreen, # dwindle
-
-      # - Navigation -
-      # within workspace
-      bind = $mainMod, left, movefocus, l
-      bind = $mainMod, right, movefocus, r
-      bind = $mainMod, up, movefocus, u
-      bind = $mainMod, down, movefocus, d
-      bind = $mainMod, N, movefocus, l
-      bind = $mainMod, E, movefocus, d
-      bind = $mainMod, I, movefocus, u
-      bind = $mainMod, O, movefocus, r
-      # between workspaces
-      bind = $mainMod, 1, workspace, 1
-      bind = $mainMod, 2, workspace, 2
-      bind = $mainMod, 3, workspace, 3
-      bind = $mainMod, 4, workspace, 4
-      bind = $mainMod, 5, workspace, 5
-      bind = $mainMod, 6, workspace, 6
-      bind = $mainMod, 7, workspace, 7
-      bind = $mainMod, 8, workspace, 8
-      bind = $mainMod, 9, workspace, 9
-      bind = $mainMod, 0, workspace, 10
-      bind = $mainMod CTRL,N,workspace,-1 # Relative navigation
-      bind = $mainMod CTRL,O,workspace,+1 # Relative navigation
-      # within group
-      bind = $mainMod CTRL ALT, N, changegroupactive, b
-      bind = $mainMod CTRL ALT, O, changegroupactive, f
-
-      # - Move windows -
-      # on workspace
-      bind = $mainMod SHIFT,N,movewindow,l
-      bind = $mainMod SHIFT,E,movewindow,d
-      bind = $mainMod SHIFT,I,movewindow,u
-      bind = $mainMod SHIFT,O,movewindow,r
-      bind = $mainMod ALT SHIFT,N,movewindoworgroup,l
-      bind = $mainMod ALT SHIFT,E,movewindoworgroup,d
-      bind = $mainMod ALT SHIFT,I,movewindoworgroup,u
-      bind = $mainMod ALT SHIFT,O,movewindoworgroup,r
-      bindm = $mainMod, mouse:272, movewindow
-      bindm = $mainMod, mouse:273, resizewindow
-      # between workspaces
-      bind = $mainMod SHIFT, 1, movetoworkspacesilent, 1
-      bind = $mainMod SHIFT, 2, movetoworkspacesilent, 2
-      bind = $mainMod SHIFT, 3, movetoworkspacesilent, 3
-      bind = $mainMod SHIFT, 4, movetoworkspacesilent, 4
-      bind = $mainMod SHIFT, 5, movetoworkspacesilent, 5
-      bind = $mainMod SHIFT, 6, movetoworkspacesilent, 6
-      bind = $mainMod SHIFT, 7, movetoworkspacesilent, 7
-      bind = $mainMod SHIFT, 8, movetoworkspacesilent, 8
-      bind = $mainMod SHIFT, 9, movetoworkspacesilent, 9
-      bind = $mainMod SHIFT, 0, movetoworkspacesilent, 10
-      bind = $mainMod SHIFT CTRL,N,movetoworkspace,-1
-      bind = $mainMod SHIFT CTRL,O,movetoworkspace,+1
-      # into/outof groups
-      bind = $mainMod,G,togglegroup
-
-      # - Resize windows - 
-      binde = $mainMod ALT,N,resizeactive,-10 0
-      binde = $mainMod ALT,E,resizeactive,0 10
-      binde = $mainMod ALT,I,resizeactive,0 -10
-      binde = $mainMod ALT,O,resizeactive,10 0
-
-      # Scratchpad
-      bind = $mainMod, S, togglespecialworkspace, special
-      # bind = $mainMod SHIFT, S, movetoworkspace, special
-
-      # Laptop multimedia keys for volume and LCD brightness
-      bindel = ,XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
-      bindel = ,XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
-      bindel = ,XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-      bindel = ,XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
-      bindel = ,XF86MonBrightnessUp, exec, brightnessctl s 10%+
-      bindel = ,XF86MonBrightnessDown, exec, brightnessctl s 10%-
-
-      # Requires playerctl
-      bindl = , XF86AudioNext, exec, playerctl next
-      bindl = , XF86AudioPause, exec, playerctl play-pause
-      bindl = , XF86AudioPlay, exec, playerctl play-pause
-      bindl = , XF86AudioPrev, exec, playerctl previous
-
+      bind = [
+        "$mainMod, return, exec, uwsm app -- $terminal"
+        "$mainMod CTRL, return, exec, $terminal --command /home/fincei/.local/bin/notes.sh"
+        "$mainMod CTRL, J, exec, $terminal --command /home/fincei/.local/bin/daily.sh"
+        "$mainMod, W, exec, uwsm app -- $browser"
+        "$mainMod, space, exec, uwsm app -- $menu # application launcher"
+        ''$mainMod SHIFT,P,exec,grim -g "$(slurp)" - | wl-copy''
+        # - Manage currently focused application -
+        "$mainMod, Q, killactive,"
+        # - Manage hyprland -
+        "$mainMod CTRL, Q, exec, uwsm stop"
+        # - Layout -
+        "$mainMod, V, togglefloating,"
+        "$mainMod, P, pseudo,"
+        "$mainMod, J, togglesplit,"
+        "$mainMod, F, fullscreen,"
+        # - Navigation -
+        # within workspace
+        "$mainMod, left, movefocus, l"
+        "$mainMod, right, movefocus, r"
+        "$mainMod, up, movefocus, u"
+        "$mainMod, down, movefocus, d"
+        "$mainMod, N, movefocus, l"
+        "$mainMod, E, movefocus, d"
+        "$mainMod, I, movefocus, u"
+        "$mainMod, O, movefocus, r"
+        # between workspaces
+        "$mainMod, 1, workspace, 1"
+        "$mainMod, 2, workspace, 2"
+        "$mainMod, 3, workspace, 3"
+        "$mainMod, 4, workspace, 4"
+        "$mainMod, 5, workspace, 5"
+        "$mainMod, 6, workspace, 6"
+        "$mainMod, 7, workspace, 7"
+        "$mainMod, 8, workspace, 8"
+        "$mainMod, 9, workspace, 9"
+        "$mainMod, 0, workspace, 10"
+        "$mainMod CTRL,N,workspace,-1 # Relative navigation"
+        "$mainMod CTRL,O,workspace,+1 # Relative navigation"
+        # within group
+        "$mainMod CTRL ALT, N, changegroupactive, b"
+        "$mainMod CTRL ALT, O, changegroupactive, f"
+        # - Move windows -
+        # on workspace
+        "$mainMod SHIFT,N,movewindow,l"
+        "$mainMod SHIFT,E,movewindow,d"
+        "$mainMod SHIFT,I,movewindow,u"
+        "$mainMod SHIFT,O,movewindow,r"
+        "$mainMod ALT SHIFT,N,movewindoworgroup,l"
+        "$mainMod ALT SHIFT,E,movewindoworgroup,d"
+        "$mainMod ALT SHIFT,I,movewindoworgroup,u"
+        "$mainMod ALT SHIFT,O,movewindoworgroup,r"
+        # between workspaces
+        "$mainMod SHIFT, 1, movetoworkspacesilent, 1"
+        "$mainMod SHIFT, 2, movetoworkspacesilent, 2"
+        "$mainMod SHIFT, 3, movetoworkspacesilent, 3"
+        "$mainMod SHIFT, 4, movetoworkspacesilent, 4"
+        "$mainMod SHIFT, 5, movetoworkspacesilent, 5"
+        "$mainMod SHIFT, 6, movetoworkspacesilent, 6"
+        "$mainMod SHIFT, 7, movetoworkspacesilent, 7"
+        "$mainMod SHIFT, 8, movetoworkspacesilent, 8"
+        "$mainMod SHIFT, 9, movetoworkspacesilent, 9"
+        "$mainMod SHIFT, 0, movetoworkspacesilent, 10"
+        "$mainMod SHIFT CTRL,N,movetoworkspace,-1"
+        "$mainMod SHIFT CTRL,O,movetoworkspace,+1"
+        # into/outof groups
+        "$mainMod,G,togglegroup"
+        # Scratchpad
+        "$mainMod, S, togglespecialworkspace, special"
+      ];
+      bindm = [
+        "$mainMod, mouse:272, movewindow"
+        "$mainMod, mouse:273, resizewindow"
+      ];
+      binde = [
+        # - Resize windows -
+        "$mainMod ALT,N,resizeactive,-10 0"
+        "$mainMod ALT,E,resizeactive,0 10"
+        "$mainMod ALT,I,resizeactive,0 -10"
+        "$mainMod ALT,O,resizeactive,10 0"
+      ];
+      bindel = [
+        # Laptop multimedia keys for volume and LCD brightness
+        ",XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+        ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+        ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+        ",XF86MonBrightnessUp, exec, brightnessctl s 10%+"
+        ",XF86MonBrightnessDown, exec, brightnessctl s 10%-"
+      ];
+      bindl = [
+        # Requires playerctl
+        ", XF86AudioNext, exec, playerctl next"
+        ", XF86AudioPause, exec, playerctl play-pause"
+        ", XF86AudioPlay, exec, playerctl play-pause"
+        ", XF86AudioPrev, exec, playerctl previous"
+      ];
       ##############################
-      ### WINDOWS AND WORKSPACES ###
+      ### WINDOW AND WORKSPACE RULES ###
       ##############################
-
-      # Ignore maximize requests from apps. You'll probably like this.
-      windowrulev2 = suppressevent maximize, class:.*
-
-      # Fix some dragging issues with XWayland
-      # windowrulev2 = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
-
-      # "Smart gaps" / "No gaps when only workspace (not applied on special workspaces)"
-      workspace = w[t1] s[false], gapsout:0, gapsin:0
-      workspace = w[tg1] s[false], gapsout:0, gapsin:0
-      workspace = f[1] s[false], gapsout:0, gapsin:0
-      windowrulev2 = bordersize 0, floating:0, onworkspace:w[t1] s[false]
-      windowrulev2 = rounding 0, floating:0, onworkspace:w[t1] s[false]
-      windowrulev2 = bordersize 0, floating:0, onworkspace:w[tg1] s[false]
-      windowrulev2 = rounding 0, floating:0, onworkspace:w[tg1] s[false]
-      windowrulev2 = bordersize 0, floating:0, onworkspace:f[1] s[false]
-      windowrulev2 = rounding 0, floating:0, onworkspace:f[1] s[false]
-
-      # large gaps on special workspace
-      workspace = s[true], gapsout:50
-      # windowrulev2 = bordersize:3, onworkspace:s[true]
-    '';
+      windowrulev2 = [
+        # Ignore maximize requests from apps. You'll probably like this.
+        "suppressevent maximize, class:.*"
+        # "Smart gaps" / "No gaps when only workspace (not applied on special workspaces)"
+        "bordersize 0, floating:0, onworkspace:w[t1] s[false]"
+        "rounding 0, floating:0, onworkspace:w[t1] s[false]"
+        "bordersize 0, floating:0, onworkspace:w[tg1] s[false]"
+        "rounding 0, floating:0, onworkspace:w[tg1] s[false]"
+        "bordersize 0, floating:0, onworkspace:f[1] s[false]"
+        "rounding 0, floating:0, onworkspace:f[1] s[false]"
+      ];
+      workspace = [
+        # "Smart gaps" / "No gaps when only workspace (not applied on special workspaces)"
+        "w[t1] s[false], gapsout:0, gapsin:0"
+        "w[tg1] s[false], gapsout:0, gapsin:0"
+        "f[1] s[false], gapsout:0, gapsin:0"
+        # large gaps on special workspace
+        "s[true], gapsout:50"
+      ];
+    };
   };
   programs.hyprlock = {
     enable = true;
