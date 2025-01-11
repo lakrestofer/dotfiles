@@ -16,10 +16,6 @@
       url = "github:hyprwm/hyprlock";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprpaper = {
-      url = "github:hyprwm/hyprlock";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     kmonad = {
       # kmonad
       url = "git+https://github.com/kmonad/kmonad?submodules=1&dir=nix";

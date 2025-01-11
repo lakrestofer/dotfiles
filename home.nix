@@ -315,10 +315,6 @@ in
     enable = true;
     package = pkgs.hypridle;
   };
-  services.hyprpaper = {
-    enable = true;
-    package = pkgs.hyprpaper;
-  };
 
   # gtk = {
   #   enable = true;
