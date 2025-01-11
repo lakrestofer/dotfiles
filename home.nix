@@ -315,18 +315,11 @@ in
     enable = true;
     package = pkgs.hypridle;
   };
-
-  # gtk = {
-  #   enable = true;
-  #   theme = {
-  #     name = "Gruvbox-B-MB";
-  #     package = pkgs.gruvbox-gtk-theme;
-  #   };
-  #   gtk3 = {
-  #     extraConfig.gtk-application-prefer-dark-theme = true;
-  #   };
-
-  # };
+  # notification service
+  services.mako = {
+    enable = true;
+  };
+  # Systemwide application themeing
   qt = {
     enable = true;
     platformTheme.name = "gtk";
@@ -355,8 +348,5 @@ in
         gtk-application-prefer-dark-theme=1
       '';
     };
-  };
-  services.mako = {
-    enable = true;
   };
 }
