@@ -6,7 +6,6 @@ import Mpris from "gi://AstalMpris"
 import Battery from "gi://AstalBattery"
 import Wp from "gi://AstalWp"
 import Network from "gi://AstalNetwork"
-import SysTray from "./SysTray"
 
 const icons = [
   "直",
@@ -15,6 +14,7 @@ const icons = [
 
 export default function Wifi() {
   const network = Network.get_default();
+
   const { wifi } = network;
   const primary = bind(network, "primary");
 
