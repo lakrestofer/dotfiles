@@ -26,6 +26,7 @@ export default function Bar(monitor: Gdk.Monitor) {
       <box hexpand halign={Gtk.Align.END} >
         <SysTray />
         <Audio />
+        <Battery />
         <Time />
       </box>
     </centerbox>

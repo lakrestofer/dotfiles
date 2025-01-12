@@ -16,8 +16,13 @@ const percentage_to_label = (p: number) => {
   `Bat: ${Math.floor(p * 100)} %`
 }
 
+
+const bat = Battery.get_default()
+const is_laptop_battery = bat.device_type === Battery.Type.BATTERY && bat.power_supply;
+
 export default function BatteryLevel() {
-  const bat = Battery.get_default()
+
+  if (!is_laptop_battery) return <box />;
 
   const percentage = bind(bat, "percentage")
 
