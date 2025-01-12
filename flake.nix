@@ -61,88 +61,90 @@
       pkgs = nixpkgs.legacyPackages.${system};
     in
     {
-      nixosConfigurations.amanda = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {
-          inherit inputs;
-          inherit pkgs;
-          agsbar = self.packages.${system}.agsbar; # we pass the agsbar package output as an input to configuration.org
+      nixosConfigurations = {
+        amanda = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit inputs;
+            inherit pkgs;
+            agsbar = self.packages.${system}.agsbar; # we pass the agsbar package output as an input to configuration.org
+          };
+          modules = [
+            ./hosts/amanda # thinkpad x220 specific configuration
+            ./common.nix # base configuration
+            kmonad.nixosModules.default
+            nixos-hardware.nixosModules.lenovo-thinkpad-x220
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.fincei = import ./home.nix;
+              home-manager.backupFileExtension = "backup";
+              home-manager.extraSpecialArgs = {
+                inherit inputs;
+              };
+            }
+          ];
         };
-        modules = [
-          ./hosts/amanda # thinkpad x220 specific configuration
-          ./common.nix # base configuration
-          kmonad.nixosModules.default
-          nixos-hardware.nixosModules.lenovo-thinkpad-x220
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.fincei = import ./home.nix;
-            home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = {
-              inherit inputs;
-            };
-          }
-        ];
-      };
-      nixosConfigurations.minji = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {
-          inherit inputs;
-          inherit pkgs;
-          agsbar = self.packages.${system}.agsbar; # we pass the agsbar package output as an input to configuration.org
+        minji = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit inputs;
+            inherit pkgs;
+            agsbar = self.packages.${system}.agsbar; # we pass the agsbar package output as an input to configuration.org
+          };
+          modules = [
+            ./hosts/minji # desktop
+            ./common.nix # base configuration
+            home-manager.nixosModules.home-manager
+            nixos-hardware.nixosModules.common-cpu-amd
+            nixos-hardware.nixosModules.common-cpu-amd-pstate
+            nixos-hardware.nixosModules.common-gpu-amd
+            nixos-hardware.nixosModules.common-hidpi
+            nixos-hardware.nixosModules.common-pc-ssd
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.fincei = import ./hosts/minji/home.nix;
+              home-manager.backupFileExtension = "backup";
+              home-manager.extraSpecialArgs = {
+                inherit inputs;
+              };
+            }
+          ];
         };
-        modules = [
-          ./hosts/minji # desktop
-          ./common.nix # base configuration
-          home-manager.nixosModules.home-manager
-          nixos-hardware.nixosModules.common-cpu-amd
-          nixos-hardware.nixosModules.common-cpu-amd-pstate
-          nixos-hardware.nixosModules.common-gpu-amd
-          nixos-hardware.nixosModules.common-hidpi
-          nixos-hardware.nixosModules.common-pc-ssd
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.fincei = import ./home.nix;
-            home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = {
-              inherit inputs;
-            };
-          }
-        ];
-      };
-      nixosConfigurations.selbeiskami = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {
-          inherit inputs;
-          inherit pkgs;
-          agsbar = self.packages.${system}.agsbar; # we pass the agsbar package output as an input to configuration.org
+        selbeiskami = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit inputs;
+            inherit pkgs;
+            agsbar = self.packages.${system}.agsbar; # we pass the agsbar package output as an input to configuration.org
+          };
+          modules = [
+            ./hosts/selbeiskami # thinkpad x220 specific configuration
+            ./common.nix # base configuration
+            kmonad.nixosModules.default
+            nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen2
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.fincei = import ./home.nix;
+              home-manager.backupFileExtension = "backup";
+              home-manager.extraSpecialArgs = {
+                inherit inputs;
+              };
+            }
+          ];
         };
-        modules = [
-          ./hosts/selbeiskami # thinkpad x220 specific configuration
-          ./common.nix # base configuration
-          kmonad.nixosModules.default
-          nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen2
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.fincei = import ./home.nix;
-            home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = {
-              inherit inputs;
-            };
-          }
-        ];
-      };
-      nixosConfigurations.nucbox = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {
-          inherit inputs;
-          inherit pkgs;
+        nucbox = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit inputs;
+            inherit pkgs;
+          };
+          modules = [ ./hosts/nucbox ];
         };
-        modules = [ ./hosts/nucbox ];
       };
       packages.${system} = {
         notes = pkgs.writeShellScriptBin "open_notes" ''
