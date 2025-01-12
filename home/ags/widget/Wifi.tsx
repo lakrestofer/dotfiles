@@ -5,51 +5,81 @@ import Hyprland from "gi://AstalHyprland"
 import Mpris from "gi://AstalMpris"
 import Battery from "gi://AstalBattery"
 import Wp from "gi://AstalWp"
-import Network from "gi://AstalNetwork"
+import AstalNetwork from "gi://AstalNetwork"
 
 const icons = [
   "直",
   "",
 ];
 
-export default function Wifi() {
-  const network = Network.get_default();
-
-  const { wifi } = network;
+const network = AstalNetwork.get_default();
+export default function Network() {
   const primary = bind(network, "primary");
+
+
+  return (
+    <>
+      {primary.as(p => {
+        switch (p) {
+          case (AstalNetwork.Primary.UNKNOWN): return <Unknown />
+          case (AstalNetwork.Primary.WIFI): return <Wifi />
+          case (AstalNetwork.Primary.WIRED): return <Wired />
+        }
+      })}
+    </>
+  );
+
+}
+
+function Unknown() {
+  return (
+    <box>
+      <label tooltipText="Unknown connection type" label="?" />
+    </box>
+  )
+}
+
+function Wifi() {
+  const { wifi } = network;
+
+  if (!wifi) return <Error error={"could not retrieve wifi property"} />
 
   const ssid = bind(wifi, "ssid");
   const strength = bind(wifi, "strength");
 
-  // const name = bind(wired, "connection").as(c => c.controller.interface);
-
-  const label = Variable.derive([primary], (primary) => {
-    switch (primary) {
-      case (Network.Primary.UNKNOWN): return "?";
-      case (Network.Primary.WIFI): return `${icons[0]}`;
-      case (Network.Primary.WIRED): return `${icons[1]}`;
-    }
-  });
-
   const tooltip = Variable.derive(
-    [primary, ssid, strength],
-    (primary, ssid, strength) => {
-      switch (primary) {
-        case (Network.Primary.UNKNOWN): return "unknown connection";
-        case (Network.Primary.WIFI): return `${ssid}: ${strength}%`;
-        case (Network.Primary.WIRED): return "wired";
-      }
-    }
+    [ssid, strength],
+    (ssid, strength) => `${ssid}: ${strength}%`
   );
-
 
   return (
     <box>
       <label
         tooltipText={bind(tooltip)}
-        label={bind(label)}
+        label={icons[0]}
       />
     </box>
   );
 }
 
+function Wired() {
+  return (
+    <box>
+      <label
+        tooltipText={"wired connection"}
+        label={icons[1]}
+      />
+    </box>
+  );
+}
+
+function Error({ error }: { error: string }) {
+  return (
+    <box>
+      <label
+        tooltip_text={error}
+        label="⏼"
+      />
+    </box>
+  );
+}
