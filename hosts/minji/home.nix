@@ -12,8 +12,8 @@
   wayland.windowManager.hyprland.settings = {
     monitor = [
       "HDMI-A-1,highres,-1080x-240,auto,transform,3" # rotated 90 to the left
-      "DP-1,highres,0x0,auto" # main center monitor
-      "DP-2,highres,2560x-240,auto,transform,1" # rotated 90 to the right
+      "DP-1,highres,2560x-240,auto,transform,1" # rotated 90 to the right
+      "DP-2,highres,0x0,auto" # main center monitor
     ];
     workspace = [
       "1,monitor:DP-1"
