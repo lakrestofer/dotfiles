@@ -16,22 +16,22 @@
       "DP-2,highres,0x0,auto" # main center monitor
     ];
     workspace = [
-      "1,monitor:DP-2"
-      "2,monitor:DP-2"
-      "3,monitor:DP-2"
-      "4,monitor:DP-2"
-      "5,monitor:DP-2"
-      "6,monitor:DP-1"
-      "7,monitor:DP-1"
-      "8,monitor:DP-1"
-      "9,monitor:DP-1"
-      "0,monitor:DP-1"
+      "1,monitor:HDMI-A-1"
+      "2,monitor:HDMI-A-1"
+      "3,monitor:HDMI-A-1"
+      "4,monitor:HDMI-A-1"
+      "5,monitor:HDMI-A-1"
+      "6,monitor:DP-2"
+      "7,monitor:DP-2"
+      "8,monitor:DP-2"
+      "9,monitor:DP-2"
+      "0,monitor:DP-2"
       "10,monitor:DP-1"
-      "11,monitor:HDMI-A-1"
-      "12,monitor:HDMI-A-1"
-      "13,monitor:HDMI-A-1"
-      "14,monitor:HDMI-A-1"
-      "15,monitor:HDMI-A-1"
+      "11,monitor:DP-1"
+      "12,monitor:DP-1"
+      "13,monitor:DP-1"
+      "14,monitor:DP-1"
+      "15,monitor:DP-1"
     ];
   };
 }

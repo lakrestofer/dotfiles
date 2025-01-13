@@ -21,7 +21,7 @@ export default function Bar(monitor: Gdk.Monitor) {
         <FocusedClient />
       </box>
       <box>
-        <label className="quote" label={"may thought govern thought"} />
+        <label className="quote" label={"P(A|B) = (P(A) * P(B|A)) / P(B)"} />
       </box>
       <box hexpand halign={Gtk.Align.END} >
         <SysTray />
