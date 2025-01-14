@@ -8,6 +8,9 @@
     consoleMode = "max";
   };
   boot.loader.efi.canTouchEfiVariables = true;
+  # hardware.amdgpu.opencl.enable = true;
+
+  programs.steam.enable = true;
 
   networking.hostName = "minji"; # Define your hostname.
 }
