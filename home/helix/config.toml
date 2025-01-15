@@ -14,15 +14,15 @@ idle-timeout = 400
 completion-trigger-len = 2
 auto-info = true
 true-color = true
-rulers = []
+rulers = [80]
 end-of-line-diagnostics = "hint"
 
-# [editor.inline-diagnostics]
-# cursor-line = "warning" # show warnings and errors on the cursorline inline
+[editor.inline-diagnostics]
+cursor-line = "warning" # show warnings and errors on the cursorline inline
 
 [editor.lsp]
 display-messages = true
-display-inlay-hints = true
+display-inlay-hints = false
 auto-signature-help = true
 snippets = true
 
