@@ -2,7 +2,7 @@
   description = "Configuration file for my nixos systems";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     hyprland = {
       # hyprland stuff
       url = "github:hyprwm/Hyprland";
