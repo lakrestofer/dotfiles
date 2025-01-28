@@ -175,7 +175,7 @@ in
 
   # environment variables
   environment.sessionVariables = {
-    ZK_NOTEBOOK_DIR = "/home/fincei/notes";
+    ZK_NOTEBOOK_DIR = "/home/fincei/vault/notes";
     TERMINAL = "alacritty";
     STNODEFAULTFOLDER = "true";
     FLAKE = "/home/fincei/dotfiles";
