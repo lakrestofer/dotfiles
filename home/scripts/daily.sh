@@ -1,4 +1,4 @@
 #!/bin/sh
 
-cd ~/vault/notes
+cd ~/vault
 zk daily
