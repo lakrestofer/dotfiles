@@ -43,6 +43,10 @@
       url = "github:abenz1267/walker";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    spbased = {
+      url = "github:lakrestofer/spbased";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
   outputs =
