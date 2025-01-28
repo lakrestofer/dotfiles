@@ -125,7 +125,6 @@ in
     typescript-language-server
     ripgrep
     zathura
-    hyprgui
     util-linux
     brightnessctl
     wofi
