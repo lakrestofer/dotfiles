@@ -87,9 +87,8 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     inputs.spbased.packages.${system}.default
-    inputs.spbased.packages.${system}.add_flashcard
-    inputs.spbased.packages.${system}.edit_flashcard
-    inputs.spbased.packages.${system}.review_flashcard
+    inputs.spbased.packages.${system}.flashcard
+    inputs.spbased.packages.${system}.reading
     git-filter-repo
     vscode
     hyprpicker
