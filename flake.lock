@@ -860,11 +860,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1738078284,
-        "narHash": "sha256-IJdDMtSjXU2EZcc9dx5jGzYzxOIt7tQbXR7VwpxxrDg=",
+        "lastModified": 1738163459,
+        "narHash": "sha256-X5Eps6u1H2v71fkJXgOhuemcgUi8WZCDsl4E3TUfJNU=",
         "owner": "lakrestofer",
         "repo": "spbased",
-        "rev": "49d6890b1950b9695470914090f1afcd26524788",
+        "rev": "98f1beb60f407326356fa2b8f8a3ba3a73430c2f",
         "type": "github"
       },
       "original": {
