@@ -804,7 +804,8 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "spbased": "spbased",
-        "walker": "walker"
+        "walker": "walker",
+        "zen-browser": "zen-browser"
       }
     },
     "rust-overlay": {
@@ -860,11 +861,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1738163459,
-        "narHash": "sha256-X5Eps6u1H2v71fkJXgOhuemcgUi8WZCDsl4E3TUfJNU=",
+        "lastModified": 1738416204,
+        "narHash": "sha256-Jr8yhuMl6L5v55NWwU4NWMKJoBRmpLtjn3Xh+R4EnTc=",
         "owner": "lakrestofer",
         "repo": "spbased",
-        "rev": "98f1beb60f407326356fa2b8f8a3ba3a73430c2f",
+        "rev": "67330443f883fd56d9dde90d316a95a1c960f286",
         "type": "github"
       },
       "original": {
@@ -1008,6 +1009,26 @@
       "original": {
         "owner": "hyprwm",
         "repo": "xdg-desktop-portal-hyprland",
+        "type": "github"
+      }
+    },
+    "zen-browser": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1727721329,
+        "narHash": "sha256-QYlWZwUSwrM7BuO+dXclZIwoPvBIuJr6GpFKv9XKFPI=",
+        "owner": "MarceColl",
+        "repo": "zen-browser-flake",
+        "rev": "e6ab73f405e9a2896cce5956c549a9cc359e5fcc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "MarceColl",
+        "repo": "zen-browser-flake",
         "type": "github"
       }
     }

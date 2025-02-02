@@ -191,7 +191,7 @@ in
         "$mainMod CTRL, return, exec, $terminal --command /home/fincei/.local/bin/notes.sh"
         "$mainMod CTRL, J, exec, $terminal --command /home/fincei/.local/bin/daily.sh"
         "$mainMod, W, exec, uwsm app -- $browser"
-        "$mainMod, space, exec, uwsm app -- $menu # application launcher"
+        "$mainMod, space, exec, uwsm app -- $menu --modules applications # application launcher"
         ''$mainMod SHIFT,P,exec,grim -g "$(slurp)" - | wl-copy''
         # - Manage currently focused application -
         "$mainMod, Q, killactive,"
