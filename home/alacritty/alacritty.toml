@@ -18,7 +18,7 @@ TERM = "alacritty"
 size = 14.0
 
 [font.normal]
-family = "Cozette"
+family = "CozetteVector"
 style = "Medium"
 
 # [font.bold]

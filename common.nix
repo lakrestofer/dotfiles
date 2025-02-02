@@ -40,6 +40,8 @@ in
       "wheel"
       "input"
       "uinput"
+      "kvm"
+      "adbusers"
     ];
   };
 
