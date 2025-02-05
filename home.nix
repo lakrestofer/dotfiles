@@ -305,6 +305,9 @@ in
         # large gaps on special workspace
         "s[true], gapsout:50"
       ];
+      layerrule = [
+        "noanim, ^(wofi)$"
+      ];
     };
   };
   programs.hyprlock = {
