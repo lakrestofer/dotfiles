@@ -188,7 +188,7 @@ in
         "$mainMod CTRL, return, exec, $terminal --command /home/fincei/.local/bin/notes.sh"
         "$mainMod CTRL, J, exec, $terminal --command /home/fincei/.local/bin/daily.sh"
         "$mainMod, W, exec, uwsm app -- $browser"
-        "$mainMod, space, exec, uwsm app -- $menu --modules applications # application launcher"
+        "$mainMod, space, exec, $menu"
         ''$mainMod SHIFT,P,exec,grim -g "$(slurp)" - | wl-copy''
         # - Manage currently focused application -
         "$mainMod, Q, killactive,"
@@ -220,8 +220,8 @@ in
         "$mainMod, 8, workspace, 8"
         "$mainMod, 9, workspace, 9"
         "$mainMod, 0, workspace, 10"
-        "$mainMod CTRL,N,workspace,-1 # Relative navigation"
-        "$mainMod CTRL,O,workspace,+1 # Relative navigation"
+        "$mainMod CTRL,N,workspace,-1" # Relative navigation
+        "$mainMod CTRL,O,workspace,+1" # Relative navigation
         # within group
         "$mainMod CTRL ALT, N, changegroupactive, b"
         "$mainMod CTRL ALT, O, changegroupactive, f"
