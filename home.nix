@@ -306,7 +306,7 @@ in
         "s[true], gapsout:50"
       ];
       layerrule = [
-        "noanim, ^(wofi)$"
+        "noanim, ^(walker)$"
       ];
     };
   };
