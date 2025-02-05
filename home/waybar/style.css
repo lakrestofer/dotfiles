@@ -1,8 +1,8 @@
 
 
 /*base background color*/
-@define-color bg_main rgba(25, 25, 25, 0.65);
-@define-color bg_main_tooltip rgba(0, 0, 0, 0.7);
+@define-color bg_main #282828;
+@define-color bg_main_tooltip #282828;
 
 
 /*base background color of selections */
@@ -30,9 +30,9 @@
 }
 
 window#waybar {
-  /* background:  @bg_main; */
-  /* border-top: 1px solid @border_main; */
-  /* color: @content_main; */
+  background:  @bg_main;
+  border-top: 1px solid @border_main;
+  color: @content_main;
 }
 
 tooltip {
@@ -106,7 +106,7 @@ tooltip label{
 
 #taskbar button:hover {
 	border-bottom: 3px solid white;
-  /* background: @bg_hover; */
+  background: @bg_hover;
 	/* color: @content_main; */
 }
 
