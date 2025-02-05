@@ -63,7 +63,7 @@ in
       ### MY PROGRAMS ###
       ###################
       "$terminal" = "alacritty";
-      "$menu" = "tofi-drun";
+      "$menu" = "tofi-drun --font ${pkgs.cozette}/share/fonts/truetype/CozetteVector.ttf";
       "$browser" = "firefox-developer-edition";
       #################
       ### AUTOSTART ###
@@ -162,7 +162,7 @@ in
         vrr = 1;
         mouse_move_enables_dpms = true;
         key_press_enables_dpms = true;
-        font_family = "CozetteHiDpi";
+        # font_family = "CozetteHiDpi";
       };
       #############
       ### INPUT ###
