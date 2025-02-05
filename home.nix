@@ -12,6 +12,7 @@ let
   ghosttyPath = "${configRoot}/ghostty";
   zathuraPath = "${configRoot}/zathura";
   waybarPath = "${configRoot}/waybar";
+  tofiPath = "${configRoot}/tofi";
   scriptPath = "${configRoot}/scripts";
   # function aliases
   linkConf = config.lib.file.mkOutOfStoreSymlink;
@@ -39,6 +40,7 @@ in
   xdg.configFile."alacritty".source = linkConf alacrittyPath;
   xdg.configFile."zathura".source = linkConf zathuraPath;
   xdg.configFile."waybar".source = linkConf waybarPath;
+  xdg.configFile."tofi".source = linkConf tofiPath;
   home.file.".local/bin".source = linkConf scriptPath;
 
   # git
@@ -63,7 +65,8 @@ in
       ### MY PROGRAMS ###
       ###################
       "$terminal" = "alacritty";
-      "$menu" = "tofi-drun --font ${pkgs.cozette}/share/fonts/truetype/CozetteVector.ttf";
+      "$menu" =
+        "tofi-drun --font ${pkgs.cozette}/share/fonts/truetype/CozetteVector.ttf --late-keyboard-init=true";
       "$browser" = "firefox-developer-edition";
       #################
       ### AUTOSTART ###
