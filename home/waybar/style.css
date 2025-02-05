@@ -11,7 +11,7 @@
 @define-color bg_active rgba(100, 100, 100, 0.5);
 
 /*base border color*/
-@define-color border_main rgba(255, 255, 255, 0.2);
+@define-color border_main rgba(255, 255, 255, 1);
 
 /*text color for entries, views and content in general */
 @define-color content_main white;
