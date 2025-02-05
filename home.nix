@@ -56,12 +56,12 @@ in
       ################
       ### MONITORS ###
       ################
-      monitor = [ ",highres,auto,auto" ];
+      monitor = [ ",highres,auto,1" ];
       ###################
       ### MY PROGRAMS ###
       ###################
       "$terminal" = "alacritty";
-      "$menu" = "tofi";
+      "$menu" = "tofi-drun";
       "$browser" = "firefox-developer-edition";
       #################
       ### AUTOSTART ###
