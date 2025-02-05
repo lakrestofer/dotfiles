@@ -11,6 +11,7 @@ let
   alacrittyPath = "${configRoot}/alacritty";
   ghosttyPath = "${configRoot}/ghostty";
   zathuraPath = "${configRoot}/zathura";
+  waybarPath = "${configRoot}/waybar";
   scriptPath = "${configRoot}/scripts";
   # function aliases
   linkConf = config.lib.file.mkOutOfStoreSymlink;
@@ -37,6 +38,7 @@ in
   xdg.configFile."ghostty".source = linkConf ghosttyPath;
   xdg.configFile."alacritty".source = linkConf alacrittyPath;
   xdg.configFile."zathura".source = linkConf zathuraPath;
+  xdg.configFile."waybar".source = linkConf waybarPath;
   home.file.".local/bin".source = linkConf scriptPath;
 
   # git
@@ -68,6 +70,7 @@ in
       #################
       "exec-once" = [
         "swww-daemon"
+        "waybar"
         "systemctl --user start hyprpolkitagent"
         "systemctl --user import-environment QT_QPA_PLATFORMTHEME"
       ];
