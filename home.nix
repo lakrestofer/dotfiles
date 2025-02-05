@@ -11,7 +11,6 @@ let
   alacrittyPath = "${configRoot}/alacritty";
   ghosttyPath = "${configRoot}/ghostty";
   zathuraPath = "${configRoot}/zathura";
-  walkerPath = "${configRoot}/walker";
   scriptPath = "${configRoot}/scripts";
   # function aliases
   linkConf = config.lib.file.mkOutOfStoreSymlink;
@@ -38,7 +37,6 @@ in
   xdg.configFile."ghostty".source = linkConf ghosttyPath;
   xdg.configFile."alacritty".source = linkConf alacrittyPath;
   xdg.configFile."zathura".source = linkConf zathuraPath;
-  xdg.configFile."walker".source = linkConf walkerPath;
   home.file.".local/bin".source = linkConf scriptPath;
 
   # git
@@ -63,7 +61,7 @@ in
       ### MY PROGRAMS ###
       ###################
       "$terminal" = "alacritty";
-      "$menu" = "walker";
+      "$menu" = "tofi";
       "$browser" = "firefox-developer-edition";
       #################
       ### AUTOSTART ###
@@ -71,7 +69,6 @@ in
       "exec-once" = [
         "swww-daemon"
         "agsbar"
-        "walker --gapplication-service"
         "systemctl --user start hyprpolkitagent"
         "systemctl --user import-environment QT_QPA_PLATFORMTHEME"
       ];
@@ -306,7 +303,7 @@ in
         "s[true], gapsout:50"
       ];
       layerrule = [
-        "noanim, ^(walker)$"
+        "noanim, ^(tofi)$"
       ];
     };
   };
