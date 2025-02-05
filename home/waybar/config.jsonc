@@ -6,13 +6,14 @@
     "gtk-layer-shell": true,
     "margin-bottom": -1,
     "passthrough": false,
-    "height": 41,
+    "height": 42,
     "modules-left": [
         "custom/os_button",
         "hyprland/workspaces",
-        "wlr/taskbar"
     ],
-    "modules-center": [],
+    "modules-center": [
+        "custom/quote"
+    ],
     "modules-right": [
         "cpu",
         "temperature",
@@ -22,22 +23,27 @@
         "pulseaudio",
         "network",
         "battery",
-        "hyprland/language",
         "clock"
     ],
-    "hyprland/language": {
-        "format": "{}",
-        "format-en": "ENG",
-    },
     "hyprland/workspaces": {
         "icon-size": 32,
         "spacing": 16,
         "on-scroll-up": "hyprctl dispatch workspace r+1",
-        "on-scroll-down": "hyprctl dispatch workspace r-1"
+        "on-scroll-down": "hyprctl dispatch workspace r-1",
+        "format": "{icon}",
+        "show-special": true,
+        "format-icons": {
+            "special": "✹",
+        },
+    },
+    "custom/quote": {
+        "format": "P(A|B) = [P(A)*P(B|A)]/P(B)",
+        "icon-size": 32,
+        "tooltip": false
     },
     "custom/os_button": {
         "format": "",
-        "on-click": "wofi --show drun",
+        "on-click": "tofi-drun",
         "tooltip": false
     },
     "cpu": {
@@ -55,7 +61,7 @@
     },
     "disk": {
         "interval": 30,
-        "format": "󰋊 {percentage_used}%",
+        "format": " {percentage_used}%",
         "path": "/",
         "tooltip": true,
         "unit": "GB",
@@ -63,7 +69,7 @@
     },
     "memory": {
         "interval": 10,
-        "format": "  {percentage}%",
+        "format": " {percentage}%",
         "max-length": 10,
         "tooltip": true,
         "tooltip-format": "RAM - {used:0.1f}GiB used"
@@ -82,7 +88,7 @@
         "spacing": 3
     },
     "clock": {
-        "format": "      {:%R\n %d.%m.%Y}",
+        "format": "{:%R %Y-%m-%d}",
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
         "calendar": {
             "mode": "year",
@@ -107,16 +113,9 @@
         }
     },
     "network": {
-        "format-wifi": " {icon}",
-        "format-ethernet": "  ",
-        "format-disconnected": "󰌙",
-        "format-icons": [
-            "󰤯 ",
-            "󰤟 ",
-            "󰤢 ",
-            "󰤢 ",
-            "󰤨 "
-        ]
+        "format-wifi": " 直 {essid} ",
+        "format-ethernet": " {ifname}",
+        "format-disconnected": "睊",
     },
     "battery": {
         "states": {
@@ -125,8 +124,8 @@
             "critical": 20
         },
         "format": "{icon} {capacity}%",
-        "format-charging": " {capacity}%",
-        "format-plugged": " {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
         "format-alt": "{time} {icon}",
         "format-icons": [
             "󰂎",

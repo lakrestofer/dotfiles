@@ -15,10 +15,10 @@ draw_bold_text_with_bright_colors = false
 TERM = "alacritty"
 
 [font]
-size = 14.0
+size = 15.0
 
 [font.normal]
-family = "CozetteVector"
+family = "Cozette"
 style = "Medium"
 
 # [font.bold]
