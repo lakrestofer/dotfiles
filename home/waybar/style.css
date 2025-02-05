@@ -31,7 +31,7 @@
 
 window#waybar {
   background:  @bg_main;
-  border-top: 1px solid @border_main;
+  /* border-top: 1px solid @border_main; */
   color: @content_main;
 }
 
@@ -40,7 +40,7 @@ tooltip {
   border-radius: 5px;
   border-width: 1px;
   border-style: solid;
-  /* border-color: @border_main; */
+  border-color: @border_main;
 }
 tooltip label{
   /* color: @content_main; */
