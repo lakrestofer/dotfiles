@@ -1,8 +1,5 @@
 # TODO
 
-- agsbar
-  - [X] network and battery module such that it works on both desktop and laptop
-  - [ ] bar after desktop turns back on from hibernation
 - wallpaper
   - [ ] gets scaled wierdly when turning back from hibernation
 - [ ] kill and launch swww-daemon and agsbar when back from hibernation

@@ -68,7 +68,6 @@ in
       #################
       "exec-once" = [
         "swww-daemon"
-        "agsbar"
         "systemctl --user start hyprpolkitagent"
         "systemctl --user import-environment QT_QPA_PLATFORMTHEME"
       ];

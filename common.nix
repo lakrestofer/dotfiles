@@ -1,7 +1,6 @@
 {
   inputs,
   pkgs,
-  agsbar,
   ...
 }:
 let
@@ -113,7 +112,6 @@ in
     nautilus
     mako
     anki-bin
-    agsbar # from the local argument
     gum
     imv
     wev
