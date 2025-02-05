@@ -78,6 +78,7 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    waybar
     tofi
     inputs.zen-browser.packages."${system}".default
     inputs.spbased.packages.${system}.default
