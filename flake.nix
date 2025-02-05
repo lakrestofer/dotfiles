@@ -142,8 +142,8 @@
       };
       packages.${system} = { };
       # === shells ===
-      devShells.${system} = {
-        # default = pkgs.mkShell { };
-      };
+      # devShells.${system} = {
+      #   # default = pkgs.mkShell { };
+      # };
     };
 }
