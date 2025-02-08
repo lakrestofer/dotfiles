@@ -79,6 +79,7 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     aseprite
+    calibre
     waybar
     tofi
     inputs.zen-browser.packages."${system}".default
