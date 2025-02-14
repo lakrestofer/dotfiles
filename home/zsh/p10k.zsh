@@ -46,6 +46,8 @@
   # last prompt line gets hidden if it would overlap with left prompt.
   typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     # =========================[ Line #1 ]=========================
+    spbaseddue
+    spbasednew
     status                  # exit code of the last command
     command_execution_time  # duration of the last command
     background_jobs         # presence of background jobs
@@ -1658,6 +1660,20 @@
     p10k segment -f 208 -i '⭐' -t 'hello, %n'
   }
 
+  function prompt_spbaseddue() {
+    local N_DUE=$(spbasedctl --root $ZK_NOTEBOOK_DIR review query-count due)
+    if [[ $N_DUE == "0" ]]; then
+      return
+    fi
+    p10k segment -i '⏳ ' -t "DUE $N_DUE"
+  }
+  function prompt_spbasednew() {
+    local N_NEW=$(spbasedctl --root $ZK_NOTEBOOK_DIR review query-count new)
+    if [[ $N_NEW == "0" ]]; then
+      return
+    fi
+    p10k segment -i '✨ ' -t "NEW $N_NEW"
+  }
   # User-defined prompt segments may optionally provide an instant_prompt_* function. Its job
   # is to generate the prompt segment for display in instant prompt. See
   # https://github.com/romkatv/powerlevel10k#instant-prompt.

@@ -775,11 +775,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1738416204,
-        "narHash": "sha256-Jr8yhuMl6L5v55NWwU4NWMKJoBRmpLtjn3Xh+R4EnTc=",
+        "lastModified": 1739524414,
+        "narHash": "sha256-WDyNratZiJBuC6jEdEY+R8F0Aly+qu7uP+iPMCgWmRs=",
         "owner": "lakrestofer",
         "repo": "spbased",
-        "rev": "67330443f883fd56d9dde90d316a95a1c960f286",
+        "rev": "3ab04f6f7b19ee86d79c4771248fd3b02d35ac40",
         "type": "github"
       },
       "original": {
