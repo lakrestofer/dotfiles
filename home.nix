@@ -191,7 +191,7 @@ in
       bind = [
         "$mainMod, return, exec, uwsm app -- $terminal"
         "$mainMod CTRL, return, exec, $terminal --command /home/fincei/.local/bin/notes.sh"
-        "$mainMod CTRL, J, exec, $terminal --command /home/fincei/.local/bin/daily.sh"
+        "$mainMod CTRL, J, exec, $terminal --command /home/fincei/.local/bin/journal.sh"
         "$mainMod, W, exec, uwsm app -- $browser"
         "$mainMod, space, exec, $menu"
         ''$mainMod SHIFT,P,exec,grim -g "$(slurp)" - | wl-copy''

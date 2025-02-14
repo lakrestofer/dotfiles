@@ -27,7 +27,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     helix = {
-      # some other applications
       url = "github:helix-editor/helix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
