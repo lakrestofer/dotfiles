@@ -46,6 +46,7 @@
   # last prompt line gets hidden if it would overlap with left prompt.
   typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     # =========================[ Line #1 ]=========================
+    # example
     spbaseddue
     spbasednew
     status                  # exit code of the last command
@@ -1662,17 +1663,17 @@
 
   function prompt_spbaseddue() {
     local N_DUE=$(spbasedctl --root $ZK_NOTEBOOK_DIR review query-count due)
-    if [[ $N_DUE == "0" ]]; then
-      return
-    fi
-    p10k segment -i '⏳ ' -t "DUE $N_DUE"
+    p10k segment -f 208 -i '⏳' -t "$N_DUE"
+  }
+  function instant_prompt_prompt_spbaseddue() {
+    prompt_spbaseddue    
   }
   function prompt_spbasednew() {
     local N_NEW=$(spbasedctl --root $ZK_NOTEBOOK_DIR review query-count new)
-    if [[ $N_NEW == "0" ]]; then
-      return
-    fi
-    p10k segment -i '✨ ' -t "NEW $N_NEW"
+    p10k segment -f 208 -i '✨' -t "$N_NEW"
+  }
+  function instant_prompt_prompt_spbasednew() {
+    prompt_spbasednew    
   }
   # User-defined prompt segments may optionally provide an instant_prompt_* function. Its job
   # is to generate the prompt segment for display in instant prompt. See
