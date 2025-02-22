@@ -170,6 +170,7 @@ in
 
   # environment variables
   environment.sessionVariables = {
+    SPBASED_ROOT = "/home/fincei/vault";
     ZK_NOTEBOOK_DIR = "/home/fincei/vault";
     TERMINAL = "alacritty";
     STNODEFAULTFOLDER = "true";
