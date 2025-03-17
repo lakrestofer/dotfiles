@@ -257,6 +257,7 @@ in
         "$mainMod,G,togglegroup"
         # Scratchpad
         "$mainMod, S, togglespecialworkspace, special"
+        "$mainMod SHIFT, S, movetoworkspacesilent, special"
       ];
       bindm = [
         "$mainMod, mouse:272, movewindow"
