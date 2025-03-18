@@ -313,14 +313,14 @@ in
       ];
     };
   };
-  programs.hyprlock = {
-    enable = true;
-    package = pkgs.hyprlock;
-  };
-  services.hypridle = {
-    enable = true;
-    package = pkgs.hypridle;
-  };
+  # programs.hyprlock = {
+  #   enable = true;
+  #   package = pkgs.hyprlock;
+  # };
+  # services.hypridle = {
+  #   enable = true;
+  #   package = pkgs.hypridle;
+  # };
   # notification service
   services.mako = {
     enable = true;
