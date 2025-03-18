@@ -138,6 +138,7 @@ in
     gnumake
     zellij
     alacritty
+    brave
     firefox-devedition-bin
     btop
     fastfetch
