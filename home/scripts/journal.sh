@@ -1,4 +1,4 @@
 #!/bin/sh
 
-cd ~/vault
+cd ~/vault/notes
 zk journal
