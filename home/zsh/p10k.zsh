@@ -1662,14 +1662,14 @@
   }
 
   function prompt_spbaseddue() {
-    local N_DUE=$(spbasedctl --root $ZK_NOTEBOOK_DIR review query-count due)
+    local N_DUE=$(spbasedctl --root $SPBASED_ROOT review query-count due)
     p10k segment -f 208 -i '⏳' -t "$N_DUE"
   }
   function instant_prompt_prompt_spbaseddue() {
     prompt_spbaseddue    
   }
   function prompt_spbasednew() {
-    local N_NEW=$(spbasedctl --root $ZK_NOTEBOOK_DIR review query-count new)
+    local N_NEW=$(spbasedctl --root $SPBASED_ROOT review query-count new)
     p10k segment -f 208 -i '✨' -t "$N_NEW"
   }
   function instant_prompt_prompt_spbasednew() {
