@@ -67,7 +67,7 @@ in
       "$terminal" = "alacritty";
       "$menu" =
         "tofi-drun --font ${pkgs.cozette}/share/fonts/truetype/CozetteVector.ttf --late-keyboard-init=true";
-      "$browser" = "firefox-developer-edition";
+      "$browser" = "brave";
       #################
       ### AUTOSTART ###
       #################
