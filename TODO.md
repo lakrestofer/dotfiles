@@ -1,13 +1,13 @@
 # TODO
 
-- wallpaper
-  - [ ] gets scaled wierdly when turning back from hibernation
+- [ ] wallpaper gets scaled wierdly when turning back from hibernation
 - [ ] kill and launch swww-daemon and agsbar when back from
       hibernation
-
-## Hosts
-
 - [ ] setup configuration for intel nuc computer
+- [ ] notification daemon
+  - [ ] hyprland builtin or mako?
+    - currently mako
+  - [ ] timeout, notification stays up until I click it
 
 ## Encryption
 
