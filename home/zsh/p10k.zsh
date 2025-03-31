@@ -1662,14 +1662,14 @@
   }
 
   function prompt_spbaseddue() {
-    local N_DUE=$(spbasedctl review query-count due)
+    local N_DUE=$(RUST_LOG=error spbasedctl review query-count due)
     p10k segment -f 208 -i '⏳' -t "$N_DUE"
   }
   function instant_prompt_prompt_spbaseddue() {
     prompt_spbaseddue    
   }
   function prompt_spbasednew() {
-    local N_NEW=$(spbasedctl review query-count new)
+    local N_NEW=$(RUST_LOG=error spbasedctl review query-count new)
     p10k segment -f 208 -i '✨' -t "$N_NEW"
   }
   function instant_prompt_prompt_spbasednew() {
