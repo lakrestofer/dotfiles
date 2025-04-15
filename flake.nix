@@ -117,7 +117,7 @@
             ./hosts/selbeiskami # thinkpad x220 specific configuration
             ./common.nix # base configuration
             kmonad.nixosModules.default
-            nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen2
+            nixos-hardware.nixosModules.lenovo-thinkpad-t14
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
