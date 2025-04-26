@@ -1,0 +1,181 @@
+* My emacs literate config - Foreword
+This is my configuration for for emacs! It is written using org-babel which
+places the contents of various code blocks into their coresponding file.
+
+To tangle the contents I use org-babel-tangle (tangles current buffer) (which is
+bound to C-c C-v t).
+* Design goals
+this configuration aims to do the following:
+- serve as a backup editor
+- environment for programming in common lisp
+* Configuration
+** Header
+This will generate a header at the top of the init.el and the early-init.el
+#+begin_src emacs-lisp :tangle init.el  
+;; -*- lexical-binding: t -*-
+;; This file has been generated from configuration.org file. DO NOT EDIT.
+;; Sources are available from https://github.com/lakrestofer/dotfiles/tree/main/.config/emacs
+#+end_src
+#+begin_src emacs-lisp :tangle early-init.el  
+;; -*- lexical-binding: t -*-
+;; This file has been generated from dotemacs.org file. DO NOT EDIT.
+;; Sources are available from https://github.com/lakrestofer/dotfiles/tree/main/.config/emacs
+#+end_src
+** Early init
+In the begining of the emacs startup process (as documented in [[https://
+www.gnu.org/software/emacs/manual/html_node/elisp/System-Interface.html][the
+manual]]) the early-init file is loaded. Here we set any configs that we want
+to apply before the rest of the startup takes place. Since the default package
+manager is loaded here we disable it. We also disable some gui elements which
+we are not interested in. A speed-up hack that we also perform is to temporarily
+remove the limit for the garbage-collector, allowing the startup proccess to run
+without the garbage collector pausing execution for cleanup.
+
+#+begin_src emacs-lisp :tangle early-init.el
+    ;; disable some gui elements
+    (menu-bar-mode -1)
+    (scroll-bar-mode -1)
+    (tool-bar-mode -1)
+    ;; disables package.el
+    (setq package-enable-at-startup nil)
+
+    ;; disable the startup screen
+    (setq-default inhibit-startup-message t
+          initial-scratch-message "")
+
+    ;; we temporarily allow the gc to leak memory
+    (setq gc-cons-threshold most-positive-fixnum)
+
+    (add-hook 'emacs-startup-hook (lambda () (setq gc-conf-threshold (* 40 1024 1024))))
+    ;; increase the amount of data that can be read from subprocess in a single go
+    (setq read-process-output-max (* 4 1024 1024)) ;; 4 mb
+#+end_src
+** Bootstrap
+Here we bootstrap the elpacka package manager
+
+#+begin_src emacs-lisp :tangle init.el
+  (defvar elpaca-installer-version 0.6)
+  (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
+  (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
+  (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
+  (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
+				:ref nil
+				:files (:defaults "elpaca-test.el" (:exclude "extensions"))
+				:build (:not elpaca--activate-package)))
+  (let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
+	 (build (expand-file-name "elpaca/" elpaca-builds-directory))
+	 (order (cdr elpaca-order))
+	 (default-directory repo))
+    (add-to-list 'load-path (if (file-exists-p build) build repo))
+    (unless (file-exists-p repo)
+      (make-directory repo t)
+      (when (< emacs-major-version 28) (require 'subr-x))
+      (condition-case-unless-debug err
+	  (if-let ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
+		   ((zerop (call-process "git" nil buffer t "clone"
+					 (plist-get order :repo) repo)))
+		   ((zerop (call-process "git" nil buffer t "checkout"
+					 (or (plist-get order :ref) "--"))))
+		   (emacs (concat invocation-directory invocation-name))
+		   ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
+					 "--eval" "(byte-recompile-directory \".\" 0 'force)")))
+		   ((require 'elpaca))
+		   ((elpaca-generate-autoloads "elpaca" repo)))
+	      (progn (message "%s" (buffer-string)) (kill-buffer buffer))
+	    (error "%s" (with-current-buffer buffer (buffer-string))))
+	((error) (warn "%s" err) (delete-directory repo 'recursive))))
+    (unless (require 'elpaca-autoloads nil t)
+      (require 'elpaca)
+      (elpaca-generate-autoloads "elpaca" repo)
+      (load "./elpaca-autoloads")))
+  (add-hook 'after-init-hook #'elpaca-process-queues)
+  (elpaca `(,@elpaca-order))
+
+  ;; Install use-package support
+  (elpaca elpaca-use-package
+    ;; Enable :elpaca use-package keyword.
+    (elpaca-use-package-mode)
+    ;; Assume :elpaca t unless otherwise specified.
+    (setq elpaca-use-package-by-default t))
+
+  ;; Block until current queue processed.
+  (elpaca-wait)
+#+end_src
+
+We also load in the no-littering package directly.
+#+begin_src emacs-lisp :tangle init.el
+  (use-package no-littering)
+  ; since elpacka downloads packages asynchronously we need to block manually here
+  (elpaca-wait)
+#+end_src
+
+** Theming and visuals
+**** Theme
+For now we set a builtin theme
+#+begin_src emacs-lisp :tangle init.el
+  (load-theme 'wombat)
+#+end_src
+**** Font
+set mono and variabled pitch fonts
+#+begin_src emacs-lisp :tangle init.el
+  (defvar ctd/default-font-size (* 10 10))
+  (defvar ctd/default-variable-font-size (* 10 10))
+  (set-face-attribute 'default nil :font "FiraCode Nerd Font" :height ctd/default-font-size)
+ #+end_src
+**** Some other visual improvements
+#+begin_src emacs-lisp :tangle init.el
+  ;; requires emacs v29
+  (pixel-scroll-precision-mode 1)
+  (blink-cursor-mode 0)
+#+end_src
+
+** Which key
+
+which key is a must
+
+#+begin_src emacs-lisp :tangle init.el
+  (use-package which-key
+    :config
+    (which-key-mode))
+#+end_src
+
+** Tree sitter
+We want emacs to use tree sitter based parsing whenever possible
+
+#+begin_src emacs-lisp :tangle init.el
+    (setq treesit-language-source-alist
+	  '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+	    (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+  ;	  (rust "https://gitub.com/tree-sitter/tree-sitter-rust")
+	    (go "https://github.com/tree-sitter/tree-sitter-go")
+	    (html "https://github.com/tree-sitter/tree-sitter-html")
+	    (yaml "https://github.com/ikatyang/tree-sitter-yaml")
+	    (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+	    (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")))
+    ;; we install the grammar if it is does not exist
+  (mapc
+   (lambda (language)
+     (unless (treesit-language-available-p language)
+       (treesit-install-language-grammar language)))
+   (mapcar #'car treesit-language-source-alist))
+#+end_src
+
+
+** Lsp
+
+** Common lisp
+
+we add slime mode for better development experience
+
+#+begin_src emacs-lisp :tangle init.el
+  (use-package slime
+    :init
+    (require 'slime-autoloads)
+    (setq inferior-lisp-program "sbcl"))
+
+#+end_src
+
+# This footer will promt the user to tangle on save
+# Local Variables:
+# eval: (add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Tangle?")(org-babel-tangle))) nil t)
+# End:
