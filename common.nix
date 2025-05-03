@@ -82,6 +82,16 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    supabase-cli
+    awscli
+    deno
+    hunspellDicts.sv_SE
+    hunspellDicts.en_US
+    hunspell
+    sqlite
+    clang-tools
+    clang
+    clangStdenv
     inputs.emacs.packages.${system}.emacs-unstable-pgtk
     aseprite
     calibre
