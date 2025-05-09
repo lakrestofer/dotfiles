@@ -5,10 +5,7 @@ places the contents of various code blocks into their coresponding file.
 To tangle the contents I use org-babel-tangle (tangles current buffer) (which is
 bound to C-c C-v t).
 * Design goals
-- [ ] setup autocomplete
-  - https://github.com/minad/cape
 - [ ] https://www.d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5
-- [ ] gptel
 - [ ] https://github.com/bluzky/relysium
   
 * Configuration
@@ -138,7 +135,12 @@ For now we set a builtin theme
 **** Font
 set mono and variabled pitch fonts
 #+begin_src emacs-lisp :tangle init.el
-(set-face-attribute 'default nil :font "Cozette" :height (* 15 10))
+(defun apply-font-config ()
+  "applies the font of choice, cozette"
+  (set-face-attribute 'default nil :font "Cozette" :height (* 15 10)))
+(unless (daemonp)
+  (apply-font-config))
+(add-hook 'server-after-make-frame-hook #'apply-font-config)
 #+end_src
 **** Some other visual improvements
 #+begin_src emacs-lisp :tangle init.el
@@ -289,6 +291,7 @@ We'll fix it by setting some scroll settings.
   (setq dashboard-startup-banner (expand-file-name "banner.txt" user-emacs-directory))
   (setq dashboard-banner-logo-title nil)
   (setq dashboard-center-content t)
+  (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
   (add-hook 'elpaca-after-init-hook #'dashboard-insert-startupify-lists)
   (add-hook 'elpaca-after-init-hook #'dashboard-initialize)
   (dashboard-setup-startup-hook))
@@ -469,16 +472,17 @@ We'll fix it by setting some scroll settings.
   (embark-collect-mode . consult-preview-at-point-mode))
 #+end_src
 
-** Org mode
+** Org
+mode
 
 #+begin_src emacs-lisp :tangle init.el
 (use-package org
   :ensure nil ;; use builtin
   :defer t
   :config
+  (setq org-link-frame-setup '((file . find-file)))
   (setq org-src-preserve-indentation t)
-  
-  )
+  (setq org-M-RET-may-split-line nil))
 (use-package org-download
   :after org
   :bind
@@ -502,20 +506,103 @@ We'll fix it by setting some scroll settings.
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . org-roam-node-find)
          ("C-c n c" . org-roam-node-capture)
+	 ("C-c n d" . org-roam-dailies-goto-today)
          ("C-c n i" . org-roam-node-insert))
   :config
   (setq org-link-descriptive t) ;; hide links, and show them when the cursor is on them
   (setq org-roam-completion-everywhere t)
   (org-roam-setup)
   (org-roam-db-autosync-mode))
+(use-package org-roam-ui
+  :ensure (:host github :repo "org-roam/org-roam-ui" :branch "main" :files ("*.el" "out"))
+  :defer t
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start t))
 #+end_src
 
 *** Org ql
 
 #+begin_src emacs-lisp :tangle init.el
 (use-package org-ql
+  :hook 'after-init-hook
   :defer t)
 #+end_src
+
+** LLM integration
+*** gptel
+
+My nixos configuration does not load in the my .zprofile before starting the emacs daemon.
+This means that i cannot access my api keys using ~(getenv)~
+
+To solve this we read in the ~/keys.sh file ourselves and set the env.
+#+begin_src emacs-lisp :tangle init.el
+(let ((env-file "~/keys.sh"))
+  (when (file-exists-p env-file)
+    (let ((output (with-temp-buffer
+                    (call-process "sh" nil t nil "-c"
+                                  (concat ". " env-file " && env"))
+                    (buffer-string))))
+      (dolist (line (split-string output "\n"))
+        (when (string-match "\\`\\([^=]+\\)=\\(.*\\)\\'" line)
+          (setenv (match-string 1 line) (match-string 2 line)))))))
+#+end_src
+
+We then need some way to read in the api keys from gptel, so we define the below two functions.
+
+#+begin_src emacs-lisp :tangle init.el
+
+(defun groq-api-key ()
+  "returns the api key for the groq llm service"
+  (getenv "GROQ_API_KEY"))
+(defun gemini-api-key ()
+  "returns the api key for the groq llm service"
+  (getenv "GEMINI_API_KEY"))
+(defun claude-api-key ()
+  "returns the api key for the groq llm service"
+  (getenv "CLAUDE_API_KEY"))
+
+#+end_src
+
+We then list out the various models from each provider and their capabilities
+
+#+begin_src emacs-lisp :tangle init.el
+;; https://console.groq.com/docs/models
+
+#+end_src
+
+And finaly we install and configure the gptel package.
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package gptel
+  :config
+  ;; configure modele providers
+  (gptel-make-gemini "Gemini"
+		     :key #'gemini-api-key
+		     :stream t)
+  (gptel-make-openai "Groq"
+		     :host "api.groq.com"
+		     :endpoint "/openai/v1/chat/completions"
+		     :key #'groq-api-key
+		     :models '(llama-3.3-70b-versatile
+			       llama3-70b-8192
+			       llama-3.1-8b-instant
+			       deepseek-r1-distill-llama-70b
+			       llama3-8b-8192
+			       qwen-qwq-32b
+			       ))
+  (gptel-make-anthropic "Claude"
+			:key #'claude-api-key
+			:stream t)
+  (setq gptel-model 'llama-3.3-70b-versatile)
+  (setq gptel-backend (gptel-get-backend "Groq"))
+  (setq gptel-default-mode 'org-mode)
+  )
+
+#+end_src
+
 ** Development
 *** Tools
 **** Magit
@@ -535,7 +622,12 @@ We'll fix it by setting some scroll settings.
   (setq  dired-kill-when-opening-new-dired-buffer t)
   (setq dired-dwim-target t))
 #+end_src
-
+**** direnv
+#+begin_src emacs-lisp :tangle init.el
+(use-package direnv
+  :config
+  (direnv-mode))
+#+end_src
 *** LSP
 #+begin_src emacs-lisp :tangle init.el
 (use-package flymake

@@ -82,6 +82,7 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    graphviz
     supabase-cli
     awscli
     deno
@@ -92,7 +93,6 @@ in
     clang-tools
     clang
     clangStdenv
-    inputs.emacs.packages.${system}.emacs-unstable-pgtk
     aseprite
     calibre
     waybar
@@ -251,6 +251,11 @@ in
   };
   services.fwupd.enable = true;
   services.upower.enable = true;
+
+  services.emacs = {
+    enable = true;
+    package = inputs.emacs.packages.${system}.emacs-unstable-pgtk;
+  };
 
   services.syncthing = {
     enable = true;
