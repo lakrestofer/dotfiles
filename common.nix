@@ -9,9 +9,11 @@ let
 in
 {
   # hardware
+  # as of 24.11
   hardware.graphics = {
     package = pkgs-unstable.mesa.drivers; # use the same mesa drivers as hyprland
-    # package32 = pkgs-unstable.pkgsi686Linux.mesa.drivers;
+    enable = true;
+    enable32Bit = true;
   };
 
   # Enable networking
@@ -166,6 +168,8 @@ in
 
   fonts = {
     packages = with pkgs; [
+      nerd-fonts.gohufont
+      nerd-fonts.hack
       ubuntu_font_family
       noto-fonts
       noto-fonts-cjk-sans
@@ -251,12 +255,12 @@ in
   };
   services.fwupd.enable = true;
   services.upower.enable = true;
-
+  
   services.emacs = {
     enable = true;
     package = inputs.emacs.packages.${system}.emacs-unstable-pgtk;
   };
-
+  
   services.syncthing = {
     enable = true;
     user = "fincei";

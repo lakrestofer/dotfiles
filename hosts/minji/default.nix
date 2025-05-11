@@ -1,4 +1,4 @@
-{ ... }:
+{ inputs, pkgs, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -13,4 +13,15 @@
   programs.adb.enable = true;
 
   networking.hostName = "minji"; # Define your hostname.
+
+  boot.initrd.kernelModules = [
+    "amdgpu"
+  ];
+
+  hardware.enableRedistributableFirmware = true;
+
+  programs.steam = {
+    enable = true;
+    package = pkgs.steam;
+  };
 }
