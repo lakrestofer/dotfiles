@@ -480,6 +480,7 @@ mode
   :ensure nil ;; use builtin
   :defer t
   :config
+  (add-hook 'org-mode-hook (lambda () (setq truncate-lines nil)))
   (setq org-link-frame-setup '((file . find-file)))
   (setq org-src-preserve-indentation t)
   (setq org-M-RET-may-split-line nil))
