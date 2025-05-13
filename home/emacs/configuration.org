@@ -707,6 +707,26 @@ And finaly we install and configure the gptel package.
   (meow-tree-sitter-register-defaults))
 #+end_src
 
+** small library of functions
+
+
+#+begin_src emacs-lisp :emacs-lisp :tangle init.el
+(defvar lakrestofer/org-inbox-file "~/vault/notes-org/20250429162227-inbox.org")
+(defun lakrestofer/add-to-org-roam-inbox ()
+  "prompts the user for some though they had and add it to the bottom
+   of my org roam inbox file"
+  (interactive)
+  (progn
+    (org-with-file-buffer
+	lakrestofer/org-inbox-file
+      (let ((thought (read-from-minibuffer "thought: ")))
+	(goto-char (point-max))
+	(org-insert-todo-heading-respect-content)
+	(insert thought)))
+    (message "adding thought to inbox")))
+(global-set-key (kbd "C-c n t") 'lakrestofer/add-to-org-roam-inbox)
+#+end_src
+
 * Fun
 #+begin_src emacs-lisp
 
