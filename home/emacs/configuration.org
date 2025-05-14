@@ -157,7 +157,14 @@ set mono and variabled pitch fonts
 
 #+begin_src emacs-lisp :tangle init.el
 #+end_src
+**** Some other eyecandy
 
+#+begin_src emacs-lisp :tangle init.el
+(use-package minimap
+  :defer t
+    :config
+  (setq minimap-window-location 'right))
+#+end_src
 ** Keybinds and movement
 #+begin_src emacs-lisp :tangle init.el
 (use-package which-key
@@ -605,6 +612,12 @@ And finaly we install and configure the gptel package.
 #+end_src
 
 ** Development
+
+*** settings
+#+begin_src emacs-lisp :tangle init.el
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+#+end_src
+
 *** Tools
 **** Magit
 #+begin_src emacs-lisp :tangle init.el
@@ -706,6 +719,12 @@ And finaly we install and configure the gptel package.
 (use-package meow-tree-sitter
   :config
   (meow-tree-sitter-register-defaults))
+#+end_src
+
+** Writing
+#+begin_src emacs-lisp :tangle init.el
+(use-package olivetti
+  :defer t)
 #+end_src
 
 ** small library of functions
