@@ -88,6 +88,7 @@ E = "join_selections"
 I = "keep_selections"
 C-o = "jump_forward"
 C-n = "jump_backward"
+"ret" = "goto_definition"
 
 [keys.normal.z]
 # unset
