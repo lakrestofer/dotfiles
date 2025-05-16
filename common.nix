@@ -146,7 +146,6 @@ in
     util-linux
     brightnessctl
     wofi
-    swww
     eza
     zoxide
     wl-clipboard

@@ -76,7 +76,6 @@ in
       ### AUTOSTART ###
       #################
       "exec-once" = [
-        "swww-daemon"
         "waybar"
         "systemctl --user start hyprpolkitagent"
         "systemctl --user import-environment QT_QPA_PLATFORMTHEME"
@@ -164,6 +163,7 @@ in
         new_status = "master";
       };
       misc = {
+        background_color = "rgb(1d2021)";
         disable_hyprland_logo = true;
         force_default_wallpaper = 0;
         vrr = 1;
@@ -297,18 +297,14 @@ in
         # Ignore maximize requests from apps. You'll probably like this.
         "suppressevent maximize, class:.*"
         # "Smart gaps" / "No gaps when only workspace (not applied on special workspaces)"
-        "bordersize 0, floating:0, onworkspace:w[t1] s[false]"
-        "rounding 0, floating:0, onworkspace:w[t1] s[false]"
-        "bordersize 0, floating:0, onworkspace:w[tg1] s[false]"
-        "rounding 0, floating:0, onworkspace:w[tg1] s[false]"
-        "bordersize 0, floating:0, onworkspace:f[1] s[false]"
-        "rounding 0, floating:0, onworkspace:f[1] s[false]"
+        # "bordersize 0, floating:0, onworkspace:w[t1] s[false]"
+        # "rounding 0, floating:0, onworkspace:w[t1] s[false]"
+        # "bordersize 0, floating:0, onworkspace:w[tg1] s[false]"
+        # "rounding 0, floating:0, onworkspace:w[tg1] s[false]"
+        # "bordersize 0, floating:0, onworkspace:f[1] s[false]"
+        # "rounding 0, floating:0, onworkspace:f[1] s[false]"
       ];
       workspace = [
-        # "Smart gaps" / "No gaps when only workspace (not applied on special workspaces)"
-        "w[t1] s[false], gapsout:0, gapsin:0"
-        "w[tg1] s[false], gapsout:0, gapsin:0"
-        "f[1] s[false], gapsout:0, gapsin:0"
         # large gaps on special workspace
         "s[true], gapsout:50"
       ];

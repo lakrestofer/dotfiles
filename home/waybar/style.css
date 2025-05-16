@@ -1,7 +1,6 @@
 
-
 /*base background color*/
-@define-color bg_main #282828;
+@define-color bg_main #1d2021;
 @define-color bg_main_tooltip #282828;
 
 
@@ -11,7 +10,7 @@
 @define-color bg_active rgba(100, 100, 100, 0.5);
 
 /*base border color*/
-@define-color border_main rgba(255, 255, 255, 1);
+@define-color border_main #3c3836;
 
 /*text color for entries, views and content in general */
 @define-color content_main white;
@@ -25,15 +24,20 @@
   border-radius: 0;
 	font-family: "Cozette";
   font-size: 20px;
-	
-	
+}
+
+window {
+	/* padding-left: 30px; */
+	/* padding-right: 30px; */
 }
 
 window#waybar {
-  background:  @bg_main;
-  /* border-top: 1px solid @border_main; */
-  color: @content_main;
+	/* padding-left: 30px; */
+	/* padding-right: 30px; */
+	background: @bg_main;
+	border: 2px solid @border_main;
 }
+
 
 tooltip {
   /* background: @bg_main_tooltip; */
@@ -46,17 +50,6 @@ tooltip label{
   /* color: @content_main; */
 }
 
-#custom-os_button {
-	/* font-family: "JetBrainsMono Nerd Font"; */
-  font-size: 24px;
-	padding-left: 12px;
-	padding-right: 20px;
-	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-#custom-os_button:hover {
-  /* background:  @bg_hover; */
-	/* color: @content_main; */
-}
 
 #workspaces {
   color: transparent;
@@ -70,7 +63,7 @@ tooltip label{
 }
 #workspaces button.active {
 	color: @content_main;
-	border-bottom: 3px solid white;
+	/* border-bottom: 3px solid white; */
 }
 #workspaces button.focused {
   color: @bg_active;
@@ -110,33 +103,20 @@ tooltip label{
 	/* color: @content_main; */
 }
 
-#cpu, #disk, #memory {
-	padding:3px;
-}
-
-#temperature {
-	color: transparent;
-	font-size: 0px;
-	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-#temperature.critical {
-	padding-right: 3px;
-	/* color: @warning_color; */
-	font-size: initial;
-	border-bottom: 3px dashed;
+#clock,
+#tray,
+#cpu,
+#memory,
+#battery,
+#network,
+#pulseaudio {
+	margin: 6px 6px 6px 0px;
+	padding-left: 1rem;
+	padding-right: 1rem;
 	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-#window {
-  border-radius: 10px;
-  margin-left: 20px;
-  margin-right: 20px;
-}
 
-#tray{
-  margin-left: 5px;
-  margin-right: 5px;
-}
 #tray > .passive {
 	border-bottom: none;
 }
@@ -147,37 +127,12 @@ tooltip label{
 	border-bottom: 3px solid ;
 }
 #tray > widget {
-	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 #tray > widget:hover {
 	background: @bg_hover;
 }
 
-#pulseaudio {
-	font-family: "JetBrainsMono Nerd Font";
-	padding-left: 3px;
-  padding-right: 3px;
-	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
 #pulseaudio:hover {
  	background: @bg_hover;
 }
 
-#network {
-	padding-left: 3px;
-  padding-right: 3px;
-}
-
-#language {
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#clock {
-  padding-right: 5px;
-  padding-left: 5px;
-	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-#clock:hover {
-	background: @bg_hover;
-}
