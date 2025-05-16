@@ -28,7 +28,6 @@
     };
     helix = {
       url = "github:helix-editor/helix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     spbased = {
       url = "github:lakrestofer/spbased";
@@ -39,10 +38,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    emacs = {
-      url = "github:nix-community/emacs-overlay/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
   outputs =
     {

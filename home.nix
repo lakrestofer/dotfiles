@@ -15,6 +15,7 @@ let
   tofiPath = "${configRoot}/tofi";
   scriptPath = "${configRoot}/scripts";
   emacsPath = "${configRoot}/emacs";
+  lazygitPath = "${configRoot}/lazygit";
   # function aliases
   linkConf = config.lib.file.mkOutOfStoreSymlink;
   system = "x86_64-linux";
@@ -43,6 +44,7 @@ in
   xdg.configFile."waybar".source = linkConf waybarPath;
   xdg.configFile."tofi".source = linkConf tofiPath;
   xdg.configFile."emacs".source = linkConf emacsPath;
+  xdg.configFile."lazygit".source = linkConf lazygitPath;
   home.file.".local/bin".source = linkConf scriptPath;
 
   # git
@@ -192,7 +194,6 @@ in
       bind = [
         # - Applications -
         "$mainMod, return, exec, uwsm app -- $terminal"
-        "$mainMod CTRL, E, exec, emacsclient -c"
         "$mainMod CTRL, return, exec, $terminal --command /home/fincei/.local/bin/notes.sh"
         "$mainMod CTRL, J, exec, $terminal --command /home/fincei/.local/bin/journal.sh"
         "$mainMod, W, exec, uwsm app -- $browser"

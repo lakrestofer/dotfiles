@@ -1,6 +1,8 @@
 theme = "gruvbox_trans"
 
 [editor]
+cursorline = true
+bufferline = "multiple"
 scrolloff = 3
 mouse = true
 middle-click-paste = true
@@ -17,8 +19,23 @@ true-color = true
 rulers = [80]
 end-of-line-diagnostics = "hint"
 
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+# [editor.indent-guides]
+# character = "╎"
+# render = true
+
+[editor.statusline]
+left = ["mode", "spinner", "spacer", "version-control", "file-name"]
+center = [ "diagnostics", "workspace-diagnostics"]
+right = [ "selections", "position", "file-type"]
+
 [editor.inline-diagnostics]
-cursor-line = "warning" # show warnings and errors on the cursorline inline
+cursor-line = "error" # show warnings and errors on the cursorline inline
+other-lines = "disable"
 
 [editor.lsp]
 display-messages = true
@@ -26,10 +43,6 @@ display-inlay-hints = false
 auto-signature-help = true
 snippets = true
 
-[editor.cursor-shape]
-normal = "block"
-insert = "bar"
-select = "underline"
 
 [editor.file-picker]
 hidden = true
@@ -39,10 +52,6 @@ git-ignore = true
 git-global = true
 git-exclude = true
 # max-depth = "None"
-[editor.statusline]
-left = ["mode", "spinner", "spacer", "version-control", "file-name"]
-center = [ "diagnostics", "workspace-diagnostics"]
-right = [ "selections", "position", "file-type"]
 
 [editor.auto-pairs]
 '(' = ')'
@@ -63,9 +72,9 @@ render = "none"
 [keys.normal]
 # unset keys
 O = "no_op"
-A-o = "no_op"
-A-i = "no_op"
-A-n = "no_op"
+# A-o = "no_op"
+# A-i = "no_op"
+# A-n = "no_op"
 N = "no_op"
 C-i = "no_op"
 # set them
@@ -89,6 +98,7 @@ I = "keep_selections"
 C-o = "jump_forward"
 C-n = "jump_backward"
 "ret" = "goto_definition"
+C-g = [":new", ":insert-output lazygit", ":buffer-close!", ":redraw"]
 
 [keys.normal.z]
 # unset
@@ -154,6 +164,8 @@ s = "hsplit_new"
 C-v = "vsplit_new"
 v = "vsplit_new"
 
+[keys.normal.space]
+e = [":new", ":insert-output yazi", ":buffer-close!", ":redraw"]
 [keys.normal.space.w]
 #unset
 C-h= "no_op"

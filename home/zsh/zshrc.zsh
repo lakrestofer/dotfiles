@@ -62,3 +62,5 @@ source ~/.zshplugins/powerlevel10k/powerlevel10k.zsh-theme
 source ~/.p10k.zsh
 eval "$(zoxide init zsh --cmd cd)"
 eval "$(direnv hook zsh)"
+
+source ~/keys.sh

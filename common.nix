@@ -83,7 +83,10 @@ in
   environment.localBinInPath = true;
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [    
+  environment.systemPackages = with pkgs; [
+    lsp-ai
+    yazi
+    lazygit
     graphviz
     supabase-cli
     awscli
@@ -255,12 +258,6 @@ in
   };
   services.fwupd.enable = true;
   services.upower.enable = true;
-  
-  services.emacs = {
-    enable = true;
-    package = inputs.emacs.packages.${system}.emacs-unstable-pgtk;
-  };
-  
   services.syncthing = {
     enable = true;
     user = "fincei";

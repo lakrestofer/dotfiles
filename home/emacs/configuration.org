@@ -41,7 +41,7 @@ without the garbage collector pausing execution for cleanup.
 
 ;; disable the startup screen
 (setq-default inhibit-startup-message t
-  	      initial-scratch-message "")
+          initial-scratch-message "")
 
 ;; we temporarily allow the gc to leak memory
 (setq gc-cons-threshold most-positive-fixnum)
@@ -120,6 +120,9 @@ Since elpacka downloads packages asynchronously we need to block manually here
 (setq use-dialog-box nil)
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t)
+(setq tab-width 4)
+(setq-default indent-tabs-mode nil)
+(setq backward-delete-char-untabify-method 'hungry)
 #+end_src
 ** Theming and visuals
 **** Theme
@@ -288,6 +291,18 @@ We'll fix it by setting some scroll settings.
 ╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝╚══════╝
 #+end_src
 
+#+begin_src emacs-lisp
+(let* ((quote-path
+        (expand-file-name
+         "quotes.txt"
+         user-emacs-directory))
+       (buffer-content
+        (with-temp-buffer
+          (insert-file-contents quote-path)
+          (buffer-string))))
+  (split-string buffer-content "\n"))
+#+end_src
+
 #+begin_src emacs-lisp :tangle init.el
 (use-package page-break-lines)
 (use-package projectile)
@@ -298,6 +313,11 @@ We'll fix it by setting some scroll settings.
   (setq dashboard-startup-banner (expand-file-name "banner.txt" user-emacs-directory))
   (setq dashboard-banner-logo-title nil)
   (setq dashboard-center-content t)
+  (setq dashboard-projects-show-base 'projectile)
+  (setq dashboard-items
+        '((recents . 5)
+          (projects . 5)
+          (agenda . 5)))
   (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
   (add-hook 'elpaca-after-init-hook #'dashboard-insert-startupify-lists)
   (add-hook 'elpaca-after-init-hook #'dashboard-initialize)
@@ -430,7 +450,7 @@ We'll fix it by setting some scroll settings.
   (setq tab-always-indent 'complete)
   ;; Enable auto completion and configure quitting
   (setq corfu-auto t
-	corfu-quit-no-match 'separator) ;; or t
+    corfu-quit-no-match 'separator) ;; or t
   (setq ispell-program-name (executable-find "hunspell")
         ispell-dictionary   "en_US")
   (add-hook 'corfu-mode-hook
@@ -514,7 +534,7 @@ mode
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . org-roam-node-find)
          ("C-c n c" . org-roam-node-capture)
-	 ("C-c n d" . org-roam-dailies-goto-today)
+         ("C-c n d" . org-roam-dailies-goto-today)
          ("C-c n i" . org-roam-node-insert))
   :config
   (setq org-link-descriptive t) ;; hide links, and show them when the cursor is on them
@@ -588,22 +608,22 @@ And finaly we install and configure the gptel package.
   :config
   ;; configure modele providers
   (gptel-make-gemini "Gemini"
-		     :key #'gemini-api-key
-		     :stream t)
+                     :key #'gemini-api-key
+                     :stream t)
   (gptel-make-openai "Groq"
-		     :host "api.groq.com"
-		     :endpoint "/openai/v1/chat/completions"
-		     :key #'groq-api-key
-		     :models '(llama-3.3-70b-versatile
-			       llama3-70b-8192
-			       llama-3.1-8b-instant
-			       deepseek-r1-distill-llama-70b
-			       llama3-8b-8192
-			       qwen-qwq-32b
-			       ))
+                     :host "api.groq.com"
+                     :endpoint "/openai/v1/chat/completions"
+                     :key #'groq-api-key
+                     :models '(llama-3.3-70b-versatile
+                               llama3-70b-8192
+                               llama-3.1-8b-instant
+                               deepseek-r1-distill-llama-70b
+                               llama3-8b-8192
+                               qwen-qwq-32b
+                               ))
   (gptel-make-anthropic "Claude"
-			:key #'claude-api-key
-			:stream t)
+                        :key #'claude-api-key
+                        :stream t)
   (setq gptel-model 'llama-3.3-70b-versatile)
   (setq gptel-backend (gptel-get-backend "Groq"))
   (setq gptel-default-mode 'org-mode)
@@ -702,7 +722,7 @@ And finaly we install and configure the gptel package.
 (setq major-mode-remap-alist
       '((python-mode . python-ts-mode)
         (css-mode . css-ts-mode)
-	;; (rust-mode . rust-ts-mode)
+        ;; (rust-mode . rust-ts-mode)
         (typescript-mode . typescript-ts-mode)
         (js2-mode . js-ts-mode)
         (bash-mode . bash-ts-mode)
@@ -729,7 +749,6 @@ And finaly we install and configure the gptel package.
 
 ** small library of functions
 
-
 #+begin_src emacs-lisp :emacs-lisp :tangle init.el
 (defvar lakrestofer/org-inbox-file "~/vault/notes-org/20250429162227-inbox.org")
 (defun lakrestofer/add-to-org-roam-inbox ()
@@ -738,11 +757,11 @@ And finaly we install and configure the gptel package.
   (interactive)
   (progn
     (org-with-file-buffer
-	lakrestofer/org-inbox-file
+        lakrestofer/org-inbox-file
       (let ((thought (read-from-minibuffer "thought: ")))
-	(goto-char (point-max))
-	(org-insert-todo-heading-respect-content)
-	(insert thought)))
+        (goto-char (point-max))
+        (org-insert-todo-heading-respect-content)
+        (insert thought)))
     (message "adding thought to inbox")))
 (global-set-key (kbd "C-c n t") 'lakrestofer/add-to-org-roam-inbox)
 #+end_src
