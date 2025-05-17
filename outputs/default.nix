@@ -14,29 +14,6 @@ let
 in
 {
   nixosConfigurations = {
-    amanda = nixpkgs.lib.nixosSystem {
-      inherit system;
-      specialArgs = {
-        inherit inputs;
-        inherit pkgs;
-      };
-      modules = [
-        ./hosts/amanda # thinkpad x220 specific configuration
-        ./common.nix # base configuration
-        kmonad.nixosModules.default
-        nixos-hardware.nixosModules.lenovo-thinkpad-x220
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.fincei = import ./home.nix;
-          home-manager.backupFileExtension = "backup";
-          home-manager.extraSpecialArgs = {
-            inherit inputs;
-          };
-        }
-      ];
-    };
     minji = nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = {
@@ -44,8 +21,8 @@ in
         inherit pkgs;
       };
       modules = [
-        ./hosts/minji # desktop
-        ./common.nix # base configuration
+        ../hosts/minji # desktop
+        ../common.nix # base configuration
         home-manager.nixosModules.home-manager
         nixos-hardware.nixosModules.common-cpu-amd
         nixos-hardware.nixosModules.common-cpu-amd-pstate
@@ -55,7 +32,7 @@ in
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.fincei = import ./hosts/minji/home.nix;
+          home-manager.users.fincei = import ../hosts/minji/home.nix;
           home-manager.backupFileExtension = "backup";
           home-manager.extraSpecialArgs = {
             inherit inputs;
@@ -70,15 +47,15 @@ in
         inherit pkgs;
       };
       modules = [
-        ./hosts/selbeiskami # thinkpad x220 specific configuration
-        ./common.nix # base configuration
+        ../hosts/selbeiskami # thinkpad x220 specific configuration
+        ../common.nix # base configuration
         kmonad.nixosModules.default
         nixos-hardware.nixosModules.lenovo-thinkpad-t14
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.fincei = import ./home.nix;
+          home-manager.users.fincei = import ../home.nix;
           home-manager.backupFileExtension = "backup";
           home-manager.extraSpecialArgs = {
             inherit inputs;
@@ -86,18 +63,5 @@ in
         }
       ];
     };
-    nucbox = nixpkgs.lib.nixosSystem {
-      inherit system;
-      specialArgs = {
-        inherit inputs;
-        inherit pkgs;
-      };
-      modules = [ ./hosts/nucbox ];
-    };
   };
-  packages.${system} = { };
-  # === shells ===
-  # devShells.${system} = {
-  #   # default = pkgs.mkShell { };
-  # };
 }
