@@ -6,20 +6,26 @@
   ...
 }@inputs:
 let
-  system = "x86_64-linux";
-  pkgs = import nixpkgs {
+  inherit (inputs.nixpkgs) lib;
+  mylib = import ../lib { inherit lib; };
+
+  genSpecialArgs = system: {
+    inherit mylib;
+    inherit inputs;
     inherit system;
-    config.allowUnfree = true;
+
+    pkgs = import nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+    };
   };
+  system = "x86_64-linux";
+  specialArgs = (genSpecialArgs system);
 in
 {
   nixosConfigurations = {
     minji = nixpkgs.lib.nixosSystem {
-      inherit system;
-      specialArgs = {
-        inherit inputs;
-        inherit pkgs;
-      };
+      inherit system specialArgs;
       modules = [
         ../hosts/minji # desktop
         ../common.nix # base configuration
@@ -32,35 +38,24 @@ in
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.fincei = import ../hosts/minji/home.nix;
+          home-manager.users.fincei.imports = [
+            (import ../hosts/minji/home.nix)
+          ];
           home-manager.backupFileExtension = "backup";
-          home-manager.extraSpecialArgs = {
-            inherit inputs;
-          };
+          home-manager.extraSpecialArgs = specialArgs;
         }
       ];
     };
-    selbeiskami = nixpkgs.lib.nixosSystem {
-      inherit system;
-      specialArgs = {
-        inherit inputs;
-        inherit pkgs;
-      };
-      modules = [
+    selbeiskami = mylib.nixosSystem {
+      inherit system specialArgs;
+      nixos-modules = [
         ../hosts/selbeiskami # thinkpad x220 specific configuration
         ../common.nix # base configuration
         kmonad.nixosModules.default
         nixos-hardware.nixosModules.lenovo-thinkpad-t14
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.fincei = import ../home.nix;
-          home-manager.backupFileExtension = "backup";
-          home-manager.extraSpecialArgs = {
-            inherit inputs;
-          };
-        }
+      ];
+      home-modules = [
+        (import ../home.nix)
       ];
     };
   };

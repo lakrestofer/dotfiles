@@ -1,17 +1,14 @@
 {
   inputs,
   pkgs,
+  system,
   ...
 }:
-let
-  pkgs-unstable = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-  system = "x86_64-linux";
-in
 {
   # hardware
   # as of 24.11
   hardware.graphics = {
-    package = pkgs-unstable.mesa.drivers; # use the same mesa drivers as hyprland
+    package = pkgs.mesa.drivers; # use the same mesa drivers as hyprland
     enable = true;
     enable32Bit = true;
   };
