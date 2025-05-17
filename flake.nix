@@ -1,6 +1,6 @@
 {
   description = "Configuration file for my nixos systems";
-
+  outputs = inputs: import ./outputs.nix inputs;
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     hyprland = {
@@ -39,5 +39,4 @@
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
-  outputs = inputs: import ./outputs inputs;
 }
