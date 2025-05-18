@@ -86,9 +86,10 @@
     },
     "disk": {
         "interval": 30,
-        "format": "disk:{specific_used:0.2f}/{specific_free:0.2f}GB",
+        "format": "disk:{percentage_used}%",
         "path": "/",
-        "tooltip": false,
+        "tooltip": true,
+        "tooltip-format": "disk:{specific_used:0.2f}/{specific_free:0.2f}GB",
         "unit": "GB",
     },
     "memory": {
