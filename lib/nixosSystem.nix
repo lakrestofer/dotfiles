@@ -6,7 +6,7 @@
   nixos-modules,
   home-modules ? [ ],
   ...
-}:
+}@args:
 let
   inherit (inputs) nixpkgs home-manager;
   specialArgs = (genSpecialArgs system);
