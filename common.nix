@@ -30,6 +30,7 @@
   users.defaultUserShell = pkgs.zsh;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
+
   users.users.fincei = {
     isNormalUser = true;
     description = "fincei";
@@ -43,6 +44,9 @@
       "adbusers"
     ];
   };
+  nix.settings.trusted-users = [
+    "fincei"
+  ];
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -81,6 +85,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    devenv
     lsp-ai
     yazi
     lazygit
