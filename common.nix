@@ -26,6 +26,12 @@
   programs.zsh = {
     enable = true;
   };
+
+  hardware.opentabletdriver = {
+    enable = true;
+    daemon.enable = true;
+  };
+
   programs.nix-ld.enable = true;
   users.defaultUserShell = pkgs.zsh;
 
@@ -35,6 +41,7 @@
     isNormalUser = true;
     description = "fincei";
     extraGroups = [
+      (pkgs.lib.mkForce "ydotool")
       "docker"
       "networkmanager"
       "wheel"
@@ -50,6 +57,11 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
+  programs.ydotool = {
+    enable = true;
+    group = "ydotool";
+  };
 
   nix.gc = {
     automatic = true;
@@ -85,6 +97,10 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    obsidian
+    # xf86_input_wacom
+    # wacomtablet
+    # libwacom
     devenv
     lsp-ai
     yazi
@@ -108,6 +124,7 @@
     inputs.spbased.packages.${system}.default
     inputs.spbased.packages.${system}.flashcard
     inputs.spbased.packages.${system}.reading
+    inputs.spbased.packages.${system}.flashcard_image
     git-filter-repo
     vscode
     hyprpicker

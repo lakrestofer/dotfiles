@@ -182,6 +182,9 @@ in
         touchpad.natural_scroll = false;
         repeat_rate = 50;
         repeat_delay = 200;
+        tablet = {
+          output = "current";
+        };
       };
       gestures = {
         workspace_swipe = false;
@@ -199,6 +202,7 @@ in
         "$mainMod, W, exec, uwsm app -- $browser"
         "$mainMod, space, exec, $menu"
         ''$mainMod SHIFT,P,exec,grim -g "$(slurp)" - | wl-copy''
+        "$mainMod CTRL, S, exec, flashcard_image.py add"
         # - Manage currently focused application -
         "$mainMod, Q, killactive,"
         # - Manage hyprland -

@@ -25,6 +25,7 @@
         "temperature",
         "memory",
         "disk",
+        "tray",
         "pulseaudio",
         "network",
         "battery"
