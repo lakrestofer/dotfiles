@@ -8,7 +8,7 @@
   # hardware
   # as of 24.11
   hardware.graphics = {
-    package = pkgs.mesa.drivers; # use the same mesa drivers as hyprland
+    package = pkgs.mesa;
     enable = true;
     enable32Bit = true;
   };
@@ -62,7 +62,9 @@
       "nix-command"
       "flakes"
     ];
-    substituters = [ "https://hyprland.cachix.org" ];
+    substituters = [
+      "https://hyprland.cachix.org"
+    ];
     trusted-public-keys = [
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
@@ -104,7 +106,6 @@
     calibre
     waybar
     tofi
-    inputs.zen-browser.packages."${system}".default
     inputs.spbased.packages.${system}.default
     inputs.spbased.packages.${system}.flashcard
     inputs.spbased.packages.${system}.reading
