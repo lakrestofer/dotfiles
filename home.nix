@@ -80,8 +80,8 @@ in
       ### AUTOSTART ###
       #################
       "exec-once" = [
-        "walker --gapplication-service"
-        "waybar"
+        "uwsm app -- walker --gapplication-service"
+        "uwsm app -- waybar"
         "systemctl --user start hyprpolkitagent"
         "systemctl --user import-environment QT_QPA_PLATFORMTHEME"
       ];
