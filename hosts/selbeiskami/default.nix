@@ -3,8 +3,24 @@
   imports = [
     ./hardware-configuration.nix
   ];
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # silent boot configuration
+  boot = {
+    loader = {
+      timeout = 0;
+      systemd-boot.enable = true;
+      systemd-boot.editor = false;
+      efi.canTouchEfiVariables = true;
+    };
+    consoleLogLevel = 3;
+    kernelParams = [
+      "quiet"
+      "splash"
+      "boot.shell_on_fail"
+      "udev.log_priority=3"
+      "rd.systemd.show_status=auto"
+    ];
+    initrd.verbose = false;
+  };
 
   networking.hostName = "selbeiskami"; # Define your hostname.
 

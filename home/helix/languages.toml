@@ -131,7 +131,7 @@ model = "groq_llama_3_3_70b_versatile"
 
 [language-server.lsp-ai.config.chat.parameters]
 max_context = 4096
-max_tokens = 1024
+max_tokens = 100000
 messages = [ 
   { role = "system", content = "You are a helpful assistant chatbot within the text editor helix." }
 ]

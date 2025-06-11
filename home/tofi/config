@@ -1,42 +1,34 @@
+# ======== Fonts  ======== 
 font = "Cozette"
 font-size = 24
 font-features = ""
 font-variations = ""
-hint-font = true
-text-color = #FFFFFF
-prompt-background = #00000000
-prompt-background-padding = 0
-prompt-background-corner-radius = 0
-placeholder-color = #FFFFFFA8
-placeholder-background = #00000000
-placeholder-background-padding = 0
-placeholder-background-corner-radius = 0
-input-background = #00000000
-input-background-padding = 0
-input-background-corner-radius = 0
-default-result-background = #00000000
-default-result-background-padding = 0
-default-result-background-corner-radius = 0
-selection-color = #F92672
-selection-background = #00000000
-selection-background-padding = 0
-selection-background-corner-radius = 0
-selection-match-color = #00000000
-text-cursor-style = bar
+# hint-font = true
+# hint-font = false
+
+# ======== Text theming ======== 
+text-color = #ebdbb2
+selection-color = #458588
+
+# ======== Text cursor theme ======== 
+text-cursor-style = block
 text-cursor-corner-radius = 0
-prompt-text = "run: "
-prompt-padding = 0
+
+# ======== Text layout ======== 
+prompt-text = "> "
 placeholder-text = ""
-num-results = 0
+# num-results = 10
 result-spacing = 0
 horizontal = false
 min-input-width = 0
-width = 100%
-height = 100%
-background-color = #000A
-outline-width = 4
-outline-color = #080800
-border-width = 4
+
+# ======== Window theming ======== 
+width = 1280
+height = 720
+background-color = #1d2021
+outline-width = 0
+outline-color = #d79921
+border-width = 3
 border-color = #d79921
 corner-radius = 0
 padding-top = 8
@@ -45,24 +37,19 @@ padding-left = 8
 padding-right = 8
 clip-to-padding = true
 scale = true
+
+# ======== Window positioning ======== 
 output = ""
 anchor = center
 exclusive-zone = -1
-margin-top = 0
-margin-bottom = 0
-margin-left = 0
-margin-right = 0
+
+# ======== Behaviour  ======== 
 hide-cursor = false
-text-cursor = false
+text-cursor = true
 history = true
-matching-algorithm = normal
+matching-algorithm = fuzzy
 require-match = true
-auto-accept-single = false
-hide-input = false
-hidden-character = "*"
-physical-keybindings = true
-print-index = false
+physical-keybindings = false
 drun-launch = false
 late-keyboard-init = true
-multi-instance = false
-ascii-input = false
+ascii-input = true

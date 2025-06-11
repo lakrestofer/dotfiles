@@ -15,6 +15,7 @@ let
   tofiPath = "${configRoot}/tofi";
   scriptPath = "${configRoot}/scripts";
   emacsPath = "${configRoot}/emacs";
+  walkerPath = "${configRoot}/walker";
   lazygitPath = "${configRoot}/lazygit";
   # function aliases
   linkConf = config.lib.file.mkOutOfStoreSymlink;
@@ -28,6 +29,7 @@ in
   programs.home-manager.enable = true; # allow home manager to manage itself
   # imports
   imports = [
+    inputs.walker.homeManagerModules.default
     ./home/zsh
     ./wallpaper
   ];
@@ -44,6 +46,7 @@ in
   xdg.configFile."waybar".source = linkConf waybarPath;
   xdg.configFile."tofi".source = linkConf tofiPath;
   xdg.configFile."emacs".source = linkConf emacsPath;
+  xdg.configFile."walker".source = linkConf walkerPath;
   xdg.configFile."lazygit".source = linkConf lazygitPath;
   home.file.".local/bin".source = linkConf scriptPath;
 
@@ -69,13 +72,15 @@ in
       ### MY PROGRAMS ###
       ###################
       "$terminal" = "alacritty";
-      "$menu" =
-        "tofi-drun --font ${pkgs.cozette}/share/fonts/truetype/CozetteVector.ttf --late-keyboard-init=true";
+      "$menu" = "walker";
+      # "$menu" =
+      #   "tofi-drun --font ${pkgs.cozette}/share/fonts/truetype/CozetteVector.ttf --late-keyboard-init=true";
       "$browser" = "brave";
       #################
       ### AUTOSTART ###
       #################
       "exec-once" = [
+        "walker --gapplication-service"
         "waybar"
         "systemctl --user start hyprpolkitagent"
         "systemctl --user import-environment QT_QPA_PLATFORMTHEME"
@@ -98,7 +103,7 @@ in
         # layout
         layout = "dwindle";
         # border color
-        "col.active_border" = "rgb(fabd2f)";
+        "col.active_border" = "rgb(458588)";
         "col.inactive_border" = "rgb(928374)";
         # other options
         no_focus_fallback = true;
