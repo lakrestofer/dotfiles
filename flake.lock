@@ -685,13 +685,13 @@
         "revCount": 983,
         "submodules": true,
         "type": "git",
-        "url": "https://github.com/kmonad/kmonad?dir=nix"
+        "url": "https://github.com/kmonad/kmonad"
       },
       "original": {
         "dir": "nix",
         "submodules": true,
         "type": "git",
-        "url": "https://github.com/kmonad/kmonad?dir=nix"
+        "url": "https://github.com/kmonad/kmonad"
       }
     },
     "nixos-hardware": {
