@@ -113,8 +113,6 @@
     waybar
     tofi
     inputs.spbased.packages.${system}.default
-    inputs.spbased.packages.${system}.flashcard
-    inputs.spbased.packages.${system}.reading
     git-filter-repo
     vscode
     hyprpicker
