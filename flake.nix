@@ -11,6 +11,5 @@
     helix.url = "github:helix-editor/helix";
     spbased.url = "github:lakrestofer/spbased";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    walker.url = "github:abenz1267/walker";
   };
 }

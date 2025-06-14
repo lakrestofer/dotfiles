@@ -22,7 +22,7 @@
 	box-shadow: none;
   border: none;
   border-radius: 0;
-	font-family: "Cozette";
+	font-family: "CozetteVector";
   font-size: 20px;
 }
 
@@ -35,7 +35,8 @@ window#waybar {
 	/* padding-left: 30px; */
 	/* padding-right: 30px; */
 	background: @bg_main;
-	border: 2px solid @border_main;
+	/* border: 2px solid @border_main; */
+	/* border-radius: 8px; */
 }
 
 
@@ -115,7 +116,6 @@ tooltip label{
 	padding-right: 1rem;
 	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
-
 
 #tray > .passive {
 	border-bottom: none;

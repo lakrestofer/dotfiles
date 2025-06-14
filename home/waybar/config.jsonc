@@ -4,15 +4,17 @@
     "mod": "dock",
     "exclusive": true,
     "gtk-layer-shell": true,
+    "reload_style_on_change": true,
     "margin-bottom": -1,
     "passthrough": false,
     "height": 42,
-    "margin-top": 3,
-    "margin-right": 3,
+    // "width": 42,
+    "margin-top": 8,
+    "margin-right": 8,
     "margin-bottom": 0,
-    "margin-left": 3,
-    "padding-left": 5,
-    "padding-right": 5,
+    "margin-left": 8,
+    "padding-left": 8,
+    "padding-right": 8,
 
     "modules-left": [
         "hyprland/workspaces"
@@ -32,19 +34,20 @@
 
     
     "hyprland/workspaces": {
-        // "persistent-workspaces": {
-        //     "*": 10,
-        // },
-        // "all-outputs": true,
         "icon-size": 32,
         "spacing": 16,
-        "on-scroll-up": "hyprctl dispatch workspace r+1",
-        "on-scroll-down": "hyprctl dispatch workspace r-1",
         "format": "{icon}",
-        "show-special": true,
         "format-icons": {
-            "special": "✹",
+            "1": "⚀",
+            "2": "⚁",
+            "3": "⚂",
+            "4": "⚃",
+            "5": "⚄",
+            "6": "⚅",
+		        "default": "",
+            "special": "✮",
         },
+        "show-special": true
     },
 
     
@@ -67,14 +70,14 @@
         "icon-size": 32,
         "tooltip": false
     },
-    "custom/os_button": {
+    "custom/os_icon": {
         "format": "",
         "on-click": "tofi-drun",
         "tooltip": false
     },
     "cpu": {
         "interval": 5,
-        "format": "cpu:{usage}%",
+        "format": "{usage}%",
         "max-length": 10
     },
     "temperature": {
@@ -115,16 +118,17 @@
             "warning": 30,
             "critical": 20
         },
-        "format": "bat: {capacity}%",
-        "format-charging": "bat (charging): {capacity}%",
-        "format-plugged": "bat (plugged): {capacity}%",
-        "format-alt": "{time} {icon}"
+        "format": "{icon} {capacity}%",
+        "format-icons": ["", "", "", "", ""],
+        "tooltip": true,
+        "tooltip-format": "{capacity}%\n{time} until discharged"
     },
     "pulseaudio": {
         "max-volume": 150,
         "scroll-step": 10,
-        "format": "audio: {volume}%",
-        "format-muted": "audio: muted",
+        "format": "{icon}",
+        "format-icons": [ "", "", ""],
+        "format-muted": "",
         "on-click": "alacritty -e pulsemixer"
     }
 }

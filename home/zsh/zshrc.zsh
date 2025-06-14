@@ -45,16 +45,18 @@ unsetopt beep notify
 bindkey -e # emacs bindings in terminal
 
 # aliases
-alias \
-    cp="cp -iv" \
-    mv="mv -iv" \
-    rm="rm -vI" \
-    ls="eza --icons" \
-    grep="grep --color=auto" \
-    e="hx" \
-    z="zathura" \
-    btw="fastfetch"
-
+alias cp="cp -iv"
+alias mv="mv -iv"
+alias rm="rm -vI"
+alias ls="eza --icons"
+alias grep="grep --color=auto"
+alias e="hx"
+alias z="zathura"
+alias btw="fastfetch"
+alias gs="git status"
+alias ga="git add"
+alias gc="git commit"
+    
 # system plugins
 source ~/.zshplugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zshplugins/zsh-autosuggestions/zsh-autosuggestions.zsh
