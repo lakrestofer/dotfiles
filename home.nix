@@ -35,7 +35,6 @@ in
   # imports
   imports = [
     # ./home/zsh
-    ./wallpaper
   ];
   # user packages (only installed per user)
   home.packages = [ ];
