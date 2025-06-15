@@ -4,9 +4,6 @@
   inputs = {
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     niri.url = "github:sodiboo/niri-flake";
-    hyprland.url = "github:hyprwm/Hyprland";
-    hypridle.url = "github:hyprwm/hypridle";
-    hyprlock.url = "github:hyprwm/hyprlock";
     kmonad.url = "git+https://github.com/kmonad/kmonad?submodules=1&dir=nix";
     home-manager.url = "github:nix-community/home-manager";
     helix.url = "github:helix-editor/helix";

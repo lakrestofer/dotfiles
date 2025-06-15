@@ -62,10 +62,8 @@
       "flakes"
     ];
     substituters = [
-      "https://hyprland.cachix.org"
     ];
     trusted-public-keys = [
-      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
   };
@@ -84,6 +82,7 @@
   virtualisation.docker.enable = true;
   environment.localBinInPath = true;
   environment.systemPackages = with pkgs; [
+    python
     swaybg
     glow
     hledger
@@ -213,24 +212,6 @@
     enable = true;
     package = pkgs.niri-unstable;
     # settings = null;
-  };
-
-  programs.hyprland = {
-    enable = true;
-    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-    portalPackage =
-      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
-    withUWSM = true;
-  };
-  programs.uwsm = {
-    enable = true;
-    waylandCompositors = {
-      hyprland = {
-        prettyName = "Hyprland";
-        comment = "Hyprland compositor managed by UWSM";
-        binPath = "/run/current-system/sw/bin/Hyprland";
-      };
-    };
   };
 
   # List services that you want to enable:
