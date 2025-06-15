@@ -1,0 +1,8 @@
+height=40%
+width=40%
+prompt=
+matching=fuzzy
+insensitive=true
+location=center
+gtk_dark=true
+filter_rate=20

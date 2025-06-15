@@ -70,11 +70,6 @@
         "icon-size": 32,
         "tooltip": false
     },
-    "custom/os_icon": {
-        "format": "",
-        "on-click": "tofi-drun",
-        "tooltip": false
-    },
     "cpu": {
         "interval": 5,
         "format": "{usage}%",

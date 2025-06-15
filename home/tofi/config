@@ -48,6 +48,6 @@ hide-cursor = false
 text-cursor = true
 history = true
 require-match = true
-drun-launch = false
+drun-launch = true
 late-keyboard-init = true
 ascii-input = true

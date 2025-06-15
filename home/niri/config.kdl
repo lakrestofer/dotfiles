@@ -1,0 +1,222 @@
+spawn-at-startup "waybar"
+
+input {
+    keyboard {
+        xkb {
+            layout "us"
+            variant "altgr-intl"
+        }
+        repeat-delay 150
+        repeat-rate 50
+}
+
+    touchpad {
+        // off
+        tap
+        // dwt
+        // dwtp
+        // drag false
+        // drag-lock
+        natural-scroll
+        // accel-speed 0.2
+        // accel-profile "flat"
+        // scroll-method "two-finger"
+        // disabled-on-external-mouse
+    }
+
+    mouse {
+        // off
+        // natural-scroll
+        // accel-speed 0.2
+        // accel-profile "flat"
+        // scroll-method "no-scroll"
+    }
+
+    trackpoint {
+        // off
+        // natural-scroll
+        // accel-speed 0.2
+        // accel-profile "flat"
+        // scroll-method "on-button-down"
+        // scroll-button 273
+        // middle-emulation
+    }
+
+    // Uncomment this to make the mouse warp to the center of newly focused windows.
+    warp-mouse-to-focus
+    focus-follows-mouse
+}
+output "Acer Technologies VG271U M3 1322131231233" {
+    mode "2560x1440"
+    scale 1.25
+    variable-refresh-rate
+    focus-at-startup
+    transform "normal"
+    position x=0 y=0
+}
+
+output "Dell Inc. DELL P2317H V2G5172OAGJB" {
+    mode "1920x1080"
+    transform "normal"
+    position x=31 y=1152
+}
+
+layout {
+    background-color "#1d2021"
+    gaps 16
+    // center-focused-column "always"
+
+    // You can customize the widths that "switch-preset-column-width" (Mod+R) toggles between.
+    preset-column-widths {
+        proportion 1.0
+        proportion 0.66667
+        proportion 0.5
+        proportion 0.33333
+    }
+    // preset-window-heights { }
+    default-column-width { proportion 1.0; }
+    // `draw-border-with-background`.
+    focus-ring {
+        off
+    }
+    border {
+        // off
+        width 4
+        urgent-color "#fb4934"
+        active-gradient from="#d79921" to="#98971a" angle=45
+        inactive-gradient from="#a89984" to="#808080" angle=45
+    }
+    shadow {
+        // Uncomment the next line to enable shadows.
+        // on
+        // draw-behind-window true
+        softness 30
+        spread 5
+        offset x=0 y=5
+        color "#0007"
+    }
+
+    struts {
+        left 20
+        right 20
+        // top 64
+        // bottom 64
+    }
+}
+
+prefer-no-csd
+screenshot-path "~/Pictures/Screenshots/screenshot_%Y-%m-%d %H-%M-%S.png"
+animations {
+    // Uncomment to turn off all animations.
+    // off
+
+    // Slow down all animations by this factor. Values below 1 speed them up instead.
+    // slowdown 3.0
+}
+
+window-rule {
+    draw-border-with-background false
+}
+
+window-rule {
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    open-floating true
+}
+
+binds {
+    // ========================================================================
+    // NIRI BINDINGS
+    // ========================================================================
+    Mod+Shift+Slash { show-hotkey-overlay; }
+    Mod+Ctrl+Q { quit; }
+    Ctrl+Alt+Delete { quit; }
+    Mod+Shift+P { power-off-monitors; }
+
+    // ========================================================================
+    // PROGRAMS
+    // ========================================================================
+    Mod+Return hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
+    Mod+Ctrl+Return hotkey-overlay-title="Open notes" { spawn "alacritty" "--command" "notes.sh"; }
+    Mod+Ctrl+J hotkey-overlay-title="Open journal" { spawn "alacritty" "--command" "journal.sh"; }
+    Mod+W hotkey-overlay-title="Open a Browser: brave" { spawn "brave"; }
+    Mod+Space hotkey-overlay-title="Run an Application" { spawn "wofi" "--show" "drun"; }
+    Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
+    Print { screenshot; }
+    Ctrl+Print { screenshot-screen; }
+    Alt+Print { screenshot-window; }
+
+    // ========================================================================
+    // MEDIA KEYS
+    // ========================================================================
+    XF86AudioRaiseVolume  allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
+    XF86AudioLowerVolume  allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
+    XF86AudioMute         allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    XF86AudioMicMute      allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+    XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl s 10%+"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl s 10%-"; }
+    
+    // ========================================================================
+    // WINDOW MANIPULATION
+    // ========================================================================
+    Mod+Q repeat=false { close-window; }
+
+    Mod+Ctrl+Space repeat=false { toggle-overview; }
+    Mod+Tab { focus-workspace-previous; }
+
+    // focus
+    Mod+N     { focus-column-left; }
+    Mod+E     { focus-window-or-monitor-down; }
+    Mod+I     { focus-window-or-monitor-up; }
+    Mod+O     { focus-column-right; }
+
+    Mod+Ctrl+E     { focus-workspace-down; }
+    Mod+Ctrl+I     { focus-workspace-up; }
+
+    Mod+L { focus-workspace 1; }
+    Mod+U { focus-workspace 2; }
+    Mod+Y { focus-workspace 3; }
+    Mod+SemiColon { focus-workspace 4; }
+
+    // move
+    Mod+Ctrl+Shift+E     { move-workspace-down; }
+    Mod+Ctrl+Shift+I     { move-workspace-up; }
+   
+    Mod+Shift+N     { move-column-left; }
+    Mod+Shift+E     { move-window-down-or-to-workspace-down; }
+    Mod+Shift+I     { move-window-up-or-to-workspace-up; }
+    Mod+Shift+O     { move-column-right; }
+
+    Mod+Shift+l { move-window-to-workspace 1; }
+    Mod+Shift+u { move-window-to-workspace 2; }
+    Mod+Shift+y { move-window-to-workspace 3; }
+    Mod+Shift+SemiColon { move-window-to-workspace 4; }
+    
+    // resize 
+    Mod+Alt+N { set-column-width "-10%"; }
+    Mod+Alt+O { set-column-width "+10%"; }
+    Mod+Alt+E { set-window-height "-10%"; }
+    Mod+Alt+I { set-window-height "+10%"; }
+
+    // layout
+    Mod+BracketLeft  { consume-or-expel-window-left; }
+    Mod+BracketRight { consume-or-expel-window-right; }
+    Mod+Comma  { consume-window-into-column; }
+    Mod+Period { expel-window-from-column; }
+
+    Mod+R { switch-preset-column-width; }
+    Mod+Shift+R { switch-preset-window-height; }
+    Mod+Ctrl+R { reset-window-height; }
+    Mod+F { maximize-column; }
+    Mod+Shift+F { fullscreen-window; }
+    Mod+Ctrl+F { expand-column-to-available-width; }
+    Mod+C { center-column; }
+    Mod+Ctrl+C { center-visible-columns; }
+
+    // Move the focused window between the floating and the tiling layout.
+    Mod+V       { toggle-window-floating; }
+    Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+
+    Mod+T { toggle-column-tabbed-display; }
+
+    Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+}

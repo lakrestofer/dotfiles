@@ -1,6 +1,6 @@
 {
   config,
-  pkgs,
+  pkgs-unstable,
   inputs,
   ...
 }:
@@ -15,6 +15,8 @@ let
   waybarPath = "${configRoot}/waybar";
   hyprPath = "${configRoot}/hypr";
   tofiPath = "${configRoot}/tofi";
+  wofiPath = "${configRoot}/wofi";
+  niriPath = "${configRoot}/niri";
   scriptPath = "${configRoot}/scripts";
   emacsPath = "${configRoot}/emacs";
   walkerPath = "${configRoot}/walker";
@@ -44,6 +46,8 @@ in
   xdg.configFile."zathura".source = linkConf zathuraPath;
   xdg.configFile."waybar".source = linkConf waybarPath;
   xdg.configFile."tofi".source = linkConf tofiPath;
+  xdg.configFile."wofi".source = linkConf wofiPath;
+  xdg.configFile."niri".source = linkConf niriPath;
   xdg.configFile."emacs".source = linkConf emacsPath;
   xdg.configFile."walker".source = linkConf walkerPath;
   xdg.configFile."lazygit".source = linkConf lazygitPath;
@@ -61,15 +65,6 @@ in
     userName = "lakrestofer";
   };
 
-  # hyprland and friends
-  # programs.hyprlock = {
-  #   enable = true;
-  #   package = pkgs.hyprlock;
-  # };
-  # services.hypridle = {
-  #   enable = true;
-  #   package = pkgs.hypridle;
-  # };
   # notification service
   services.mako = {
     enable = true;
@@ -87,11 +82,11 @@ in
     font.name = "CozetteHiDpi Medium 10";
     theme = {
       name = "Gruvbox-Dark";
-      package = pkgs.gruvbox-gtk-theme;
+      package = pkgs-unstable.gruvbox-gtk-theme;
     };
     iconTheme = {
       name = "Gruvbox-Plus-Dark";
-      package = pkgs.gruvbox-plus-icons;
+      package = pkgs-unstable.gruvbox-plus-icons;
     };
     gtk3.extraConfig = {
       Settings = ''

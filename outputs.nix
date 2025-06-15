@@ -1,11 +1,11 @@
 {
   kmonad,
-  nixpkgs,
+  nixpkgs-unstable,
   nixos-hardware,
   ...
 }@inputs:
 let
-  inherit (inputs.nixpkgs) lib;
+  inherit (inputs.nixpkgs-unstable) lib;
   mylib = import ./lib { inherit lib; };
 
   genSpecialArgs = system: {
@@ -13,7 +13,7 @@ let
     inherit inputs;
     inherit system;
 
-    pkgs = import nixpkgs {
+    pkgs-unstable = import nixpkgs-unstable {
       inherit system;
       config.allowUnfree = true;
     };
@@ -35,6 +35,7 @@ in
       // {
         system = "x86_64-linux";
         nixos-modules = [
+          inputs.niri.nixosModules.niri
           ./hosts/minji # desktop
           ./common.nix # base configuration
           nixos-hardware.nixosModules.common-cpu-amd

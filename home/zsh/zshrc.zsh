@@ -56,6 +56,7 @@ alias btw="fastfetch"
 alias gs="git status"
 alias ga="git add"
 alias gc="git commit"
+alias o="xdg-open"
     
 # system plugins
 source ~/.zshplugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

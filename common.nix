@@ -5,8 +5,8 @@
   ...
 }:
 {
-  # hardware
-  # as of 24.11
+  nixpkgs.overlays = [ inputs.niri.overlays.niri ];
+
   hardware.graphics = {
     package = pkgs.mesa;
     enable = true;
@@ -49,7 +49,6 @@
   ];
 
   # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   nix.gc = {
     automatic = true;
@@ -62,7 +61,6 @@
       "nix-command"
       "flakes"
     ];
-
     substituters = [
       "https://hyprland.cachix.org"
     ];
@@ -85,11 +83,9 @@
   };
   virtualisation.docker.enable = true;
   environment.localBinInPath = true;
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
+    swaybg
     glow
-    libqalculate
     hledger
     devenv
     lsp-ai
@@ -98,7 +94,6 @@
     graphviz
     supabase-cli
     awscli
-    deno
     hunspellDicts.sv_SE
     hunspellDicts.en_US
     hunspell
@@ -109,7 +104,6 @@
     aseprite
     calibre
     waybar
-    tofi
     inputs.spbased.packages.${system}.default
     git-filter-repo
     vscode
@@ -214,13 +208,13 @@
     QT_QPA_PLATFORM = "wayland;xcb";
     SDL_VIDEODRIVER = "wayland,x11";
   };
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+
+  programs.niri = {
+    enable = true;
+    package = pkgs.niri-unstable;
+    # settings = null;
+  };
+
   programs.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
@@ -228,11 +222,6 @@
       inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     withUWSM = true;
   };
-  # programs.hyprlock = {
-  #   enable = true;
-  #   package = pkgs.hyprlock;
-  #   # package = inputs.hyprlock.packages.${pkgs.stdenv.hostPlatform.system}.hyprlock;
-  # };
   programs.uwsm = {
     enable = true;
     waylandCompositors = {

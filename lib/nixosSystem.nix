@@ -8,11 +8,15 @@
   ...
 }@args:
 let
-  inherit (inputs) nixpkgs home-manager;
+  inherit (inputs) nixpkgs-unstable home-manager;
   specialArgs = (genSpecialArgs system);
 in
-nixpkgs.lib.nixosSystem {
+nixpkgs-unstable.lib.nixosSystem {
   inherit system specialArgs;
+  pkgs = import inputs.nixpkgs-unstable {
+    inherit system;
+    config.allowUnfree = true;
+  };
   modules =
     nixos-modules
     ++ (lib.optionals ((lib.lists.length home-modules) > 0) [
