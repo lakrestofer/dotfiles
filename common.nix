@@ -82,7 +82,7 @@
   virtualisation.docker.enable = true;
   environment.localBinInPath = true;
   environment.systemPackages = with pkgs; [
-    python
+    python3
     swaybg
     glow
     hledger
