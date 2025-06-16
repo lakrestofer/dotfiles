@@ -54,6 +54,7 @@ in
       // {
         system = "x86_64-linux";
         nixos-modules = [
+          inputs.niri.nixosModules.niri
           ./hosts/selbeiskami # thinkpad x220 specific configuration
           ./common.nix # base configuration
           kmonad.nixosModules.default
