@@ -82,6 +82,8 @@
   virtualisation.docker.enable = true;
   environment.localBinInPath = true;
   environment.systemPackages = with pkgs; [
+    libnotify
+    fuzzel
     python3
     swaybg
     glow

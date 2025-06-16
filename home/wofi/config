@@ -1,8 +1,12 @@
 height=40%
 width=40%
-prompt=
+prompt=>
 matching=fuzzy
 insensitive=true
 location=center
 gtk_dark=true
 filter_rate=20
+no_actions=true
+key_down=Ctrl-n
+key_up=Ctrl-p
+term=alacritty

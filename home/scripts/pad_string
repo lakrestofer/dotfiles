@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+
+set -e # exit if any step has a nonzero exit code
+set -o pipefail # including in the middle of a pipe
+
+local str="$1"
+local target_len=40
+local str_len=${#str}
+local pad_len=$(( target_len - str_len ))
+(( pad_len < 0 )) && pad_len=0
+printf '%*s' "$pad_len" ''

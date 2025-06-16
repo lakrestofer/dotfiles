@@ -1,5 +1,6 @@
 [general]
-import = [ "~/.config/alacritty/gruvbox.toml" ]
+# import = [ "~/.config/alacritty/gruvbox.toml" ]
+import = [ "~/.config/alacritty/gruvbox_light.toml" ]
 live_config_reload = true
 
 
@@ -371,4 +372,4 @@ save_to_clipboard = true
 [window]
 decorations = "none"
 dynamic_title = false
-opacity = 0.95
+opacity = 0.90

@@ -5,46 +5,8 @@ set -o pipefail # including in the middle of a pipe
 
 local INBOX_FILE="/home/fincei/vault/notes/inbox.md"
 
-COMMAND="${1}"
-ID="$2"
+local default=$(wl-paste --no-newline --primary 2>/dev/null || wl-paste --no-newline 2>/dev/null || echo "")
 
-help () {
-  echo "usage: inbox [command] [argument]"
-  echo ""
-  echo "examples:"
-  echo "       reading        # add new item to the inbox interactively"
-  echo "       reading add    # add new item to the inbox"
-  exit 0
-}
+local thought=$(fuzzel --dmenu --lines=0 --prompt="inbox: ")
+echo -E "- $thought" >> $INBOX_FILE 
 
-add() {
-  local thought=$1
-
-  echo -E "- $thought" >> $INBOX_FILE 
-  
-  exit 0
-}
-
-add_interactive() {
-  # Check if clipboard has textual content
-  local default=$(wl-paste --no-newline --primary 2>/dev/null || wl-paste --no-newline 2>/dev/null || echo "")
-
-  local res=$(
-    tofi \
-      --font=CozetteVector\
-      --late-keyboard-init=true\
-      --require-match=false \
-      --height=60\
-      --prompt-text='thought: '\
-    <&-
-  )
-  add $res
-  exit 0
-}
-
-case "$COMMAND" in
-  "add") add;;
-  "help") help;;
-esac
-
-add_interactive

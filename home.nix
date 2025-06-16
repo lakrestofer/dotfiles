@@ -14,12 +14,12 @@ let
   zathuraPath = "${configRoot}/zathura";
   waybarPath = "${configRoot}/waybar";
   hyprPath = "${configRoot}/hypr";
-  tofiPath = "${configRoot}/tofi";
+  makoPath = "${configRoot}/mako";
   wofiPath = "${configRoot}/wofi";
+  fuzzelPath = "${configRoot}/fuzzel";
   niriPath = "${configRoot}/niri";
   scriptPath = "${configRoot}/scripts";
   emacsPath = "${configRoot}/emacs";
-  walkerPath = "${configRoot}/walker";
   lazygitPath = "${configRoot}/lazygit";
   zshRoot = "${configRoot}/zsh";
   # function aliases
@@ -44,11 +44,11 @@ in
   xdg.configFile."alacritty".source = linkConf alacrittyPath;
   xdg.configFile."zathura".source = linkConf zathuraPath;
   xdg.configFile."waybar".source = linkConf waybarPath;
-  xdg.configFile."tofi".source = linkConf tofiPath;
+  xdg.configFile."fuzzel".source = linkConf fuzzelPath;
   xdg.configFile."wofi".source = linkConf wofiPath;
   xdg.configFile."niri".source = linkConf niriPath;
+  xdg.configFile."mako".source = linkConf makoPath;
   xdg.configFile."emacs".source = linkConf emacsPath;
-  xdg.configFile."walker".source = linkConf walkerPath;
   xdg.configFile."lazygit".source = linkConf lazygitPath;
   xdg.dataFile."fincei_data".source = linkConf dataRoot;
   home.file.".local/bin".source = linkConf scriptPath;

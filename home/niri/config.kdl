@@ -1,4 +1,5 @@
 spawn-at-startup "waybar"
+spawn-at-startup "swaybg --image /home/fincei/vault/wallpapers/field.jpg"
 
 input {
     keyboard {
@@ -54,6 +55,14 @@ output "Acer Technologies VG271U M3 1322131231233" {
     transform "normal"
     position x=0 y=0
 }
+output "Lenovo Group Limited LEN T27p-10 0x474D5050" {
+    mode "2560x1440"
+    scale 1.25
+    variable-refresh-rate
+    focus-at-startup
+    transform "normal"
+    position x=0 y=0
+}
 
 output "Dell Inc. DELL P2317H V2G5172OAGJB" {
     mode "1920x1080"
@@ -61,9 +70,17 @@ output "Dell Inc. DELL P2317H V2G5172OAGJB" {
     position x=31 y=1152
 }
 
+output "Chimei Innolux Corporation 0x140A Unknown" {
+    mode "1920x1080"
+    transform "normal"
+    position x=31 y=1152
+}
+
+
+
 layout {
     background-color "#1d2021"
-    gaps 16
+    gaps 4
     // center-focused-column "always"
 
     // You can customize the widths that "switch-preset-column-width" (Mod+R) toggles between.
@@ -97,8 +114,8 @@ layout {
     }
 
     struts {
-        left 20
-        right 20
+        left 10
+        right 10
         // top 64
         // bottom 64
     }
@@ -135,15 +152,16 @@ binds {
     // ========================================================================
     // PROGRAMS
     // ========================================================================
-    Mod+Return hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
-    Mod+Ctrl+Return hotkey-overlay-title="Open notes" { spawn "alacritty" "--command" "notes.sh"; }
-    Mod+Ctrl+J hotkey-overlay-title="Open journal" { spawn "alacritty" "--command" "journal.sh"; }
-    Mod+W hotkey-overlay-title="Open a Browser: brave" { spawn "brave"; }
-    Mod+Space hotkey-overlay-title="Run an Application" { spawn "wofi" "--show" "drun"; }
-    Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
-    Print { screenshot; }
-    Ctrl+Print { screenshot-screen; }
-    Alt+Print { screenshot-window; }
+    Mod+Return hotkey-overlay-title="Open a Terminal: alacritty" repeat=false { spawn "alacritty"; }
+    Mod+Ctrl+Return hotkey-overlay-title="Open notes" repeat=false { spawn "notes.sh"; }
+    // Mod+Ctrl+I hotkey-overlay-title="Open notes" repeat=false { spawn "inbox"; }
+    Mod+Ctrl+J hotkey-overlay-title="Open journal" repeat=false { spawn "journal.sh"; }
+    Mod+W hotkey-overlay-title="Open a Browser: brave" repeat=false { spawn "brave"; }
+    Mod+Space hotkey-overlay-title="Run an Application" repeat=false { spawn "fuzzel"; }
+    Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" repeat=false { spawn "swaylock"; }
+    Print repeat=false { screenshot; }
+    Ctrl+Print repeat=false { screenshot-screen; }
+    Alt+Print repeat=false { screenshot-window; }
 
     // ========================================================================
     // MEDIA KEYS
@@ -165,12 +183,12 @@ binds {
 
     // focus
     Mod+N     { focus-column-left; }
-    Mod+E     { focus-window-or-monitor-down; }
-    Mod+I     { focus-window-or-monitor-up; }
+    Mod+E     { focus-window-or-workspace-down; }
+    Mod+I     { focus-window-or-workspace-up; }
     Mod+O     { focus-column-right; }
 
-    Mod+Ctrl+E     { focus-workspace-down; }
-    Mod+Ctrl+I     { focus-workspace-up; }
+    Mod+Ctrl+E     { focus-monitor-down; }
+    Mod+Ctrl+I     { focus-monitor-up; }
 
     Mod+L { focus-workspace 1; }
     Mod+U { focus-workspace 2; }

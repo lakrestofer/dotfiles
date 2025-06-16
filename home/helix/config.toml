@@ -1,7 +1,7 @@
-theme = "gruvbox_trans"
+theme = "gruvbox_light_trans"
 
 [editor]
-cursorline = true
+# cursorline = true
 bufferline = "multiple"
 scrolloff = 3
 mouse = true
@@ -16,7 +16,7 @@ idle-timeout = 400
 completion-trigger-len = 2
 auto-info = true
 true-color = true
-rulers = [80]
+# rulers = [80]
 end-of-line-diagnostics = "hint"
 
 [editor.cursor-shape]
