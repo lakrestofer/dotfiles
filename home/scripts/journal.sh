@@ -4,9 +4,11 @@
 set -e # exit if any step has a nonzero exit code
 set -o pipefail # including in the middle of a pipe
 
+cd $ZK_NOTEBOOK_DIR
+
 # if the current month is after the month of the last note
 # then create a new journal note for this month
-today=$(strftime '%Y-%m')
+today=$(date '+%Y-%m')
 has_journal=$(zk list --quiet --format {{path}} --no-pager --sort path- "journal/$today")
 
 if [[ -z has_journal ]]; then

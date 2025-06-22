@@ -82,6 +82,7 @@
   virtualisation.docker.enable = true;
   environment.localBinInPath = true;
   environment.systemPackages = with pkgs; [
+    xwayland-satellite
     libnotify
     fuzzel
     python3

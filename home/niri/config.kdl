@@ -1,5 +1,10 @@
 spawn-at-startup "waybar"
-spawn-at-startup "swaybg --image /home/fincei/vault/wallpapers/field.jpg"
+spawn-at-startup "wallpaper.sh"
+spawn-at-startup "xwayland-satellite"
+
+environment {
+    DISPLAY ":0"
+}
 
 input {
     keyboard {
@@ -7,7 +12,7 @@ input {
             layout "us"
             variant "altgr-intl"
         }
-        repeat-delay 150
+        repeat-delay 200
         repeat-rate 50
 }
 
@@ -196,8 +201,11 @@ binds {
     Mod+SemiColon { focus-workspace 4; }
 
     // move
-    Mod+Ctrl+Shift+E     { move-workspace-down; }
-    Mod+Ctrl+Shift+I     { move-workspace-up; }
+    Mod+Ctrl+Shift+E { move-workspace-down; }
+    Mod+Ctrl+Shift+I { move-workspace-up; }
+
+    Mod+Ctrl+Alt+Shift+E { move-workspace-to-monitor-down; }
+    Mod+Ctrl+Alt+Shift+I { move-workspace-to-monitor-up; }
    
     Mod+Shift+N     { move-column-left; }
     Mod+Shift+E     { move-window-down-or-to-workspace-down; }

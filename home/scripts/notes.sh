@@ -3,6 +3,8 @@
 set -e # exit if any step has a nonzero exit code
 set -o pipefail # including in the middle of a pipe
 
+cd $ZK_NOTEBOOK_DIR
+
 # {{(format-date modified 'elapsed')}}
 input=$(zk list \
   --quiet \
