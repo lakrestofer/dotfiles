@@ -84,6 +84,7 @@
   environment.systemPackages = with pkgs; [
     chafa
     ffmpeg
+    qutebrowser
     xwayland-satellite
     libnotify
     fuzzel
@@ -148,7 +149,6 @@
     zathura
     util-linux
     brightnessctl
-    wofi
     eza
     zoxide
     wl-clipboard

@@ -10,12 +10,12 @@ let
   dataRoot = "${config.home.homeDirectory}/dotfiles/data";
   helixPath = "${configRoot}/helix";
   alacrittyPath = "${configRoot}/alacritty";
+  qutePath = "${configRoot}/qutebrowser";
   ghosttyPath = "${configRoot}/ghostty";
   zathuraPath = "${configRoot}/zathura";
   waybarPath = "${configRoot}/waybar";
   hyprPath = "${configRoot}/hypr";
   makoPath = "${configRoot}/mako";
-  wofiPath = "${configRoot}/wofi";
   fuzzelPath = "${configRoot}/fuzzel";
   niriPath = "${configRoot}/niri";
   scriptPath = "${configRoot}/scripts";
@@ -44,8 +44,8 @@ in
   xdg.configFile."alacritty".source = linkConf alacrittyPath;
   xdg.configFile."zathura".source = linkConf zathuraPath;
   xdg.configFile."waybar".source = linkConf waybarPath;
+  xdg.configFile."qutebrowser".source = linkConf qutePath;
   xdg.configFile."fuzzel".source = linkConf fuzzelPath;
-  xdg.configFile."wofi".source = linkConf wofiPath;
   xdg.configFile."niri".source = linkConf niriPath;
   xdg.configFile."mako".source = linkConf makoPath;
   xdg.configFile."emacs".source = linkConf emacsPath;
