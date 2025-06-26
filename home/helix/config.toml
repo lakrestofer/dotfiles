@@ -2,7 +2,7 @@ theme = "gruvbox_light_trans"
 
 [editor]
 # cursorline = true
-bufferline = "multiple"
+bufferline = "always"
 scrolloff = 3
 mouse = true
 middle-click-paste = true

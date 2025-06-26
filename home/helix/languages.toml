@@ -12,7 +12,7 @@ scope = "source.md"
 injection-regex = "md|markdown"
 file-types = ["md", "markdown"]
 roots = [".zk"]
-language-servers = ["lsp-ai", "typos", "zk" ]
+language-servers = ["lsp-ai", "typos", "zk"]
 auto-format = true
 formatter = { command = "dprint", args = ["fmt", "--stdin", "md"] }
 
@@ -23,7 +23,7 @@ language-servers = [
   "emmet-ls",
   "typescript-language-server",
   "tailwindcss-ls",
-  "lsp-ai"
+  "lsp-ai",
 ]
 formatter = { command = "prettier", args = ["--parser", "typescript"] }
 auto-format = true
@@ -37,6 +37,11 @@ shebangs = []
 comment-token = "#"
 language-servers = ["nil"]
 # indent = { tab-width = 2, unit = "  " }
+auto-format = true
+
+[[language]]
+name = "toml"
+language-servers = ["taplo"]
 auto-format = true
 
 [[language]]
@@ -104,7 +109,7 @@ config.nil = { "formatting" = { command = ["nixfmt"] } }
 command = "lsp-ai"
 
 [language-server.lsp-ai.config.memory]
-file_store = { }
+file_store = {}
 
 [language-server.lsp-ai.config.models.groq_llama_3_3_70b_versatile]
 type = "open_ai"
@@ -132,7 +137,6 @@ model = "groq_llama_3_3_70b_versatile"
 [language-server.lsp-ai.config.chat.parameters]
 max_context = 4096
 max_tokens = 100000
-messages = [ 
-  { role = "system", content = "You are a helpful assistant chatbot within the text editor helix." }
+messages = [
+  { role = "system", content = "You are a helpful assistant chatbot within the text editor helix." },
 ]
-
