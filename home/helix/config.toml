@@ -24,9 +24,10 @@ insert = "bar"
 normal = "block"
 select = "underline"
 
-# [editor.indent-guides]
-# character = "╎"
-# render = true
+[editor.indent-guides]
+render = true
+character = "╎" # Some characters that work well: "▏", "┆", "┊", "⸽"
+skip-levels = 1
 
 [editor.statusline]
 left = ["mode", "spinner", "spacer", "version-control", "file-name"]

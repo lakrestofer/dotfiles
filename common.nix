@@ -82,6 +82,7 @@
   virtualisation.docker.enable = true;
   environment.localBinInPath = true;
   environment.systemPackages = with pkgs; [
+    ffmpeg
     xwayland-satellite
     libnotify
     fuzzel
