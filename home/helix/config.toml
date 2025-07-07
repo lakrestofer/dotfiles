@@ -17,7 +17,7 @@ completion-trigger-len = 2
 auto-info = true
 true-color = true
 # rulers = [80]
-end-of-line-diagnostics = "hint"
+end-of-line-diagnostics = "disable"
 
 [editor.cursor-shape]
 insert = "bar"
@@ -25,7 +25,7 @@ normal = "block"
 select = "underline"
 
 [editor.indent-guides]
-render = true
+render = false
 character = "╎" # Some characters that work well: "▏", "┆", "┊", "⸽"
 skip-levels = 1
 
@@ -33,15 +33,18 @@ skip-levels = 1
 left = ["mode", "spinner", "spacer", "version-control", "file-name"]
 center = [ "diagnostics", "workspace-diagnostics"]
 right = [ "selections", "position", "file-type"]
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
 
 [editor.inline-diagnostics]
-cursor-line = "error" # show warnings and errors on the cursorline inline
+cursor-line = "warning" # show warnings and errors on the cursorline inline
 other-lines = "disable"
 
 [editor.lsp]
 display-messages = true
 display-inlay-hints = false
-auto-signature-help = true
+auto-signature-help = false
 snippets = true
 
 

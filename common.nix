@@ -82,6 +82,7 @@
   virtualisation.docker.enable = true;
   environment.localBinInPath = true;
   environment.systemPackages = with pkgs; [
+    chafa
     ffmpeg
     xwayland-satellite
     libnotify
