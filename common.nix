@@ -35,6 +35,7 @@
     isNormalUser = true;
     description = "fincei";
     extraGroups = [
+      "ydotool"
       "docker"
       "networkmanager"
       "wheel"
@@ -79,9 +80,14 @@
       package = pkgs.nix-direnv;
     };
   };
+
+  programs.ydotool.enable = true;
+
   virtualisation.docker.enable = true;
   environment.localBinInPath = true;
   environment.systemPackages = with pkgs; [
+    astroterm
+    warp-terminal
     chafa
     ffmpeg
     qutebrowser

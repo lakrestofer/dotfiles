@@ -160,18 +160,21 @@ binds {
     Mod+Ctrl+Return hotkey-overlay-title="Open notes" repeat=false { spawn "notes.sh"; }
     // Mod+Ctrl+I hotkey-overlay-title="Open notes" repeat=false { spawn "inbox"; }
     Mod+Ctrl+J hotkey-overlay-title="Open journal" repeat=false { spawn "journal.sh"; }
-    Mod+W hotkey-overlay-title="Open a Browser: brave" repeat=false { spawn "brave"; }
+    Mod+W hotkey-overlay-title="Open brave" repeat=false { spawn "brave"; }
+    Mod+F1 hotkey-overlay-title="type a bookmark" repeat=false { spawn "bookmarks.sh"; }
+    Mod+F2 hotkey-overlay-title="create new bookmark" repeat=false { spawn "create_bookmark.sh"; }
+    Mod+F3 hotkey-overlay-title="add thought to inbox" repeat=false { spawn "inbox.sh"; }
     Mod+Space hotkey-overlay-title="Run an Application" repeat=false { spawn "fuzzel"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" repeat=false { spawn "swaylock"; }
-    XF86Favorites repeat=false { screenshot; }
-    Ctrl+XF86Favorites repeat=false { screenshot-screen; }
-    Alt+XF86Favorites repeat=false { screenshot-window; }
+    Mod+F12 repeat=false { screenshot; }
+    Mod+F11 repeat=false { screenshot-screen; }
+    Mod+F10 repeat=false { screenshot-window; }
 
     // ========================================================================
     // MEDIA KEYS
     // ========================================================================
-    XF86AudioRaiseVolume  allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
-    XF86AudioLowerVolume  allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
+    XF86AudioRaiseVolume  allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.02+"; }
+    XF86AudioLowerVolume  allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.02-"; }
     XF86AudioMute         allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
     XF86AudioMicMute      allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
     XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl s 10%+"; }

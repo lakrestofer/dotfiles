@@ -17,6 +17,8 @@ input=$(zk list \
   --with-nth=2 --accept-nth=1
 )
 
+echo "$input"
+
 # exit on empty input
 if [[ -z "${input//[[:space:]]/}" ]]; then
   exit 0
@@ -25,7 +27,7 @@ fi
 # check if note exists by querying for path
 if [[ $input != *.md ]]; then
   notify-send "creating note"
-  alacritty --command zk new --no-input --title $input
+  alacritty --command zk new --no-input --title "$input"
   exit 0
 fi
 

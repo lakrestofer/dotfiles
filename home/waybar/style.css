@@ -1,20 +1,12 @@
-
-/*base background color*/
 @define-color bg_main #1d2021;
 @define-color bg_main_tooltip #282828;
 
+@define-color bg_hover rgba(256, 256, 256, 0.3);
+@define-color bg_active rgba(256, 256, 256, 1);
 
-/*base background color of selections */
-@define-color bg_hover rgba(200, 200, 200, 0.3);
-/*base background color of active elements */
-@define-color bg_active rgba(100, 100, 100, 0.5);
-
-/*base border color*/
 @define-color border_main #3c3836;
 
-/*text color for entries, views and content in general */
 @define-color content_main white;
-/*text color for entries that are unselected */
 @define-color content_inactive rgba(255, 255, 255, 0.25);
 
 * {
@@ -22,7 +14,9 @@
 	box-shadow: none;
   border: none;
   border-radius: 0;
-	font-family: "CozetteVector";
+	/* font-family: "CozetteVector"; */
+	/* font-family: "Fira Code"; */
+	font-family: "HackNerdFont";
   font-size: 20px;
 }
 
@@ -53,7 +47,9 @@ tooltip label{
 
 
 #workspaces {
-  color: transparent;
+  color: white;
+  /* font-size: 1em; */
+  /* font-weight: "bold"; */
 	margin-right: 1.5px;
 	margin-left: 1.5px;
 }

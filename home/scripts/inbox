@@ -7,6 +7,6 @@ local INBOX_FILE="/home/fincei/vault/notes/inbox.md"
 
 local default=$(wl-paste --no-newline --primary 2>/dev/null || wl-paste --no-newline 2>/dev/null || echo "")
 
-local thought=$(fuzzel --dmenu --lines=0 --prompt="inbox: ")
+local thought=$(fuzzel --dmenu --lines=0 --prompt="inbox: " --search "$default")
 echo -E "- $thought" >> $INBOX_FILE 
 
