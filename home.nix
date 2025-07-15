@@ -21,6 +21,7 @@ let
   scriptPath = "${configRoot}/scripts";
   emacsPath = "${configRoot}/emacs";
   lazygitPath = "${configRoot}/lazygit";
+  yaziPath = "${configRoot}/yazi";
   zshRoot = "${configRoot}/zsh";
   # function aliases
   linkConf = config.lib.file.mkOutOfStoreSymlink;
@@ -44,6 +45,7 @@ in
   xdg.configFile."alacritty".source = linkConf alacrittyPath;
   xdg.configFile."zathura".source = linkConf zathuraPath;
   xdg.configFile."waybar".source = linkConf waybarPath;
+  xdg.configFile."yazi".source = linkConf yaziPath;
   xdg.configFile."qutebrowser".source = linkConf qutePath;
   xdg.configFile."fuzzel".source = linkConf fuzzelPath;
   xdg.configFile."niri".source = linkConf niriPath;
