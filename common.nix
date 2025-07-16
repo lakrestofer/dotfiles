@@ -86,7 +86,7 @@
   virtualisation.docker.enable = true;
   environment.localBinInPath = true;
   environment.systemPackages = with pkgs; [
-    astroterm
+    ghostty
     warp-terminal
     chafa
     ffmpeg
@@ -112,7 +112,6 @@
     clang-tools
     clang
     clangStdenv
-    aseprite
     calibre
     waybar
     inputs.spbased.packages.${system}.default
@@ -123,7 +122,7 @@
     slurp
     grim
     pdfgrep
-    texlive.combined.scheme-full
+    # texlive.combined.scheme-full
     pandoc
     imagemagick_light
     dprint
@@ -166,7 +165,7 @@
     zellij
     alacritty
     brave
-    firefox-devedition-bin
+    firefox-devedition
     btop
     fastfetch
     eza
