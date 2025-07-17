@@ -31,8 +31,8 @@ skip-levels = 1
 
 [editor.statusline]
 left = ["mode", "spinner", "spacer", "version-control", "file-name"]
-center = [ "diagnostics", "workspace-diagnostics"]
-right = [ "selections", "position", "file-type"]
+center = ["diagnostics", "workspace-diagnostics"]
+right = ["selections", "position", "file-type"]
 mode.normal = "NORMAL"
 mode.insert = "INSERT"
 mode.select = "SELECT"
@@ -97,12 +97,13 @@ A-k = "shrink_selection"
 A-h = "select_next_sibling"
 h = "search_next"
 H = "search_prev"
-E = "join_selections" 
+E = "join_selections"
 I = "keep_selections"
 C-o = "jump_forward"
 C-n = "jump_backward"
 "ret" = "goto_definition"
 C-g = [":new", ":insert-output lazygit", ":buffer-close!", ":redraw"]
+C-A-r = [":reload-all"]
 
 [keys.normal.z]
 # unset
@@ -136,25 +137,25 @@ i = "no_op"
 k = "select_textobject_inner"
 [keys.normal.C-w]
 #unset
-C-h= "no_op"
-C-j= "no_op"
+C-h = "no_op"
+C-j = "no_op"
 j = "no_op"
-C-k= "no_op"
+C-k = "no_op"
 k = "no_op"
 H = "no_op"
 J = "no_op"
 K = "no_op"
 L = "no_op"
 #set
-C-l= "wonly"
+C-l = "wonly"
 l = "wonly"
-C-n= "jump_view_left"
+C-n = "jump_view_left"
 n = "jump_view_left"
-C-e= "jump_view_down"
+C-e = "jump_view_down"
 e = "jump_view_down"
-C-i= "jump_view_up"
+C-i = "jump_view_up"
 i = "jump_view_up"
-C-o= "jump_view_right"
+C-o = "jump_view_right"
 o = "jump_view_right"
 N = "swap_view_left"
 E = "swap_view_down"
@@ -172,25 +173,25 @@ v = "vsplit_new"
 e = [":new", ":insert-output yazi", ":buffer-close!", ":redraw"]
 [keys.normal.space.w]
 #unset
-C-h= "no_op"
-C-j= "no_op"
+C-h = "no_op"
+C-j = "no_op"
 j = "no_op"
-C-k= "no_op"
+C-k = "no_op"
 k = "no_op"
 H = "no_op"
 J = "no_op"
 K = "no_op"
 L = "no_op"
 #set
-C-l= "wonly"
+C-l = "wonly"
 l = "wonly"
-C-n= "jump_view_left"
+C-n = "jump_view_left"
 n = "jump_view_left"
-C-e= "jump_view_down"
+C-e = "jump_view_down"
 e = "jump_view_down"
-C-i= "jump_view_up"
+C-i = "jump_view_up"
 i = "jump_view_up"
-C-o= "jump_view_right"
+C-o = "jump_view_right"
 o = "jump_view_right"
 N = "swap_view_left"
 E = "swap_view_down"
