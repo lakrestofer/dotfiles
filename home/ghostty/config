@@ -1,5 +1,5 @@
-font-family = "CozetteVector"
+font-family = "Hack Nerd Font"
 window-decoration = false
 window-theme = "ghostty"
-theme = "GruvboxDark"
+theme = "GruvboxLight"
 confirm-close-surface = false

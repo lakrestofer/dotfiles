@@ -86,6 +86,7 @@
   virtualisation.docker.enable = true;
   environment.localBinInPath = true;
   environment.systemPackages = with pkgs; [
+    vscode-langservers-extracted
     ghostty
     warp-terminal
     chafa
