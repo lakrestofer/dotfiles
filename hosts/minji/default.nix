@@ -21,7 +21,7 @@
   hardware.enableRedistributableFirmware = true;
 
   programs.steam = {
-    enable = false;
+    enable = true;
     package = pkgs.steam;
   };
 }
