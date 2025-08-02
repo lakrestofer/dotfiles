@@ -5,7 +5,7 @@ set -o pipefail # including in the middle of a pipe
 
 BOOKMARKS_FILE="/home/fincei/bookmarks"
 
-bookmark=$(cat "$BOOKMARKS_FILE" | fuzzel --dmenu)
+bookmark=$(cat "$BOOKMARKS_FILE" | fuzzel --dmenu --lines=5 --prompt="bookmark: ")
 
 if [[ -z $bookmark ]]; then
   notify-send "No bookmark. exiting..."

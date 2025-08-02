@@ -8,7 +8,7 @@ BOOKMARKS_FILE="/home/fincei/bookmarks"
 
 default=$(wl-paste --no-newline --primary 2>/dev/null || wl-paste --no-newline 2>/dev/null || echo "")
 
-bookmark=$(fuzzel --dmenu --lines=0 --prompt="new bookmark: " --search $default)
+bookmark=$(fuzzel --dmenu --lines=0 --search $default --prompt="new bookmark: ")
 
 if [[ -z $bookmark ]]; then
   notify-send "No bookmark. exiting..."
