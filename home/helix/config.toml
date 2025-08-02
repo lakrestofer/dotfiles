@@ -26,7 +26,7 @@ select = "underline"
 
 [editor.indent-guides]
 render = false
-character = "╎" # Some characters that work well: "▏", "┆", "┊", "⸽"
+character = "|" # Some characters that work well: "▏", "┆", "┊", "⸽"
 skip-levels = 1
 
 [editor.statusline]

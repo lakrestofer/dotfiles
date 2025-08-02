@@ -24,6 +24,10 @@
 
   networking.hostName = "selbeiskami"; # Define your hostname.
 
+  services.tlp.enable = true;
+
+  hardware.bluetooth.enable = true; # enables support for Bluetooth
+
   environment.systemPackages = with pkgs; [
     kanata
   ];
@@ -131,5 +135,9 @@
         };
       };
     };
+  };
+  programs.steam = {
+    enable = true;
+    package = pkgs.steam;
   };
 }

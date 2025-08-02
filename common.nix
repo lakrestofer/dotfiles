@@ -86,6 +86,9 @@
   virtualisation.docker.enable = true;
   environment.localBinInPath = true;
   environment.systemPackages = with pkgs; [
+    bitwarden-cli
+    pavucontrol
+    mpv
     poppler-utils
     vscode-langservers-extracted
     ghostty
@@ -230,8 +233,24 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
+    wireplumber = {
+      extraConfig.bluetoothEnhancements = {
+        "monitor.bluez.properties" = {
+          "bluez5.enable-sbc-xq" = true;
+          "bluez5.enable-msbc" = true;
+          "bluez5.enable-hw-volume" = true;
+          "bluez5.roles" = [
+            "hsp_hs"
+            "hsp_ag"
+            "hfp_hf"
+            "hfp_ag"
+          ];
+        };
+      };
+    };
   };
   services.dbus.implementation = "broker";
   services.greetd = {

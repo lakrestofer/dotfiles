@@ -59,6 +59,7 @@ in
           ./common.nix # base configuration
           kmonad.nixosModules.default
           nixos-hardware.nixosModules.lenovo-thinkpad-t14
+          nixos-hardware.nixosModules.common-cpu-intel
         ];
         home-modules = [
           (import ./home.nix)
