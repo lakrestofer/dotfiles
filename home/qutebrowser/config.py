@@ -1,4 +1,3 @@
-import copy
 config.load_autoconfig(False)
 
 # c.aliases = {'w': 'session-save', 'q': 'close', 'qa': 'quit', 'wq': 'quit --save', 'wqa': 'quit --save'}
@@ -15,39 +14,27 @@ config.source('gruvbox.py')
 # c.colors.webpage.darkmode.enabled = False
 # c.colors.webpage.darkmode.policy.images = 'smart'
 # c.colors.webpage.darkmode.policy.page = 'smart'
-c.tabs.position = "left"
+c.tabs.position = "bottom"
+# c.tabs.tabs_are_windows = True
 c.tabs.width = "10%"
+c.qt.highdpi = True
+
+###############################################################################
+# movement behaviour
+###############################################################################
+# c.scrolling.smooth = True
 
 
 ###############################################################################
 # bindings
 ###############################################################################
-rebind_map = {k: v for k, v in zip("hjklneioHJKLNEIO", "neiohjklNEIOHJKL")}
-
-# modes that we want to flip the bindings over
-for mode in c.bindings.default:
-    new_dict = copy.deepcopy(c.bindings.default[mode])
-    for key in c.bindings.default[mode]:
-        # ignore special keys
-        if key[0] == '<':
-            continue
-
-        # search the key for characters that we shall change
-        new_key = ""
-        for key_character in key:
-            new_key_character = key_character
-            if key_character in remappings:
-                new_key_character = remappings[key_character]
-            new_key += new_key_character
-        new_dict[new_key] = c.bindings.default[mode][key]
-    c.bindings.default[mode] = new_dict
-
-
+config.source('colemak.py')
 
 ###############################################################################
 # minor settings
 ###############################################################################
-
+# c.editor.command = ["alacritty", "--command", "hx", "--working-dir", "~/dotfiles" "{file}"]
+c.editor.command = ["alacritty", "--command", "hx", "{file}"]
 # c.changelog_after_upgrade = 'minor'
 
 ## Threshold for inverting background elements with dark mode. Background
