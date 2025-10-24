@@ -1,0 +1,35 @@
+[colors.primary]
+background = '#fff8f1'
+foreground = '#1f1b13'
+ 
+[colors.normal]
+black = '#000000' # black
+red = '#ba1a1a' # red
+green = '#735c0c' # green 
+yellow = '#695d3f' # yellow
+blue = '#47664a' # blue
+magenta = '#735c0c' # magenta
+cyan = '#695d3f' # cyan
+white = '#7e7667' # white
+
+ 
+ 
+[colors.bright]
+black = '#1a1a1a' # black
+red = '#e12626' # red
+green = '#a18111' # green 
+yellow = '#897952' # yellow
+blue = '#5c8460' # blue
+magenta = '#a18111' # magenta
+cyan = '#897952' # cyan
+white = '#989080' # white
+ 
+[colors.dim]
+black = '#000000' # black
+red = '#8d1414' # red
+green = '#453707' # green 
+yellow = '#49412c' # yellow
+blue = '#324834' # blue
+magenta = '#453707' # magenta
+cyan = '#49412c' # cyan
+white = '#625c50' # white

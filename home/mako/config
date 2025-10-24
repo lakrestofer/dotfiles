@@ -1,0 +1,9 @@
+# font=Fira Code 15
+font=CozetteVector 16
+default-timeout=4000
+background-color=#ebdbb2FF
+text-color=#1d2021FF
+border-size=4
+border-color=#d79921FF
+border-radius=0
+anchor=top-center

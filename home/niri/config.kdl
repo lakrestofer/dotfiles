@@ -1,0 +1,284 @@
+spawn-at-startup "waybar"
+spawn-at-startup "wallpaper.sh"
+spawn-at-startup "xwayland-satellite"
+
+environment {
+    DISPLAY ":0"
+}
+
+// Make the wallpaper stationary, rather than moving with workspaces.
+layer-rule {
+    // This is for swaybg; change for other wallpaper tools.
+    // Find the right namespace by running niri msg layers.
+    match namespace="^wallpaper$"
+    place-within-backdrop true
+}
+
+overview {
+    workspace-shadow {
+        off
+    }
+}
+
+input {
+    keyboard {
+        xkb {
+            layout "us"
+            variant "altgr-intl"
+        }
+        repeat-delay 200
+        repeat-rate 50
+}
+
+    touchpad {
+        // off
+        tap
+        // dwt
+        // dwtp
+        // drag false
+        // drag-lock
+        natural-scroll
+        accel-speed 0.2
+        accel-profile "adaptive"
+        // scroll-method "two-finger"
+        disabled-on-external-mouse
+    }
+
+    mouse {
+        // off
+        // natural-scroll
+        // accel-speed 0.2
+        // accel-profile "flat"
+        // scroll-method "no-scroll"
+    }
+
+    trackpoint {
+        // off
+        // natural-scroll
+        // accel-speed 0.2
+        // accel-profile "flat"
+        // scroll-method "on-button-down"
+        // scroll-button 273
+        // middle-emulation
+    }
+
+    warp-mouse-to-focus
+    focus-follows-mouse
+}
+output "Acer Technologies VG271U M3 1322131231233" {
+    mode "2560x1440"
+    scale 1.0
+    variable-refresh-rate
+    focus-at-startup
+    transform "normal"
+    position x=0 y=0
+}
+output "Lenovo Group Limited LEN T27p-10 0x474D5050" {
+    mode "2560x1440"
+    scale 1.25
+    variable-refresh-rate
+    focus-at-startup
+    transform "normal"
+    position x=0 y=0
+}
+output "Lenovo Group Limited LEN T27p-10 0x32385942" {
+    mode "1920x1080"
+    scale 1.0
+    variable-refresh-rate
+    focus-at-startup
+    transform "normal"
+    position x=0 y=0
+}
+
+output "Dell Inc. DELL P2317H V2G5172OAGJB" {
+    mode "1920x1080"
+    transform "normal"
+    position x=320 y=1440
+}
+
+output "Chimei Innolux Corporation 0x140A Unknown" {
+    mode "1920x1080"
+    transform "normal"
+    // position x=320 y=1440
+    position x=0 y=1080
+}
+
+
+
+layout {
+    tab-indicator {
+        place-within-column
+    }
+    background-color "transparent"
+    // background-color "#1d2021"
+    gaps 20
+    // center-focused-column "always"
+
+    // You can customize the widths that "switch-preset-column-width" (Mod+R) toggles between.
+    preset-column-widths {
+        proportion 1.0
+        proportion 0.5
+        proportion 0.30
+    }
+    // preset-window-heights { }
+    default-column-width { proportion 1.0; }
+    // `draw-border-with-background`.
+    focus-ring {
+        // off
+        width 4
+        urgent-color "#fb4934"
+        active-color "#d79921"
+    }
+    border {
+        off
+        width 2
+        urgent-color "#fb4934"
+        // active-color "#d79921"
+        // inactive-color "#808080"
+        active-color "#f9f5d7"
+        inactive-color "#f9f5d7"
+    }
+    shadow {
+        // Uncomment the next line to enable shadows.
+        // on
+        // draw-behind-window true
+        softness 30
+        spread 5
+        offset x=0 y=5
+        color "#0007"
+    }
+
+    struts {
+        left 10
+        right 10
+        // top 64
+        // bottom 64
+    }
+}
+
+prefer-no-csd
+screenshot-path "~/Pictures/Screenshots/screenshot_%Y-%m-%d %H-%M-%S.png"
+animations {
+    // Uncomment to turn off all animations.
+    // off
+
+    // Slow down all animations by this factor. Values below 1 speed them up instead.
+    // slowdown 3.0
+}
+
+window-rule {
+    draw-border-with-background false
+}
+
+window-rule {
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    open-floating true
+}
+
+binds {
+    // ========================================================================
+    // NIRI BINDINGS
+    // ========================================================================
+    Mod+Shift+Slash { show-hotkey-overlay; }
+    Mod+Ctrl+Q { quit; }
+    Ctrl+Alt+Delete { quit; }
+    Mod+Shift+P { power-off-monitors; }
+
+    // ========================================================================
+    // PROGRAMS
+    // ========================================================================
+    Mod+Return hotkey-overlay-title="Open a Terminal: ghostty" repeat=false { spawn "ghostty" "+new-window"; }
+    Mod+Ctrl+Return hotkey-overlay-title="Open notes" repeat=false { spawn "notes.sh"; }
+    // Mod+Ctrl+I hotkey-overlay-title="Open notes" repeat=false { spawn "inbox"; }
+    Mod+Ctrl+J hotkey-overlay-title="Open journal" repeat=false { spawn "journal.sh"; }
+    Mod+Ctrl+E hotkey-overlay-title="Open emacs" repeat=false { spawn "emacsclient" "-c"; }
+    Mod+W hotkey-overlay-title="Open firefox" repeat=false { spawn "firefox-devedition"; }
+    Mod+Space hotkey-overlay-title="Run an Application" repeat=false { spawn "fuzzel"; }
+    Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" repeat=false { spawn "swaylock"; }
+
+    Mod+F1 hotkey-overlay-title="show collection of often used scripts" repeat=false { spawn "scripts.sh"; }
+    Mod+F10 hotkey-overlay-title="change audio source" { spawn "audiosource.sh"; }
+    Mod+F12 hotkey-overlay-title="take a screenshot" repeat=false { screenshot; }
+
+    // ========================================================================
+    // MEDIA KEYS
+    // ========================================================================
+    XF86AudioRaiseVolume  allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.02+"; }
+    XF86AudioLowerVolume  allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.02-"; }
+    XF86AudioMute         allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    XF86AudioMicMute      allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+    XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl s 10%+"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl s 10%-"; }
+    
+    // ========================================================================
+    // WINDOW MANIPULATION
+    // ========================================================================
+    Mod+Q repeat=false { close-window; }
+
+    Mod+Ctrl+Space repeat=false { toggle-overview; }
+    Mod+Tab { focus-workspace-previous; }
+
+    // focus
+    Mod+N     { focus-column-left; }
+    Mod+E     { focus-window-or-workspace-down; }
+    Mod+I     { focus-window-or-workspace-up; }
+    Mod+O     { focus-column-right; }
+
+    // Mod+Ctrl+E     { focus-monitor-down; }
+    // Mod+Ctrl+I     { focus-monitor-up; }
+
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+L { focus-workspace 1; }
+    Mod+U { focus-workspace 2; }
+    Mod+Y { focus-workspace 3; }
+    Mod+SemiColon { focus-workspace 4; }
+
+    // move
+    Mod+Ctrl+Shift+E { move-workspace-down; }
+    Mod+Ctrl+Shift+I { move-workspace-up; }
+
+    Mod+Ctrl+Alt+Shift+E { move-workspace-to-monitor-down; }
+    Mod+Ctrl+Alt+Shift+I { move-workspace-to-monitor-up; }
+   
+    Mod+Shift+N     { move-column-left; }
+    Mod+Shift+E     { move-window-down-or-to-workspace-down; }
+    Mod+Shift+I     { move-window-up-or-to-workspace-up; }
+    Mod+Shift+O     { move-column-right; }
+
+    Mod+Shift+l { move-window-to-workspace 1; }
+    Mod+Shift+u { move-window-to-workspace 2; }
+    Mod+Shift+y { move-window-to-workspace 3; }
+    Mod+Shift+SemiColon { move-window-to-workspace 4; }
+    
+    // resize 
+    Mod+Alt+N { set-column-width "-10%"; }
+    Mod+Alt+O { set-column-width "+10%"; }
+    Mod+Alt+E { set-window-height "-10%"; }
+    Mod+Alt+I { set-window-height "+10%"; }
+
+    // layout
+    Mod+BracketLeft  { consume-or-expel-window-left; }
+    Mod+BracketRight { consume-or-expel-window-right; }
+    Mod+Comma  { consume-window-into-column; }
+    Mod+Period { expel-window-from-column; }
+
+    Mod+R { switch-preset-column-width; }
+    Mod+Shift+R { switch-preset-window-height; }
+    Mod+Ctrl+R { reset-window-height; }
+    Mod+F { maximize-column; }
+    Mod+Shift+F { fullscreen-window; }
+    Mod+Ctrl+F { expand-column-to-available-width; }
+    Mod+C { center-column; }
+    Mod+Ctrl+C { center-visible-columns; }
+
+    // Move the focused window between the floating and the tiling layout.
+    Mod+V       { toggle-window-floating; }
+    Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+
+    Mod+T { toggle-column-tabbed-display; }
+
+    Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+}

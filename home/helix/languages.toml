@@ -1,0 +1,170 @@
+[language-server.rust-analyzer]
+config.cargo.buildScripts.enable = true
+
+[[language]]
+name = "scheme"
+language-servers = ["steel-language-server"]
+formatter = { command = "raco", args = ["fmt"] }
+
+[language-server.steel-language-server]
+command = "steel-language-server"
+args = []
+
+[[language]]
+name = "c"
+auto-format = true
+language-servers = ["typos", "clangd"]
+
+[[language]]
+name = "markdown"
+scope = "source.md"
+injection-regex = "md|markdown"
+file-types = ["md", "markdown"]
+roots = [".zk"]
+language-servers = ["lsp-ai", "zk"]
+auto-format = true
+formatter = { command = "dprint", args = ["fmt", "--stdin", "md"] }
+
+[[language]]
+name = "tsx"
+language-servers = [
+  "eslint",
+  "emmet-ls",
+  "typescript-language-server",
+  "tailwindcss-ls",
+  "lsp-ai",
+]
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
+auto-format = true
+
+[[language]]
+name = "nix"
+scope = "source.nix"
+injection-regex = "nix"
+file-types = ["nix"]
+shebangs = []
+comment-token = "#"
+language-servers = ["nil"]
+# indent = { tab-width = 2, unit = "  " }
+auto-format = true
+
+[[language]]
+name = "toml"
+language-servers = ["taplo"]
+auto-format = true
+
+[[language]]
+name = "typescript"
+language-servers = [
+  "eslint",
+  "emmet-ls",
+  "typescript-language-server",
+  "tailwindcss-ls",
+]
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
+auto-format = true
+
+[[language]]
+name = "nu"
+scope = "source.nu"
+file-types = ["nu"]
+language-servers = [{ name = "nu-lsp" }]
+comment-token = "#"
+
+[[language]]
+name = "rust"
+scope = "source.rs"
+injection-regex = "rs|rust"
+file-types = ["rs"]
+roots = ["cargo.toml"]
+language-servers = ["rust-analyzer", "typos"]
+
+[[language]]
+name = "svelte"
+scope = "source.svelte"
+injection-regex = "svelte"
+file-types = ["svelte"]
+indent = { tab-width = 2, unit = "  " }
+language-servers = ["svelteserver", "eslint", "tailwindcss-ls"]
+auto-format = true
+
+# [[language]]
+# name = "sql"
+# scope = "source.sql"
+# file-types = ["sql"]
+# language-servers = ["postgrestools"]
+
+[[language]]
+name = "go"
+language-servers = ["gopls"]
+
+# === grammars ===
+[[grammar]]
+name = "svelte"
+source = { git = "https://github.com/Himujjal/tree-sitter-svelte", rev = "be7f2e7db1fc19f0852265ec60923fc058380739" }
+
+# === language servers ===
+[language-server]
+zk = { command = "zk", args = ["lsp"] }
+sql-language-server = { command = "sql-language-server", args = [
+  "up",
+  "--method",
+  "stdio",
+] }
+eslint = { args = ["--stdio"], command = "vscode-eslint-language-server" }
+typos = { command = "typos-lsp", environment = { "RUST_LOG" = "error" }, config.diagnosticSeverity = "Warning" }
+clangd = { command = "clangd", args = ["--clang-tidy"] }
+
+[language-server.nu-lsp]
+command = "nu"
+args = ["--lsp"]
+
+[language-server.nil]
+command = "nil"
+config.nil = { "formatting" = { command = ["nixfmt"] } }
+
+##############################
+## Configuration for lsp-ai ##
+##############################
+
+[language-server.lsp-ai]
+command = "lsp-ai"
+
+[language-server.lsp-ai.config.memory]
+file_store = {}
+
+[language-server.lsp-ai.config.models.groq_llama_3_3_70b_versatile]
+type = "open_ai"
+chat_endpoint = "https://api.groq.com/openai/v1/chat/completions"
+model = "llama-3.3-70b-versatile"
+auth_token_env_var_name = "GROQ_API_KEY"
+
+# completion
+# [language-server.lsp-ai.config.completion]
+# model = "groq_llama_3_3_70b_versatile"
+
+# [language-server.lsp-ai.config.completion.parameters]
+# max_context = 30000
+# max_tokens = 64
+# messages = [
+#   { role = "system", content = "Instructions:\n- You are an AI programming assistant.\n- Given a piece of code with the cursor location marked by \"<CURSOR>\", replace \"<CURSOR>\" with the correct code or comment.\n- First, think step-by-step.\n- Describe your plan for what to build in pseudocode, written out in great detail.\n- Then output the code replacing the \"<CURSOR>\"\n- Ensure that your completion fits within the language context of the provided code snippet (e.g., Python, JavaScript, Rust).\n\nRules:\n- Only respond with code or comments.\n- Only replace \"<CURSOR>\"; do not include any previously written code.\n- Never include \"<CURSOR>\" in your response\n- If the cursor is within a comment, complete the comment meaningfully.\n- Handle ambiguous cases by providing the most contextually appropriate completion.\n- Be consistent with your responses."},
+# ]
+
+# chat
+[[language-server.lsp-ai.config.chat]]
+trigger = ">"
+action_display_name = "Chat"
+model = "groq_llama_3_3_70b_versatile"
+
+[language-server.lsp-ai.config.chat.parameters]
+max_context = 4096
+max_tokens = 100000
+messages = [
+  { role = "system", content = "You are a helpful assistant chatbot within the text editor helix." },
+]
+
+
+## sql server
+[language-server.postgrestools]
+command = "postgrestools"
+args = ["lsp-proxy"]

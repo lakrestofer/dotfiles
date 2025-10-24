@@ -1,0 +1,40 @@
+#!/bin/sh
+
+set -e # exit if any step has a nonzero exit code
+set -o pipefail # including in the middle of a pipe
+
+CHIME_PATH=~/vault/data/sound/bowl-light.mp3
+
+ITERS=10
+TIME_PER_ITER=60 # 60 seconds
+TOTAL_TIME=$((ITERS * TIME_PER_ITER / 60))
+
+play_chime() {
+  mpv --really-quiet $CHIME_PATH
+}
+
+play_low_chime() {
+  mpv --really-quiet --pitch=0.6 $CHIME_PATH
+}
+
+iter() {
+  sleep 60
+  play_chime
+}
+
+main() {
+  gum log "This meditation will run for around" $TOTAL_TIME "minutes"
+  gum log "After the meditation, note how often you felt distracted"
+  gum log "Every time the chime plays, fully commit to starting again"
+  gum log "Start the meditation by focusing on the breath"
+
+  gum log "Be mindfull of the breath. Do not control it. Count the breaths softly"
+  for i in {1..10}; do
+    play_chime
+    sleep 60
+  done
+  play_low_chime
+
+}
+
+main

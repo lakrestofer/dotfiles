@@ -1,0 +1,23 @@
+font-family = "Hack Nerd Font"
+font-size = 16
+# working-directory = "inherit"
+working-directory = inherit
+window-inherit-working-directory = true
+# window-decoration = false
+# window-theme = "ghostty"
+theme = "Gruvbox Light Hard"
+# theme = "Gruvbox Dark Hard"
+shell-integration-features=no-cursor,no-ssh-env
+shell-integration="zsh"
+# cursor-style = "block"
+# cursor-style-blink = false
+confirm-close-surface = false
+background-opacity = 0.95
+# custom-shader = shaders/cursor_smear.glsl
+# custom-shader = shaders/sparks.glsl
+# custom-shader = shaders/blaze.glsl
+# custom-shader = shaders/blaze_tapered.glsl
+# custom-shader = shaders/cursor_rainbow.glsl
+# custom-shader = shaders/blaze_no_trail.glsl
+
+keybind = shift+enter=text:\x1b\r

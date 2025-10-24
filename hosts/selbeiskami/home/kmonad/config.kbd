@@ -1,0 +1,87 @@
+;; setxkbmap -layout us -variant altgr-intl -option nodeadkeys
+;;(defcfg
+;;  input (device-file "/dev/input/by-path/platform-i8042-serio-0-event-kbd")
+;;  output (uinput-sink
+;;          "KMonad: L15AMD")
+;;
+;;  ;; Comment this is you want unhandled events not to be emitted
+;;  fallthrough true
+;;
+;;  ;; Set this to false to disable any command-execution in KMonad
+;;  allow-cmd true
+;;)
+
+
+(defalias
+  ecm (tap-next esc lmet)   ;; Escape    when tapped, Control when held
+)
+
+(defalias dis displayoff)
+
+#| Layer template
+ |(deflayer name
+ |        _     _     _           _     _     _     _                              
+ |  _     _     _     _     _     _     _     _     _     _     _     _     _     _     _     _     _
+ |  _     _     _     _     _     _     _     _     _     _     _     _     _     _                  
+ |  _     _     _     _     _     _     _     _     _     _     _     _     _     _                   
+ |  _     _     _     _     _     _     _     _     _     _     _     _     _                        
+ |  _     _     _     _     _     _     _     _     _     _     _     _     _     _     _     _      
+ |        _     _      _                 _                _     _     _     _     _     _     _  
+ |)
+|#
+
+(defsrc
+        mute   volu  vold        brdn  brup  displayoff  wlan                           
+  esc   f1     f2    f3    f4    f5    f6    f7    f8    f9    f10   f11   f12   home  end   ins   del
+  grv   1      2     3     4     5     6     7     8     9     0     -     =     bspc                 
+  tab   q      w     e     r     t     y     u     i     o     p     [     ]     ret                  
+  caps  a      s     d     f     g     h     j     k     l     ;     '     \                            
+  lsft  lsgt   z     x     c     v     b     n     m     ,     .     /     rsft  
+        lctl  lmet   lalt              spc               ralt  ssrq  rctl  pgup  up    pgdn
+		                                                                   left  down  rght
+)
+
+(defalias
+  qwr (layer-switch qwerty)
+  col (layer-switch colemakdh)
+)
+
+(deflayer colemakdh
+        mute   volu  vold        brdn  brup  @dis  @qwr
+  esc   f1     f2    f3    f4    f5    f6    f7    f8    f9    f10   f11   f12   home  end   ins   del
+  grv   1      2     3     4     5     6     7     8     9     0     -     =     bspc
+  @stab q      w     f     p     b     j     l     u     y     ;     [     ]     ret
+  @ecm  a      r     s     t    g      m     n     e     i     o     '     \
+  lsft  z      x     c     d     v     XX    k     h     ,     .     /     rsft
+        lmet  lalt   lctl              spc               rctl  lalt  cmp   pgup  up    pgdn
+		                                                                   left  down  rght
+)
+
+(deflayer qwerty
+        mute  volu  vold        brdn  brup  @dis  @col
+  esc   f1    f2    f3    f4    f5    f6    f7    f8    f9    f10   f11   f12   home  end   ins   del
+  grv   1     2     3     4     5     6     7     8     9     0     -     =     bspc
+  tab   q     w     e     r     t     y     u     i     o     p     [     ]     ret
+  @ecm  a     s     d     f     g     h     j     k     l     ;     '     \
+  lsft  lsgt  z     x     c     v     b     n     m     ,     .     /     rsft  
+        lctl  lmet  lalt              spc               ralt  ssrq  rctl  pgup  up    pgdn
+		                                                                  left  down  rght
+)
+
+(defalias
+ stab (tap-hold 200 tab  (layer-toggle swedish-chars))
+ å (around ralt w)
+ ö (around ralt p)
+ ä (around ralt q)
+)
+
+(deflayer swedish-chars
+        _     _     _           _     _     _     _                              
+  _     _     _     _     _     _     _     _     _     _     _     _     _     _     _     _     _   
+  _     _     _     _     _     _     _     _     _     _     _     _     _     _
+  _     _     _     _     _     _     _     _     _     _     _     @å    _     _
+  _     _     _     _     _     _     _     _     _     _     @ö    @ä    _
+  _     _     _     _     _     _     _     _     _     _     _     _     _     
+        _     _      _                 _                _     _     _     _     _     _     
+                                                                          _     _     _
+)

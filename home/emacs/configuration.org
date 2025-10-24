@@ -1,0 +1,992 @@
+#+STARTUP: content
+* My emacs literate config - Foreword
+This is my configuration for emacs! It is written using org-babel which
+places the contents of various code blocks into their coresponding file.
+
+To tangle the contents I use org-babel-tangle (tangles current buffer) (which is
+bound to C-c C-v t).
+* On editing this file
+
+- S-Tab will fold the headings which makes it easier to navigate the
+  file content
+  - [ ] in the future use some lsp like "goto definition/symbol" to
+    quickly move to some other part of the document
+- *C-c C-v t* will generate the early init file and the init file from
+  the source blocks of this file
+- *C-c C-,* will open a menu for creating various blocks
+- *C-c C-v d* will split a source block in two 
+      
+* Configuration goals
+- Programmable attention
+- Development
+  - eglot
+    - [X] auto format
+    - bindings for
+      - goto definitions
+      - goto declarations
+      - list symbols
+      - workspace commands from lsp
+  - language setup
+    - rust
+    - nix
+      - [X] setup nil language server
+    - zig
+      - [ ] setup zls language server
+  - web development
+    - ts
+    - tsx
+    - js
+    - json, jsonc
+    - toml
+  - nix
+  - [ ] setup nil language server
+* Configuration
+
+With the goals set, may the actual configuration begin!
+
+** Header
+This will generate a header at the top of the init.el and the early-init.el
+#+begin_src emacs-lisp :tangle init.el  
+;; -*- lexical-binding: t -*-
+;; This file has been generated from configuration.org file. DO NOT EDIT.
+;; Sources are available from https://github.com/lakrestofer/dotfiles/tree/main/.config/emacs
+#+end_src
+
+#+begin_src emacs-lisp :tangle early-init.el  
+;; -*- lexical-binding: t -*-
+;; This file has been generated from configurations.org file. DO NOT EDIT.
+;; Sources are available from https://github.com/lakrestofer/dotfiles/tree/main/.config/emacs
+#+end_src
+** Early init
+
+In the begining of the emacs startup process (as documented in [[info:emacs#Early Init File][the
+manual]]) early-init file is loaded. Here we set any configs that we
+want to apply before the rest of the startup takes place. Since the
+default package manager is loaded here we disable it. We also disable
+some gui elements which we are not interested in. A speed-up hack that
+we also perform is to temporarily remove the limit for the
+garbage-collector, allowing the startup proccess to run without the
+garbage collector pausing execution for cleanup.
+
+#+begin_src emacs-lisp :tangle early-init.el
+;; disable some gui elements
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+;; disables package.el
+(setq package-enable-at-startup nil)
+
+;; disable the startup screen
+(setq-default inhibit-startup-message t
+          initial-scratch-message "")
+
+;; we temporarily allow the gc to leak memory
+(setq gc-cons-threshold most-positive-fixnum)
+
+(add-hook 'emacs-startup-hook (lambda () (setq gc-conf-threshold (* 40 1024 1024))))
+;; increase the amount of data that can be read from subprocess in a single go
+(setq read-process-output-max (* 4 1024 1024)) ;; 4 mb
+#+end_src
+** Package manager bootstrap
+Here we install elpaca and 
+#+begin_src emacs-lisp :tangle init.el
+(defvar elpaca-installer-version 0.11)
+(defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
+(defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
+(defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
+(defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
+                              :ref nil :depth 1 :inherit ignore
+                              :files (:defaults "elpaca-test.el" (:exclude "extensions"))
+                              :build (:not elpaca--activate-package)))
+(let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
+       (build (expand-file-name "elpaca/" elpaca-builds-directory))
+       (order (cdr elpaca-order))
+       (default-directory repo))
+  (add-to-list 'load-path (if (file-exists-p build) build repo))
+  (unless (file-exists-p repo)
+    (make-directory repo t)
+    (when (<= emacs-major-version 28) (require 'subr-x))
+    (condition-case-unless-debug err
+        (if-let* ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
+                  ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
+                                                  ,@(when-let* ((depth (plist-get order :depth)))
+                                                      (list (format "--depth=%d" depth) "--no-single-branch"))
+                                                  ,(plist-get order :repo) ,repo))))
+                  ((zerop (call-process "git" nil buffer t "checkout"
+                                        (or (plist-get order :ref) "--"))))
+                  (emacs (concat invocation-directory invocation-name))
+                  ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
+                                        "--eval" "(byte-recompile-directory \".\" 0 'force)")))
+                  ((require 'elpaca))
+                  ((elpaca-generate-autoloads "elpaca" repo)))
+            (progn (message "%s" (buffer-string)) (kill-buffer buffer))
+          (error "%s" (with-current-buffer buffer (buffer-string))))
+      ((error) (warn "%s" err) (delete-directory repo 'recursive))))
+  (unless (require 'elpaca-autoloads nil t)
+    (require 'elpaca)
+    (elpaca-generate-autoloads "elpaca" repo)
+    (let ((load-source-file-function nil)) (load "./elpaca-autoloads"))))
+(add-hook 'after-init-hook #'elpaca-process-queues)
+(elpaca `(,@elpaca-order))
+#+end_src
+#+begin_src emacs-lisp :tangle init.el
+;; Enable use-package :ensure support for Elpaca.
+(elpaca elpaca-use-package
+  (elpaca-use-package-mode))
+;; (setq use-package-compute-statistics t)
+(setq use-package-always-ensure t)
+#+end_src
+Since elpacka downloads packages asynchronously we need to block manually here
+#+begin_src emacs-lisp :tangle init.el
+(use-package no-littering)
+(elpaca-wait)
+#+end_src
+** Performance tuning
+#+begin_src emacs-lisp :tangle init.el
+(use-package gcmh
+  ;; :ensure (:host "github.com" :repo "emacsmirror/gcmh" :depth 1 :main "gcmh.el")
+  :init
+  (setq gcmh-idle-delay 'auto)
+  (gcmh-mode 1))  
+#+end_src
+** Some nice default behaviour
+#+begin_src emacs-lisp :tangle init.el
+(setq history-length 25)
+(savehist-mode 1)
+(save-place-mode 1)
+(setq use-dialog-box nil)
+(global-auto-revert-mode 1)
+(setq global-auto-revert-non-file-buffers t)
+(setq tab-width 4)
+(setq-default indent-tabs-mode nil)
+(setq backward-delete-char-untabify-method 'hungry)
+#+end_src
+** Theming and visuals
+**** Theme
+For now we set a builtin theme
+#+begin_src emacs-lisp :tangle init.el
+(use-package doom-themes
+  :config
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t ; if nil, italics is universally disabled
+        doom-gruvbox-light-padded-modeline t
+        doom-gruvbox-light-variant 'hard)
+  (load-theme 'doom-gruvbox-light t)
+  (doom-themes-org-config))
+#+end_src
+**** Font
+set mono and variabled pitch fonts
+#+begin_src emacs-lisp :tangle init.el
+(defun apply-font-config ()
+  "applies the font of choice, Fira Code"
+  (set-face-attribute 'default nil :font "Fira Code" :height (* 15 10)))
+(unless (daemonp)
+  (apply-font-config))
+(add-hook 'server-after-make-frame-hook #'apply-font-config)
+#+end_src
+**** Some other visual improvements
+#+begin_src emacs-lisp :tangle init.el
+;; requires emacs v29
+(pixel-scroll-precision-mode 1)
+(blink-cursor-mode 0)
+#+end_src
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package solaire-mode
+  :config
+  (solaire-global-mode +1))
+#+end_src
+
+#+begin_src emacs-lisp :tangle init.el
+#+end_src
+**** Some other eyecandy
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package minimap
+  :defer t
+  :config
+  (setq minimap-major-modes '(prog-mode))
+  (setq minimap-window-location 'right))
+#+end_src
+
+** Keybinds and movement
+#+begin_src emacs-lisp :tangle init.el
+(use-package which-key
+  :config
+  (which-key-mode))
+#+end_src
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package meow
+  :config
+  (defun meow-setup ()
+    (setq meow-mode-state-list
+          '((conf-mode . normal)
+            (fundamental-mode . normal)
+            (help-mode . motion)
+            (prog-mode . normal)
+            (text-mode . normal)))
+    (setq meow-cheatsheet-layout meow-cheatsheet-layout-colemak-dh)
+    (setq meow-cheatsheet-physical-layout meow-cheatsheet-physical-layout-iso)
+    (setq meow-expand-hint-remove-delay 3)
+    (setq meow-keypad-leader-dispatch "C-z")
+    (meow-motion-define-key
+     ;; Use e to move up, n to move down.
+     ;; Since special modes usually use n to move down, we only overwrite e here.
+     '("n" . meow-prev)
+     '("<escape>" . ignore))
+    (meow-leader-define-key
+     '("?" . meow-cheatsheet)
+     '("1" . meow-digit-argument)
+     '("2" . meow-digit-argument)
+     '("3" . meow-digit-argument)
+     '("4" . meow-digit-argument)
+     '("5" . meow-digit-argument)
+     '("6" . meow-digit-argument)
+     '("7" . meow-digit-argument)
+     '("8" . meow-digit-argument)
+     '("9" . meow-digit-argument)
+     '("0" . meow-digit-argument))
+    (meow-normal-define-key
+     ;; movement
+     '("n" . meow-left)
+     '("N" . meow-left-expand)
+     '("e" . meow-next)
+     '("E" . meow-next-expand)
+     '("i" . meow-prev)
+     '("I" . meow-prev-expand)
+     '("o" . meow-right)
+     '("O" . meow-right-expand)
+     '("f" . meow-find)
+     '("t" . meow-till)
+     ;; word movement
+     '("b" . meow-back-word)
+     '("B" . meow-back-symbol)
+     '("w" . meow-next-word)
+     '("W" . meow-next-symbol)
+     ;; arguments
+     '("0" . meow-expand-0)
+     '("1" . meow-expand-1)
+     '("2" . meow-expand-2)
+     '("3" . meow-expand-3)
+     '("4" . meow-expand-4)
+     '("5" . meow-expand-5)
+     '("6" . meow-expand-6)
+     '("7" . meow-expand-7)
+     '("8" . meow-expand-8)
+     '("9" . meow-expand-9)
+     '("-" . negative-argument)
+     '(";" . meow-reverse)
+     ;; selection
+     '("," . meow-inner-of-thing)
+     '("." . meow-bounds-of-thing)
+     '("[" . meow-beginning-of-thing)
+     '("]" . meow-end-of-thing)
+     '("g" . meow-cancel-selection)
+     '("h" . meow-block)
+     '("H" . meow-to-block)
+     '("l" . meow-line)
+     ;; search
+     '("/" . meow-visit)
+     '("v" . meow-search)
+     ;; to insert mode
+     '("a" . meow-append)
+     '("A" . meow-open-below)
+     '("c" . meow-change)
+     '("s" . meow-insert)
+     '("S" . meow-open-above)
+     '("k" . meow-insert)
+     '("K" . meow-open-above)
+     ;; other
+     '("G" . meow-grab)
+     '("j" . meow-join)
+     '("d" . meow-kill)
+     '("x" . meow-delete)
+     '("X" . meow-backward-delete)
+     '("L" . meow-goto-line)
+     '("m" . meow-mark-word)
+     '("M" . meow-mark-symbol)
+     '("p" . meow-yank)
+     '("q" . meow-quit)
+     '("r" . meow-replace)
+     '("u" . meow-undo)
+     '("U" . meow-undo-in-selection)
+     '("y" . meow-save)
+     '("z" . meow-pop-selection)
+     '("'" . repeat)
+     '("<escape>" . ignore)))
+  (meow-setup)
+  (meow-global-mode 1))
+#+end_src
+
+The default 'scroll by buffer height' causes me to lose sight of the cursor.
+We'll fix it by setting some scroll settings.
+
+#+begin_src emacs-lisp :tangle init.el
+(setq scroll-step 1)
+(setq scroll-margin 10)
+(setq scroll-conservatively 101)
+#+end_src
+
+** Window management
+
+Navigating around windows using nothing but window-other gets old real
+quick. There exist alternatives thought
+
+#+begin_src emacs-lisp :tangle init.el
+
+;; we undbind the "suspend-emacs" command from C-z to
+;; make space for our own custom binds
+(unbind-key "C-z")
+
+(use-package windmove
+  :ensure nil
+  :init
+  (windmove-mode 1))
+
+(defun my-split-right ()
+  "Split window with another buffer."
+  (interactive)
+  (split-window-right)
+  (balance-windows)
+  (windmove-right))
+
+(defun my-split-down ()
+  "Split window with another buffer."
+  (interactive)
+  (split-window-down)
+  (balance-windows)
+  (windmove-down))
+
+
+(defun my-delete-window (&optional window)
+  "delete the a window and then make each window take an equal amount of space"
+  (interactive)
+  (if window (delete-window window) (delete-window))
+  (balance-windows))
+
+(bind-keys
+ :prefix-map window-management
+ :prefix "C-z w"
+ ("n" . windmove-left)
+ ("e" . windmove-down)
+ ("i" . windmove-up)
+ ("o" . windmove-right)
+ ("s" . my-split-right)
+ ("h" . my-split-down)
+ ("q" . my-delete-window)
+ )
+
+#+end_src
+
+** Information display
+
+** Interactive menus and completion
+
+- [ ] explain the emacs completion system
+
+- A description from the consult repo
+  - "Consult provides search and navigation commands based on the Emacs
+    completion function completing-read."
+  - gives us a better way to filter some of the results
+*** minibuffer
+    
+#+begin_src emacs-lisp :tangle init.el
+(use-package consult
+  :bind (;; C-c bindings in `mode-specific-map'
+         ("C-c M-x" . consult-mode-command)
+         ("C-c h" . consult-history)
+         ("C-c k" . consult-kmacro)
+         ("C-c m" . consult-man)
+         ("C-c i" . consult-info)
+         ([remap Info-search] . consult-info)
+         ;; C-x bindings in `ctl-x-map'
+         ("C-z f" . project-find-file)
+         ("C-z b" . consult-project-buffer)
+         ("C-z B" . consult-buffer)
+         ;; Custom M-# bindings for fast register access
+         ("M-#" . consult-register-load)
+         ("M-'" . consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
+         ("C-M-#" . consult-register)
+         ;; Other custom bindings
+         ("M-y" . consult-yank-pop)                ;; orig. yank-pop
+         ;; M-g bindings in `goto-map'
+         ("M-g e" . consult-compile-error)
+         ("M-g f" . consult-flymake)               ;; Alternative: consult-flycheck
+         ("M-g g" . consult-goto-line)             ;; orig. goto-line
+         ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
+         ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
+         ("M-g m" . consult-mark)
+         ("M-g k" . consult-global-mark)
+         ("M-g i" . consult-imenu)
+         ("M-g I" . consult-imenu-multi)
+         ;; M-s bindings in `search-map'
+         ("M-s d" . consult-find)                  ;; Alternative: consult-fd
+         ("M-s c" . consult-locate)
+         ("M-s g" . consult-grep)
+         ("M-s G" . consult-git-grep)
+         ("M-s r" . consult-ripgrep)
+         ("M-s l" . consult-line)
+         ("M-s L" . consult-line-multi)
+         ("M-s k" . consult-keep-lines)
+         ("M-s u" . consult-focus-lines)
+         ;; Isearch integration
+         ("M-s e" . consult-isearch-history)
+         :map isearch-mode-map
+         ("M-e" . consult-isearch-history)         ;; orig. isearch-edit-string
+         ("M-s e" . consult-isearch-history)       ;; orig. isearch-edit-string
+         ("M-s l" . consult-line)                  ;; needed by consult-line to detect isearch
+         ("M-s L" . consult-line-multi)            ;; needed by consult-line to detect isearch
+         ;; Minibuffer history
+         :map minibuffer-local-map
+         ("M-s" . consult-history)                 ;; orig. next-matching-history-element
+         ("M-r" . consult-history))                ;; orig. previous-matching-history-element
+
+  ;; Enable automatic preview at point in the *Completions* buffer. This is
+  ;; relevant when you use the default completion UI.
+  :hook (completion-list-mode . consult-preview-at-point-mode)
+
+  ;; The :init configuration is always executed (Not lazy)
+  :init
+
+  ;; Tweak the register preview for `consult-register-load',
+  ;; `consult-register-store' and the built-in commands.  This improves the
+  ;; register formatting, adds thin separator lines, register sorting and hides
+  ;; the window mode line.
+  (advice-add #'register-preview :override #'consult-register-window)
+  (setq register-preview-delay 0.5)
+
+  ;; Use Consult to select xref locations with preview
+  (setq xref-show-xrefs-function #'consult-xref
+        xref-show-definitions-function #'consult-xref)
+
+  ;; Configure other variables and modes in the :config section,
+  ;; after lazily loading the package.
+  :config
+
+  ;; Optionally configure preview. The default value
+  ;; is 'any, such that any key triggers the preview.
+  ;; (setq consult-preview-key 'any)
+  ;; (setq consult-preview-key "M-.")
+  ;; (setq consult-preview-key '("S-<down>" "S-<up>"))
+  ;; For some commands and buffer sources it is useful to configure the
+  ;; :preview-key on a per-command basis using the `consult-customize' macro.
+  (consult-customize
+   consult-theme :preview-key '(:debounce 0.2 any)
+   consult-ripgrep consult-git-grep consult-grep consult-man
+   consult-bookmark consult-recent-file consult-xref
+   consult--source-bookmark consult--source-file-register
+   consult--source-recent-file consult--source-project-recent-file
+   ;; :preview-key "M-."
+   :preview-key '(:debounce 0.4 any))
+
+  ;; Optionally configure the narrowing key.
+  ;; Both < and C-+ work reasonably well.
+  (setq consult-narrow-key "<") ;; "C-+"
+
+  ;; Optionally make narrowing help available in the minibuffer.
+  ;; You may want to use `embark-prefix-help-command' or which-key instead.
+  ;; (keymap-set consult-narrow-map (concat consult-narrow-key " ?") #'consult-narrow-help)
+  )
+#+end_src
+
+We also load vertico, which provides alternate completion ui for the minibuffer
+
+#+begin_src emacs-lisp :tangle init.el
+
+(use-package vertico
+  :custom
+  ;; (vertico-scroll-margin 0) ;; Different scroll margin
+  (vertico-count 20) ;; Show more candidates
+  (vertico-resize t) ;; Grow and shrink the Vertico minibuffer
+  ;; (vertico-cycle t) ;; Enable cycling for `vertico-next/previous'
+  :init
+  (vertico-mode))
+#+end_src
+
+*** emacs completion system    
+
+when the default completion system generates/is given completion
+candidates we are able to affect the ordering of them.
+
+orderless is a package that provides one such style of ordering
+  
+#+begin_src emacs-lisp :tangle init.el
+(use-package orderless
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles partial-completion)))))
+#+end_src
+
+some ordering functions use our usage history to determine how to
+order candidates. To persist this between restarts, we enable
+savehist-mode
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package savehist
+  :ensure nil
+  :init
+  (savehist-mode))
+#+end_src
+
+We set a default completion candidate filter (determines which
+functions shall be used to provide completion).
+
+#+begin_src emacs-lisp :tangle init.el
+(setq read-extended-command-predicate #'command-completion-default-include-p)
+#+end_src
+
+*** in buffer completion
+
+For inbuffer completion we have an alternate ui that is provided by
+[[https://github.com/minad/corfu][corfu]]
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package corfu
+  :config
+  ;; we unset the return key since it may sometimes
+  ;; in buffer completion should be as fast as possible limited
+  ;; context makes more advanced completion ordering (based on sure
+  ;; input) not necessary
+  (defun orderless-fast-dispatch (word index total)
+    (and (= index 0) (= total 1) (length< word 4)
+         (cons 'orderless-literal-prefix word)))
+
+  (orderless-define-completion-style orderless-fast
+    (orderless-style-dispatchers '(orderless-fast-dispatch))
+    (orderless-matching-styles '(orderless-literal orderless-regexp)))
+
+  (add-hook 'corfu-mode-hook
+            (lambda ()
+              (setq-local completion-styles '(orderless-fast basic)
+                          completion-category-overrides nil
+                          completion-category-defaults nil)))
+  ;; Enable auto completion and configure quitting
+  (setq corfu-auto t
+        corfu-quit-no-match 'separator) ;; or t
+  ;; some emacs settings that we want to set
+  (setq tab-always-indent 'complete)
+  (setq text-mode-ispell-word-completion nil)
+
+  :init
+  (global-corfu-mode)
+  (corfu-history-mode)
+  )
+#+end_src
+
+This completion system also needs us to provide some sources for
+completions. The Cape package provides some such functions
+
+#+begin_src emacs-lisp :tangle init.el
+
+(use-package cape
+  :bind ("C-c p" . cape-prefix-map) ;; Alternative key: M-<tab>, M-p, M-+
+  :init
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-abbrev)
+  (add-hook 'completion-at-point-functions #'cape-file)
+  (add-hook 'completion-at-point-functions #'cape-elisp-block)
+  )
+#+end_src
+
+*** Snippets
+
+emacs has a builtin concept of [[info:emacs#Abbrevs][abbreviations]] and [[info:emacs#Dynamic Abbrevs][dynamic abbreviations]]
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package abbrev-mode
+  :ensure nil
+  :bind (("M-/" . dabbrev-completion)
+         ("C-M-/" . dabbrev-expand))
+  :config
+  (add-to-list 'dabbrev-ignored-buffer-regexps "\\` ")
+  (add-to-list 'dabbrev-ignored-buffer-modes 'authinfo-mode)
+  (add-to-list 'dabbrev-ignored-buffer-modes 'doc-view-mode)
+  (add-to-list 'dabbrev-ignored-buffer-modes 'pdf-view-mode)
+  (add-to-list 'dabbrev-ignored-buffer-modes 'tags-table-mode))
+#+end_src
+
+*** UX for minibuffer completion menu
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package marginalia
+  :config
+  (marginalia-mode))
+
+(use-package embark
+  :bind
+  (("C-." . embark-act)         ;; pick some comfortable binding
+   ("C-;" . embark-dwim)        ;; good alternative: M-.
+   ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+  :init
+  (setq prefix-help-command #'embark-prefix-help-command)
+  ;; (add-hook 'eldoc-documentation-functions #'embark-eldoc-first-target)
+  (setq eldoc-documentation-strategy #'eldoc-documentation-compose-eagerly)
+  :config
+  ;; Hide the mode line of the Embark live/completions buffers
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none)))))
+
+;; Consult users will also want the embark-consult package.
+(use-package embark-consult
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
+#+end_src
+** File management
+#+begin_src emacs-lisp :tangle init.el
+(use-package dired
+  :ensure nil
+  :config
+)
+(use-package dirvish
+  :init
+  (dirvish-override-dired-mode))
+#+end_src
+** Version control
+#+begin_src emacs-lisp :tangle init.el
+(use-package diff-hl
+  :init
+  (global-diff-hl-mode))
+  #+end_src
+** Org mode
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package org
+  :ensure nil ;; use builtin
+  :defer t
+  :hook ((org-mode . auto-fill-mode))
+  :config
+  (add-hook 'org-mode-hook (lambda () (setq truncate-lines nil)))
+  (setq org-link-frame-setup '((file . find-file)))
+  (setq org-src-preserve-indentation t)
+  (setq org-M-RET-may-split-line nil))
+#+end_src
+
+#+begin_src emacs-lisp :tangle init.el
+
+(use-package org-download
+  :after org
+  :bind
+  (:map org-mode-map
+        (("s-Y" . org-download-clipboard)
+         ("s-y" . org-download-yank))))
+#+end_src
+
+*** Org roam
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package org-roam
+  :init
+  (setq org-return-follows-link t)
+  (setq find-file-visit-truename t)
+  (setq org-roam-v2-ack t)
+  (setq split-width-threshold 0)
+  (setq split-height-threshold nil)
+  (setq org-roam-directory "~/vault/notes-org")
+  :bind (:prefix-map org-roam-prefix-map
+                     :prefix "C-z n"
+                     :prefix-docstring "org roam bindings"
+                     ("l" . org-roam-buffer-toggle)
+                     ("f" . org-roam-node-find)
+                     ("c" . org-roam-node-capture)
+                     ("d" . org-roam-dailies-goto-today)
+                     ("i" . org-roam-node-insert))
+  :config
+  (setq org-link-descriptive t) ;; hide links, and show them when the cursor is on them
+  (setq org-roam-completion-everywhere t)
+  (org-roam-setup)
+  (org-roam-db-autosync-mode))
+#+end_src
+
+#+begin_src emacs-lisp :tangle init.el
+
+(use-package org-roam-ui
+  :ensure (:host github :repo "org-roam/org-roam-ui" :branch "main" :files ("*.el" "out"))
+  :defer t
+  :bind (:prefix-map org-roam-ui-prefix-map
+                     :prefix "C-z n u"
+                     ("t" . org-roam-ui-mode))
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start t)
+  (org-roam-ui-sync-theme)
+  )
+#+end_src
+
+To efficiently add org roam buffers to our agenda we
+need to somehow build our org-agenda-files dynamically.
+
+[[https://www.d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5][This article]] contains a description of how to do that
+
+*** Org ql
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package org-ql
+  :hook 'after-init-hook
+  :defer t)
+#+end_src
+
+*** Org roam ql
+#+begin_src emacs-lisp :tangle init.el
+(use-package org-roam-ql
+  :after (org-roam)
+  )
+#+end_src
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package org-roam-ql-ql
+  ;; Simple config
+  :after (org-ql org-roam-ql)
+  :config
+  (org-roam-ql-ql-init))
+#+end_src
+
+** LLM integration
+*** gptel
+
+My nixos configuration does not load in the my .zprofile before starting the emacs daemon.
+This means that i cannot access my api keys using ~(getenv)~
+
+To solve this we read in the ~/keys.sh file ourselves and set the env.
+#+begin_src emacs-lisp :tangle init.el
+(let ((env-file "~/keys.sh"))
+  (when (file-exists-p env-file)
+    (let ((output (with-temp-buffer
+                    (call-process "sh" nil t nil "-c"
+                                  (concat ". " env-file " && env"))
+                    (buffer-string))))
+      (dolist (line (split-string output "\n"))
+        (when (string-match "\\`\\([^=]+\\)=\\(.*\\)\\'" line)
+          (setenv (match-string 1 line) (match-string 2 line)))))))
+#+end_src
+
+We then need some way to read in the api keys from gptel, so we define the below two functions.
+
+#+begin_src emacs-lisp :tangle init.el
+
+(defun groq-api-key ()
+  "returns the api key for the groq llm service"
+  (getenv "GROQ_API_KEY"))
+(defun gemini-api-key ()
+  "returns the api key for the groq llm service"
+  (getenv "GEMINI_API_KEY"))
+(defun claude-api-key ()
+  "returns the api key for the groq llm service"
+  (getenv "CLAUDE_API_KEY"))
+
+#+end_src
+
+We then list out the various models from each provider and their capabilities
+
+#+begin_src emacs-lisp :tangle init.el
+;; https://console.groq.com/docs/models
+
+#+end_src
+
+And finaly we install and configure the gptel package.
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package gptel
+  :config
+  ;; configure modele providers
+  (gptel-make-gemini "Gemini"
+                     :key #'gemini-api-key
+                     :stream t)
+  (gptel-make-openai "Groq"
+                     :host "api.groq.com"
+                     :endpoint "/openai/v1/chat/completions"
+                     :key #'groq-api-key
+                     :models '(llama-3.3-70b-versatile
+                               llama3-70b-8192
+                               llama-3.1-8b-instant
+                               deepseek-r1-distill-llama-70b
+                               llama3-8b-8192
+                               qwen-qwq-32b
+                               ))
+  (gptel-make-anthropic "Claude"
+                        :key #'claude-api-key
+                        :stream t)
+  (setq gptel-model 'llama-3.3-70b-versatile)
+  (setq gptel-backend (gptel-get-backend "Groq"))
+  (setq gptel-default-mode 'org-mode)
+  )
+
+#+end_src
+
+** Development
+
+*** settings
+#+begin_src emacs-lisp :tangle init.el
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+#+end_src
+
+*** Tools
+**** Magit
+#+begin_src emacs-lisp :tangle init.el
+(use-package transient
+  :defer t)
+(use-package magit
+  :defer t)
+#+end_src
+**** Dired
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package dired
+  :ensure nil
+  :commands (dired dired-jump)
+  :config
+  (setq  dired-kill-when-opening-new-dired-buffer t)
+  (setq dired-dwim-target t))
+#+end_src
+**** direnv
+#+begin_src emacs-lisp :tangle init.el
+(use-package direnv
+  :config
+  (direnv-mode))
+#+end_src
+*** LSP
+#+begin_src emacs-lisp :tangle init.el
+(use-package flymake
+  :ensure nil
+  :defer t)
+#+end_src
+
+#+begin_src emacs-lisp :tangle init.el
+
+(defun lakrestofer/eglot-maybe-format ()
+  "if eglot is managing the current buffer, format it"
+  (if (eglot-managed-p) (eglot-format-buffer)))
+  
+(use-package eglot
+  :ensure nil
+  :commands eglot
+  :config
+  (add-hook 'after-save-hook #'lakrestofer/eglot-maybe-format nil t)
+  (setq eglot-autoshutdown t)
+  (setq eglot-server-programs `(((rust-ts-mode rust-mode) . ("rust-analyzer"))
+                                (nix-mode .
+                                          ("nil" :initializationOptions (:nil
+                                                                         (:formating (:command ["nixfmt"])
+                                                                          :nix (:flake (:autoArchive t))))))
+                                ))
+  :hook ((rust-mode
+          json-mode
+          nix-mode) . eglot-ensure)
+  )
+#+end_src
+*** Languages
+**** Markdown
+#+begin_src emacs-lisp :tangle init.el
+(use-package markdown-mode
+  :mode "\\.md\\'")
+#+end_src
+**** Nix
+#+begin_src emacs-lisp :tangle init.el
+(use-package nix-mode
+  :mode "\\.nix\\'"
+  )
+#+end_src
+
+**** Rust
+#+begin_src emacs-lisp :tangle init.el
+(use-package rust-mode
+  :mode "\\.rs\\'"
+  :hook (rust-mode . eglot-ensure) ; or lsp-deferred if using lsp-mode
+  :init
+  (add-hook 'rust-mode-hook (lambda () (setq indent-tabs-mode nil)))
+  :config
+  (setq rust-mode-treesitter-derive t))
+
+(use-package cargo
+  :hook (rust-mode . cargo-minor-mode))
+
+(use-package toml-mode
+  :mode "\\.toml\\'")
+#+end_src
+**** zig
+
+#+begin_src emacs-lisp :tangle init.el
+#+end_src
+
+*** Tree sitter
+#+begin_src emacs-lisp :tangle init.el
+;; define source definitions for various treesitter grammars
+(setq treesit-language-source-alist
+      '((css . ("https://github.com/tree-sitter/tree-sitter-css" "v0.20.0"))
+        (go . ("https://github.com/tree-sitter/tree-sitter-go" "v0.20.0"))
+        (html . ("https://github.com/tree-sitter/tree-sitter-html" "v0.20.1"))
+        (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript" "v0.20.1" "src"))
+        (json . ("https://github.com/tree-sitter/tree-sitter-json" "v0.20.2"))
+        (markdown . ("https://github.com/ikatyang/tree-sitter-markdown" "v0.7.1"))
+        (python . ("https://github.com/tree-sitter/tree-sitter-python" "v0.20.4"))
+        (rust . ("https://github.com/tree-sitter/tree-sitter-rust" "v0.21.2"))
+        (toml . ("https://github.com/tree-sitter/tree-sitter-toml" "v0.5.1"))
+        (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.3" "tsx/src"))
+        (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.3" "typescript/src"))
+        (yaml . ("https://github.com/ikatyang/tree-sitter-yaml" "v0.5.0"))))
+;; install grammar if not installed
+(dolist (grammar treesit-language-source-alist)
+  (unless (treesit-language-available-p (car grammar))
+    (treesit-install-language-grammar (car grammar))))
+;; associate each tree sitter mode with its original mode
+(setq major-mode-remap-alist
+      '((python-mode . python-ts-mode)
+        (css-mode . css-ts-mode)
+        ;; (rust-mode . rust-ts-mode)
+        (typescript-mode . typescript-ts-mode)
+        (js2-mode . js-ts-mode)
+        (bash-mode . bash-ts-mode)
+        (conf-toml-mode . toml-ts-mode)
+        (go-mode . go-ts-mode)
+        (css-mode . css-ts-mode)
+        (json-mode . json-ts-mode)
+        (js-json-mode . json-ts-mode)))
+#+end_src
+
+**** Tree sitter based additions
+
+#+begin_src emacs-lisp :tangle init.el
+(use-package meow-tree-sitter
+  :config
+  (meow-tree-sitter-register-defaults))
+#+end_src
+
+** Writing
+#+begin_src emacs-lisp :tangle init.el
+(use-package olivetti
+  :defer t
+  :config
+  (setq olivetti-style 'fancy)
+  )
+#+end_src
+
+** small library of functions
+
+#+begin_src emacs-lisp
+(defvar lakrestofer/org-inbox-file "~/vault/notes-org/20250429162227-inbox.org")
+(defun lakrestofer/add-to-org-roam-inbox ()
+  "prompts the user for some though they had and add it to the bottom
+   of my org roam inbox file"
+  (interactive)
+  (progn
+    (org-with-file-buffer
+        lakrestofer/org-inbox-file
+      (let ((thought (read-from-minibuffer "thought: ")))
+        (goto-char (point-max))
+        (org-insert-todo-heading-respect-content)
+        (insert thought)))
+    (message "adding thought to inbox")))
+(global-set-key (kbd "C-c n t") 'lakrestofer/add-to-org-roam-inbox)
+#+end_src
+* Appendix
+# This footer will promt the user to tangle on save
+# Local Variables:
+# eval: (add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Tangle?")(org-babel-tangle))) nil t)
+# End:
+
+

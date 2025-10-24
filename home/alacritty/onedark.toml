@@ -1,0 +1,37 @@
+# Colors (One Dark)
+
+# Default colors
+[colors.primary]
+background = "#16181A"
+foreground = "#ABB2BF"
+
+# Normal colors
+[colors.normal]
+black = "#16181A"
+red     = '#D05C65'
+green   = '#7DA869'
+yellow  = '#D5B06B'
+blue    = '#519FDF'
+magenta = '#c678dd'
+cyan    = '#46A6B2'
+white = "#ABB2BF"
+# purple = "#B668CD"
+
+# gold = "#D19A66"
+# gray = "#252D30"
+
+# faint-gray = "#ABB2BF"
+# light-gray = "#636C6E"
+# linenr = "#282C34"
+
+
+# Bright colors
+# [colors.bright]
+# black = "#2C323C"
+# red     = '#e06c75'
+# green   = '#98c379'
+# yellow  = '#d19a66'
+# blue    = '#61afef'
+# magenta = '#c678dd'
+# cyan    = '#56b6c2'
+# white   = '#ffffff'

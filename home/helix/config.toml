@@ -1,0 +1,246 @@
+theme = "gruvbox_light_trans"
+# theme = "gruvbox_trans"
+
+[editor]
+# cursorline = true
+bufferline = "always"
+scrolloff = 3
+mouse = true
+middle-click-paste = true
+scroll-lines = 3
+shell = ["sh", "-c"]
+line-number = "relative"
+gutters = ["diagnostics", "line-numbers", "diff"]
+auto-completion = true
+auto-format = true
+idle-timeout = 400
+completion-trigger-len = 2
+auto-info = true
+true-color = true
+# rulers = [80]
+end-of-line-diagnostics = "disable"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.indent-guides]
+render = false
+character = "|" # Some characters that work well: "▏", "┆", "┊", "⸽"
+skip-levels = 1
+
+[editor.statusline]
+left = ["mode", "spinner", "spacer", "version-control", "file-name"]
+center = ["diagnostics", "workspace-diagnostics"]
+right = ["selections", "position", "file-type"]
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
+[editor.inline-diagnostics]
+cursor-line = "warning" # show warnings and errors on the cursorline inline
+other-lines = "disable"
+
+[editor.lsp]
+display-messages = true
+display-inlay-hints = false
+auto-signature-help = false
+snippets = true
+
+
+[editor.file-picker]
+hidden = true
+parents = true
+ignore = true
+git-ignore = true
+git-global = true
+git-exclude = true
+# max-depth = "None"
+
+[editor.auto-pairs]
+# '(' = ')'
+# '{' = '}'
+# '[' = ']'
+# '"' = '"'
+# "'" = "'"
+# '`' = '`'
+# '<' = '>'
+
+[editor.search]
+smart-case = true
+wrap-around = true
+
+[editor.whitespace]
+render = "none"
+
+[keys.normal]
+# unset keys
+O = "no_op"
+# A-o = "no_op"
+# A-i = "no_op"
+# A-n = "no_op"
+N = "no_op"
+C-i = "no_op"
+# set them
+n = "move_char_left"
+e = "move_line_down"
+i = "move_line_up"
+o = "move_char_right"
+j = "move_next_word_end"
+J = "move_next_long_word_end"
+k = "insert_mode"
+K = "insert_at_line_start"
+l = "open_below"
+L = "open_above"
+A-l = "expand_selection"
+A-k = "shrink_selection"
+A-h = "select_next_sibling"
+h = "search_next"
+H = "search_prev"
+E = "join_selections"
+I = "keep_selections"
+A-n = ":buffer-previous"
+A-o = ":buffer-next"
+C-o = "jump_forward"
+C-n = "jump_backward"
+"ret" = "goto_definition"
+C-g = [":new", ":insert-output lazygit", ":buffer-close!", ":redraw"]
+C-A-r = [":reload-all"]
+
+[keys.normal.z]
+# unset
+k = "no_op"
+j = "no_op"
+# set
+e = "scroll_up"
+i = "scroll_down"
+[keys.normal.Z]
+# unset
+k = "no_op"
+j = "no_op"
+# set
+e = "scroll_up"
+i = "scroll_down"
+[keys.normal.g]
+# unset
+e = "no_op"
+l = "no_op"
+i = "no_op"
+# set
+j = "goto_last_line"
+n = "goto_line_start"
+o = "goto_line_end"
+k = "goto_implementation"
+h = "goto_next_buffer"
+[keys.normal.m]
+#unset
+i = "no_op"
+#set
+k = "select_textobject_inner"
+[keys.normal.C-w]
+#unset
+C-h = "no_op"
+C-j = "no_op"
+j = "no_op"
+C-k = "no_op"
+k = "no_op"
+H = "no_op"
+J = "no_op"
+K = "no_op"
+L = "no_op"
+#set
+C-l = "wonly"
+l = "wonly"
+C-n = "jump_view_left"
+n = "jump_view_left"
+C-e = "jump_view_down"
+e = "jump_view_down"
+C-i = "jump_view_up"
+i = "jump_view_up"
+C-o = "jump_view_right"
+o = "jump_view_right"
+N = "swap_view_left"
+E = "swap_view_down"
+I = "swap_view_up"
+O = "swap_view_right"
+
+[keys.normal.C-w.h]
+#set
+C-s = "hsplit_new"
+s = "hsplit_new"
+C-v = "vsplit_new"
+v = "vsplit_new"
+
+[keys.normal.space]
+e = [":new", ":insert-output yazi", ":buffer-close!", ":redraw"]
+[keys.normal.space.w]
+#unset
+C-h = "no_op"
+C-j = "no_op"
+j = "no_op"
+C-k = "no_op"
+k = "no_op"
+H = "no_op"
+J = "no_op"
+K = "no_op"
+L = "no_op"
+#set
+C-l = "wonly"
+l = "wonly"
+C-n = "jump_view_left"
+n = "jump_view_left"
+C-e = "jump_view_down"
+e = "jump_view_down"
+C-i = "jump_view_up"
+i = "jump_view_up"
+C-o = "jump_view_right"
+o = "jump_view_right"
+N = "swap_view_left"
+E = "swap_view_down"
+I = "swap_view_up"
+O = "swap_view_right"
+
+[keys.normal.space.w.h]
+#set
+C-s = "hsplit_new"
+s = "hsplit_new"
+C-v = "vsplit_new"
+v = "vsplit_new"
+[keys.select]
+#unset
+k = "no_op"
+l = "no_op"
+E = "no_op"
+N = "no_op"
+#set
+n = "extend_char_left"
+e = "extend_line_down"
+i = "extend_line_up"
+o = "extend_char_right"
+j = "extend_next_word_end"
+J = "extend_next_long_word_end"
+h = "extend_search_next"
+H = "extend_search_prev"
+
+[keys.select.g]
+# unset
+e = "no_op"
+l = "no_op"
+i = "no_op"
+# set
+j = "goto_last_line"
+n = "goto_line_start"
+o = "goto_line_end"
+k = "goto_implementation"
+h = "goto_next_buffer"
+
+[keys.insert]
+#unset
+C-k = "no_op"
+#set
+C-n = "delete_char_backward"
+C-e = "insert_newline"
+C-h = "move_line_down"
+C-j = "goto_line_end_newline"
+C-i = "kill_to_line_end"
