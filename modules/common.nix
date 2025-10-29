@@ -5,7 +5,23 @@
   ...
 }:
 {
-  nixpkgs.overlays = [ inputs.niri.overlays.niri ];
+  nixpkgs.overlays = [
+    inputs.niri.overlays.niri
+    (final: prev: {
+      # lsp for custom snippets and code actions
+      hx-lsp = pkgs.rustPlatform.buildRustPackage {
+        name = "hx-lsp";
+        src = builtins.fetchGit {
+          url = "https://github.com/erasin/hx-lsp";
+          ref = "main";
+          rev = "b86dc789a473d941cb42e533e58a0bf247159395";
+        };
+        buildInputs = [ ];
+        nativeBuildInputs = [ pkgs.pkg-config ];
+        cargoHash = "sha256-dcGInrfWftClvzrxYZvrazm+IWWRfOZmxDJPKwu7GwM=";
+      };
+    })
+  ];
 
   hardware.graphics = {
     package = pkgs.mesa;
@@ -103,121 +119,129 @@
 
   hardware.keyboard.qmk.enable = true;
   services.udev.packages = [ pkgs.via ];
-  environment.systemPackages = with pkgs; [
-    pulseaudio
-    uv
-    claude-code
-    iwe
-    strongswan
-    nmap
-    via
-    qmk
-    racket
-    typos
-    typos-lsp
-    steel
-    inkscape
-    postgres-lsp
-    nufmt
-    nushell
-    pavucontrol
-    mpv
-    poppler-utils
-    vscode-langservers-extracted
-    ghostty
-    warp-terminal
-    chafa
-    ffmpeg
-    qutebrowser
-    xwayland-satellite
-    libnotify
-    fuzzel
-    (python3.withPackages (
-      ps: with ps; [
-        pip
-        pygame
-      ]
-    ))
-    swaybg
-    glow
-    hledger
-    devenv
-    lsp-ai
-    yazi
-    lazygit
-    graphviz
-    supabase-cli
-    awscli
-    hunspellDicts.sv_SE
-    hunspellDicts.en_US
-    hunspell
-    sqlite
-    clang-tools
-    clang
-    clangStdenv
-    calibre
-    waybar
-    inputs.spbased.packages.${system}.default
-    git-filter-repo
-    vscode
-    hyprpicker
-    nodejs
-    slurp
-    grim
-    pdfgrep
-    # texlive.combined.scheme-full
-    pandoc
-    imagemagick_light
-    dprint
-    wget
-    fzf
-    zk
-    jo
-    jq
-    taskwarrior-tui
-    taskwarrior3
-    zed-editor
-    syncthing
-    taplo
-    nixfmt-rfc-style
-    nil
-    nvd
-    nix-output-monitor
-    nh
-    nautilus
-    mako
-    anki-bin
-    gum
-    imv
-    wev
-    pulsemixer
-    upower
-    typescript-language-server
-    ripgrep
-    zathura
-    util-linux
-    brightnessctl
-    eza
-    zoxide
-    wl-clipboard
-    inputs.helix.packages.${system}.default
-    hyprpolkitagent
-    git
-    # tmux
-    gnumake
-    zellij
-    alacritty
-    brave
-    firefox-devedition
-    btop
-    fastfetch
-    eza
-    tree
-    zip
-    unzip
-    pciutils
-    usbutils
-  ];
+  environment.systemPackages =
+    (with pkgs; [
+      hx-lsp
+      p7zip
+      unrar
+      todoist
+      pulseaudio
+      uv
+      claude-code
+      iwe
+      strongswan
+      nmap
+      via
+      qmk
+      racket
+      typos
+      typos-lsp
+      steel
+      inkscape
+      postgres-lsp
+      nufmt
+      nushell
+      pavucontrol
+      mpv
+      poppler-utils
+      vscode-langservers-extracted
+      ghostty
+      warp-terminal
+      chafa
+      ffmpeg
+      qutebrowser
+      xwayland-satellite
+      libnotify
+      fuzzel
+      (python3.withPackages (
+        ps: with ps; [
+          pip
+          pygame
+        ]
+      ))
+      swaybg
+      glow
+      hledger
+      devenv
+      lsp-ai
+      yazi
+      lazygit
+      graphviz
+      supabase-cli
+      awscli
+      hunspellDicts.sv_SE
+      hunspellDicts.en_US
+      hunspell
+      sqlite
+      clang-tools
+      clang
+      clangStdenv
+      calibre
+      waybar
+      inputs.spbased.packages.${system}.default
+      git-filter-repo
+      vscode
+      hyprpicker
+      nodejs
+      slurp
+      grim
+      pdfgrep
+      # texlive.combined.scheme-full
+      pandoc
+      imagemagick_light
+      dprint
+      wget
+      fzf
+      zk
+      jo
+      jq
+      taskwarrior-tui
+      taskwarrior3
+      zed-editor
+      syncthing
+      taplo
+      nixfmt-rfc-style
+      nil
+      nvd
+      nix-output-monitor
+      nh
+      nautilus
+      mako
+      anki-bin
+      gum
+      imv
+      wev
+      pulsemixer
+      upower
+      typescript-language-server
+      ripgrep
+      zathura
+      util-linux
+      brightnessctl
+      eza
+      zoxide
+      wl-clipboard
+      inputs.helix.packages.${system}.default
+      hyprpolkitagent
+      git
+      # tmux
+      gnumake
+      zellij
+      alacritty
+      brave
+      firefox-devedition
+      btop
+      fastfetch
+      eza
+      tree
+      zip
+      unzip
+      pciutils
+      usbutils
+    ])
+    ++ [
+
+    ];
 
   fonts = {
     packages = with pkgs; [

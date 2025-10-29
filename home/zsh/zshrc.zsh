@@ -24,6 +24,10 @@ if [[ ! -e ~/.zshplugins/zsh-autosuggestions ]]; then
   git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions.git ~/.zshplugins/zsh-autosuggestions
   zcompile-many ~/.zshplugins/zsh-autosuggestions/{zsh-autosuggestions.zsh,src/**/*.zsh}
 fi
+if [[ ! -e ~/.zshplugins/zsh-fzf-history-search ]]; then
+  git clone --depth=1 https://github.com/joshskidmore/zsh-fzf-history-search ~/.zshplugins/zsh-fzf-history-search
+  zcompile-many ~/.zshplugins/zsh-fzf-history-search/zsh-fzf-history-search.zsh
+fi
 if [[ ! -e ~/.zshplugins/powerlevel10k ]]; then
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.zshplugins/powerlevel10k
   make -C ~/.zshplugins/powerlevel10k pkg
@@ -57,10 +61,17 @@ alias gs="git status"
 alias ga="git add"
 alias gc="git commit"
 alias o="xdg-open"
+
+# some settings
+export FZF_DEFAULT_OPTS='
+--style=minimal
+--color=16
+'
     
 # system plugins
 source ~/.zshplugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zshplugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zshplugins/zsh-fzf-history-search/zsh-fzf-history-search.zsh
 source ~/.zshplugins/powerlevel10k/powerlevel10k.zsh-theme
 source ~/.p10k.zsh
 eval "$(zoxide init zsh --cmd cd)"

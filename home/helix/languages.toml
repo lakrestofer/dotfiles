@@ -21,7 +21,13 @@ scope = "source.md"
 injection-regex = "md|markdown"
 file-types = ["md", "markdown"]
 roots = [".zk"]
-language-servers = ["lsp-ai", "zk"]
+language-servers = [
+  "zk",
+  { name = "hx-lsp", only-features = [
+    "completion",
+    "code-action",
+  ] },
+]
 auto-format = true
 formatter = { command = "dprint", args = ["fmt", "--stdin", "md"] }
 
@@ -168,3 +174,7 @@ messages = [
 [language-server.postgrestools]
 command = "postgrestools"
 args = ["lsp-proxy"]
+
+# custom snippets and code actions
+[language-server.hx-lsp]
+command = "hx-lsp"

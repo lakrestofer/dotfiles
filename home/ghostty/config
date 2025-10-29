@@ -1,5 +1,7 @@
 font-family = "Hack Nerd Font"
 font-size = 16
+font-synthetic-style= bold-italic
+alpha-blending=linear-corrected
 # working-directory = "inherit"
 working-directory = inherit
 window-inherit-working-directory = true

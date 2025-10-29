@@ -25,6 +25,10 @@ insert = "bar"
 normal = "block"
 select = "underline"
 
+[editor.smart-tab]
+enable = true
+supersede-menu = true
+
 [editor.indent-guides]
 render = false
 character = "|" # Some characters that work well: "▏", "┆", "┊", "⸽"
