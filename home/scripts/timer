@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -e
+set -u
+set -o pipefail
+
+sleep "$1"
+mpv ~/vault/data/sound/bowl-light.mp3
+notify-send "Timer complete!"

@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+
+# timer fo 25 minutes
+notify-send "Start working now!"
+bb timer $((25 * 60))
+notify-send "time to take a break"

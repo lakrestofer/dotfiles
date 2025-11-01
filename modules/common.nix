@@ -60,6 +60,8 @@
   programs.nix-ld.enable = true;
   users.defaultUserShell = pkgs.zsh;
 
+  programs.thunderbird.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
 
   users.users.fincei = {
