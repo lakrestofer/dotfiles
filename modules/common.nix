@@ -119,7 +119,7 @@
   virtualisation.docker.enable = true;
   environment.localBinInPath = true;
 
-  hardware.keyboard.qmk.enable = true;
+  # hardware.keyboard.qmk.enable = true;
   services.udev.packages = [ pkgs.via ];
   environment.systemPackages =
     (with pkgs; [
@@ -135,13 +135,13 @@
       strongswan
       nmap
       via
-      qmk
+      # qmk
       racket
       typos
       typos-lsp
       steel
       inkscape
-      postgres-lsp
+      postgres-language-server
       nufmt
       nushell
       pavucontrol
@@ -250,10 +250,10 @@
     packages = with pkgs; [
       nerd-fonts.gohufont
       nerd-fonts.hack
-      ubuntu_font_family
+      ubuntu-classic
       noto-fonts
       noto-fonts-cjk-sans
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       liberation_ttf
       fira-code
       cozette
