@@ -123,6 +123,7 @@
   services.udev.packages = [ pkgs.via ];
   environment.systemPackages =
     (with pkgs; [
+      texliveMedium
       hx-lsp
       p7zip
       unrar

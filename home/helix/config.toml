@@ -109,8 +109,8 @@ A-o = ":buffer-next"
 C-o = "jump_forward"
 C-n = "jump_backward"
 "ret" = "goto_definition"
-C-g = [":new", ":insert-output lazygit", ":buffer-close!", ":redraw"]
 C-A-r = [":reload-all"]
+space.B = ":echo %sh{git blame -L %{cursor_line},+1 %{buffer_name}}"
 
 [keys.normal.z]
 # unset
@@ -176,8 +176,10 @@ s = "hsplit_new"
 C-v = "vsplit_new"
 v = "vsplit_new"
 
-[keys.normal.space]
-e = [":new", ":insert-output yazi", ":buffer-close!", ":redraw"]
+# commands that deal work lsp stuff
+[keys.normal.space.l]
+c = ":lsp-workspace-command"
+
 [keys.normal.space.w]
 #unset
 C-h = "no_op"
