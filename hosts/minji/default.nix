@@ -20,14 +20,4 @@
 
   hardware.enableRedistributableFirmware = true;
 
-  programs.steam = {
-    enable = true;
-    package = pkgs.steam;
-  };
-
-  services.sunshine = {
-    enable = true;
-    openFirewall = true;
-    capSysAdmin = true;
-  };
 }

@@ -21,6 +21,11 @@
         cargoHash = "sha256-dcGInrfWftClvzrxYZvrazm+IWWRfOZmxDJPKwu7GwM=";
       };
     })
+    (final: prev: {
+      spotify-player = prev.spotify-player.override {
+        withAudioBackend = "pulseaudio";
+      };
+    })
   ];
 
   hardware.graphics = {
@@ -123,13 +128,20 @@
   services.udev.packages = [ pkgs.via ];
   environment.systemPackages =
     (with pkgs; [
+      # python tooling
+      uv
+      python3
+      ruff
+
+      codebook
+      bun
+      spotify-player
       texliveMedium
       hx-lsp
       p7zip
       unrar
       todoist
       pulseaudio
-      uv
       claude-code
       iwe
       strongswan
@@ -142,35 +154,22 @@
       steel
       inkscape
       postgres-language-server
-      nufmt
-      nushell
       pavucontrol
       mpv
       poppler-utils
       vscode-langservers-extracted
       ghostty
-      warp-terminal
-      chafa
       ffmpeg
-      qutebrowser
       xwayland-satellite
       libnotify
       fuzzel
-      (python3.withPackages (
-        ps: with ps; [
-          pip
-          pygame
-        ]
-      ))
       swaybg
       glow
       hledger
       devenv
-      lsp-ai
       yazi
       lazygit
       graphviz
-      supabase-cli
       awscli
       hunspellDicts.sv_SE
       hunspellDicts.en_US
@@ -196,11 +195,7 @@
       wget
       fzf
       zk
-      jo
       jq
-      taskwarrior-tui
-      taskwarrior3
-      zed-editor
       syncthing
       taplo
       nixfmt-rfc-style
@@ -230,7 +225,6 @@
       # tmux
       gnumake
       zellij
-      alacritty
       brave
       firefox-devedition
       btop

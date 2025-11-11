@@ -27,9 +27,9 @@ fi
 # check if note exists by querying for path
 if [[ $input != *.md ]]; then
   notify-send "creating note"
-  alacritty --command zk new --no-input --title "$input"
+  ghostty +new-window -e zk new --no-input --title "$input"
   exit 0
 fi
 
-alacritty --command "zk" "edit" "$input"
+ghostty -e "zk" "edit" "$input"
 

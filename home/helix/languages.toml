@@ -27,6 +27,7 @@ language-servers = [
     "completion",
     "code-action",
   ] },
+  "codebook",
 ]
 auto-format = true
 formatter = { command = "dprint", args = ["fmt", "--stdin", "md"] }
@@ -178,3 +179,11 @@ args = ["lsp-proxy"]
 # custom snippets and code actions
 [language-server.hx-lsp]
 command = "hx-lsp"
+
+[language-server.codebook]
+command = "codebook-lsp"
+args = ["serve"]
+
+[language-server.ty]
+command = "uvx"
+args = ["ty", "server"]

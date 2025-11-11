@@ -74,7 +74,13 @@ source ~/.zshplugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zshplugins/zsh-fzf-history-search/zsh-fzf-history-search.zsh
 source ~/.zshplugins/powerlevel10k/powerlevel10k.zsh-theme
 source ~/.p10k.zsh
-eval "$(zoxide init zsh --cmd cd)"
-eval "$(direnv hook zsh)"
+
+# we then init some integrations with zoxide and direnv
+if [[ "$CLAUDECODE" != "1" ]]; then
+  # we do this conditonaly such that claude code gets a clean environment
+  eval "$(zoxide init zsh --cmd cd)"
+  eval "$(direnv hook zsh)"
+fi
+
 
 source ~/keys.sh

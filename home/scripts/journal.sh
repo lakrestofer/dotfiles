@@ -36,4 +36,4 @@ if [[ $input != *.md ]]; then
   exit 0
 fi
 
-alacritty --command zk edit $input
+ghostty -e zk edit $input

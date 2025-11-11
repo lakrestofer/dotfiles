@@ -9,6 +9,7 @@ let
   configRoot = "${config.home.homeDirectory}/dotfiles/home";
   dataRoot = "${config.home.homeDirectory}/dotfiles/data";
   helixPath = "${configRoot}/helix";
+  codebookPath = "${configRoot}/codebook";
   alacrittyPath = "${configRoot}/alacritty";
   qutePath = "${configRoot}/qutebrowser";
   ghosttyPath = "${configRoot}/ghostty";
@@ -40,6 +41,7 @@ in
   # user packages (only installed per user)
   home.packages = [ ];
   xdg.configFile."helix".source = linkConf helixPath;
+  xdg.configFile."codebook".source = linkConf codebookPath;
   xdg.configFile."hypr".source = linkConf hyprPath;
   xdg.configFile."ghostty".source = linkConf ghosttyPath;
   xdg.configFile."alacritty".source = linkConf alacrittyPath;
