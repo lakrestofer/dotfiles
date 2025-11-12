@@ -6,7 +6,6 @@
 }:
 {
   nixpkgs.overlays = [
-    inputs.niri.overlays.niri
     (final: prev: {
       # lsp for custom snippets and code actions
       hx-lsp = pkgs.rustPlatform.buildRustPackage {
@@ -36,22 +35,6 @@
 
   services.gvfs.enable = true;
   services.udisks2.enable = true;
-  networking.networkmanager = {
-    enable = true;
-    plugins = with pkgs; [
-      networkmanager-l2tp
-      networkmanager-strongswan
-    ];
-  };
-  services.strongswan = {
-    enable = true;
-  };
-  networking.firewall.enable = false;
-  programs.nm-applet.enable = true;
-
-  environment.etc."strongswan.conf" = {
-    text = '''';
-  };
 
   # Set your time zone.
   time.timeZone = "Europe/Stockholm";
@@ -66,46 +49,6 @@
   users.defaultUserShell = pkgs.zsh;
 
   programs.thunderbird.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-
-  users.users.fincei = {
-    isNormalUser = true;
-    description = "fincei";
-    extraGroups = [
-      "ydotool"
-      "docker"
-      "networkmanager"
-      "wheel"
-      "input"
-      "uinput"
-      "kvm"
-      "adbusers"
-    ];
-  };
-  nix.settings.trusted-users = [
-    "fincei"
-  ];
-
-  # Allow unfree packages
-
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 30d";
-  };
-
-  nix.settings = {
-    experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
-    substituters = [
-    ];
-    trusted-public-keys = [
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-    ];
-  };
   programs.direnv = {
     enable = true;
     package = pkgs.direnv;
@@ -126,12 +69,17 @@
 
   # hardware.keyboard.qmk.enable = true;
   services.udev.packages = [ pkgs.via ];
+
   environment.systemPackages =
     (with pkgs; [
       # python tooling
       uv
       python3
       ruff
+
+      # audio tooling
+      pulseaudio
+      pulsemixer
 
       codebook
       bun
@@ -141,7 +89,6 @@
       p7zip
       unrar
       todoist
-      pulseaudio
       claude-code
       iwe
       strongswan
@@ -159,7 +106,6 @@
       vscode-langservers-extracted
       ghostty
       ffmpeg
-      xwayland-satellite
       libnotify
       fuzzel
       swaybg
@@ -208,7 +154,6 @@
       gum
       imv
       wev
-      pulsemixer
       upower
       typescript-language-server
       ripgrep
@@ -282,43 +227,11 @@
     SDL_VIDEODRIVER = "wayland,x11";
   };
 
-  programs.niri = {
-    enable = true;
-    package = pkgs.niri-unstable;
-    # settings = null;
-  };
-
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    wireplumber = {
-      extraConfig.bluetoothEnhancements = {
-        "monitor.bluez.properties" = {
-          "bluez5.enable-sbc-xq" = true;
-          "bluez5.enable-msbc" = true;
-          "bluez5.enable-hw-volume" = true;
-          "bluez5.roles" = [
-            "hsp_hs"
-            "hsp_ag"
-            "hfp_hf"
-            "hfp_ag"
-          ];
-        };
-      };
-    };
-  };
+
   services.dbus.implementation = "broker";
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --remember-session";
-        user = "fincei";
-      };
-    };
-  };
+
   services.fwupd.enable = true;
   services.upower.enable = true;
   services.syncthing = {
@@ -328,8 +241,6 @@
     configDir = "/home/fincei/.config/syncthing"; # Folder
   };
   systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true"; # Don't create default ~/Sync folder
-
-  security.pam.services.hyprlock = { };
 
   system.stateVersion = "24.05"; # Did you read the comment?
 }

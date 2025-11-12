@@ -38,6 +38,11 @@ in
           inputs.niri.nixosModules.niri
           ./hosts/minji # desktop
           ./modules/common.nix # base configuration
+          ./modules/fincei.nix
+          ./modules/nix_settings.nix
+          ./modules/networking.nix
+          ./modules/media.nix
+          ./modules/graphical_session.nix
           nixos-hardware.nixosModules.common-cpu-amd
           nixos-hardware.nixosModules.common-cpu-amd-pstate
           nixos-hardware.nixosModules.common-gpu-amd
@@ -55,9 +60,13 @@ in
         system = "x86_64-linux";
         nixos-modules = [
           inputs.niri.nixosModules.niri
-          ./hosts/selbeiskami # thinkpad x220 specific configuration
+          ./hosts/selbeiskami # thinkpad t14 gen 2 configuration
           ./modules/common.nix # base configuration
-          kmonad.nixosModules.default
+          ./modules/fincei.nix
+          ./modules/nix_settings.nix
+          ./modules/networking.nix
+          ./modules/media.nix
+          ./modules/graphical_session.nix
           nixos-hardware.nixosModules.lenovo-thinkpad-t14
           nixos-hardware.nixosModules.common-cpu-intel
         ];
