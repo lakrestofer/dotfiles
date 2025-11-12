@@ -148,7 +148,6 @@
       nmap
       via
       # qmk
-      racket
       typos
       typos-lsp
       steel
@@ -287,13 +286,6 @@
     enable = true;
     package = pkgs.niri-unstable;
     # settings = null;
-  };
-
-  # List services that you want to enable:
-  services.emacs = {
-    enable = true;
-    package = pkgs.emacs-pgtk;
-    startWithGraphical = true;
   };
 
   # Enable the OpenSSH daemon.
