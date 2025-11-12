@@ -19,6 +19,7 @@ let
   makoPath = "${configRoot}/mako";
   fuzzelPath = "${configRoot}/fuzzel";
   niriPath = "${configRoot}/niri";
+  swaylockPath = "${configRoot}/swaylock";
   scriptPath = "${configRoot}/scripts";
   emacsPath = "${configRoot}/emacs";
   lazygitPath = "${configRoot}/lazygit";
@@ -40,6 +41,7 @@ in
   ];
   # user packages (only installed per user)
   home.packages = [ ];
+  xdg.configFile."swaylock".source = linkConf swaylockPath;
   xdg.configFile."helix".source = linkConf helixPath;
   xdg.configFile."codebook".source = linkConf codebookPath;
   xdg.configFile."hypr".source = linkConf hyprPath;
