@@ -27,9 +27,10 @@
   environment.systemPackages = with pkgs; [
     # allows us to run x11 applications in niri (which does not implement x11 integration itself)
     xwayland-satellite
+    swaylock
+    swayidle
   ];
 
-  programs.swaylock.enable = true;
   security.pam.services.swaylock = { };
 
 }
