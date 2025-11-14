@@ -17,9 +17,11 @@
         };
         buildInputs = [ ];
         nativeBuildInputs = [ pkgs.pkg-config ];
+        # cargoHash = pkgs.lib.fakeHash;
         cargoHash = "sha256-dcGInrfWftClvzrxYZvrazm+IWWRfOZmxDJPKwu7GwM=";
       };
-
+    })
+    (final: prev: {
       terminalist = pkgs.rustPlatform.buildRustPackage {
         name = "terminalist";
         src = builtins.fetchGit {
@@ -27,11 +29,11 @@
           ref = "main";
           rev = "fb0ef9adc7d017430a2c6efcb640ec58a6669b1c";
         };
-        buildInputs = [ ];
+        buildInputs = with pkgs; [ openssl ];
         nativeBuildInputs = [ pkgs.pkg-config ];
-        cargoHash = "sha256-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+        # cargoHash = pkgs.lib.fakeHash;
+        cargoHash = "sha256-6dqzzUXchlFJdLGM9W148SEF9XgaT32s06/aFi9XbVk=";
       };
-
     })
     (final: prev: {
       spotify-player = prev.spotify-player.override {
