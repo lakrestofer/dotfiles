@@ -19,6 +19,19 @@
         nativeBuildInputs = [ pkgs.pkg-config ];
         cargoHash = "sha256-dcGInrfWftClvzrxYZvrazm+IWWRfOZmxDJPKwu7GwM=";
       };
+
+      terminalist = pkgs.rustPlatform.buildRustPackage {
+        name = "terminalist";
+        src = builtins.fetchGit {
+          url = "https://github.com/romaintb/terminalist";
+          ref = "main";
+          rev = "fb0ef9adc7d017430a2c6efcb640ec58a6669b1c";
+        };
+        buildInputs = [ ];
+        nativeBuildInputs = [ pkgs.pkg-config ];
+        cargoHash = "sha256-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+      };
+
     })
     (final: prev: {
       spotify-player = prev.spotify-player.override {
@@ -72,6 +85,7 @@
 
   environment.systemPackages =
     (with pkgs; [
+      terminalist
       # python tooling
       uv
       python3

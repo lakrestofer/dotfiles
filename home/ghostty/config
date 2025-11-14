@@ -9,7 +9,7 @@ window-inherit-working-directory = true
 # window-theme = "ghostty"
 theme = "Gruvbox Light Hard"
 # theme = "Gruvbox Dark Hard"
-shell-integration-features=no-cursor,no-ssh-env
+shell-integration-features=no-cursor
 shell-integration="zsh"
 # cursor-style = "block"
 # cursor-style-blink = false
@@ -23,3 +23,4 @@ background-opacity = 0.95
 # custom-shader = shaders/blaze_no_trail.glsl
 
 keybind = shift+enter=text:\x1b\r
+keybind = global:super+grave_accent=toggle_quick_terminal
