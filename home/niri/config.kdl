@@ -1,14 +1,28 @@
 spawn-at-startup "waybar"
 spawn-at-startup "wallpaper.sh"
 spawn-at-startup "xwayland-satellite"
+spawn-at-startup "open-journal.sh"
 
 output "Acer Technologies VG271U M3 1322131231233" {
     position x=0 y=0
+    focus-at-startup
 }
 
 output "Dell Inc. DELL P2317H V2G5172OAGJB" {
     position x=-1080 y=-240
     transform "270"
+
+    layout {
+        gaps 0
+
+        struts {
+            left 5
+            right 5
+            // top 64
+            // bottom 64
+        }
+        
+    }
 }
 
 // may thought govern thought
@@ -214,7 +228,8 @@ binds {
     Mod+Return hotkey-overlay-title="Open a Terminal: ghostty" repeat=false { spawn "ghostty" "+new-window"; }
     Mod+Ctrl+Return hotkey-overlay-title="Open notes" repeat=false { spawn "notes.sh"; }
     // Mod+Ctrl+I hotkey-overlay-title="Open notes" repeat=false { spawn "inbox"; }
-    Mod+Ctrl+J hotkey-overlay-title="Open journal" repeat=false { spawn "journal.sh"; }
+    Mod+Ctrl+J hotkey-overlay-title="Open journal" repeat=false { spawn "open-journal.sh"; }
+    Mod+Shift+Ctrl+J hotkey-overlay-title="Open journal selection menu" repeat=false { spawn "list-journal.sh"; }
     // Mod+Ctrl+E hotkey-overlay-title="Open emacs" repeat=false { spawn "emacsclient" "-c"; }
     Mod+W hotkey-overlay-title="Open firefox" repeat=false { spawn "firefox-devedition"; }
     Mod+Space hotkey-overlay-title="Run an Application" repeat=false { spawn "fuzzel"; }
