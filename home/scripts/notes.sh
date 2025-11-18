@@ -27,9 +27,9 @@ fi
 # check if note exists by querying for path
 if [[ $input != *.md ]]; then
   notify-send "creating note"
-  ghostty +new-window -e zk new --no-input --title "$input"
+  ghostty -e zk new --no-input --title "$input"
   exit 0
 fi
 
-ghostty -e "zk" "edit" "$input"
+ghostty --title="markdown-notes" -e "zk" "edit" "$input"
 

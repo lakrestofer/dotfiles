@@ -2,6 +2,29 @@ spawn-at-startup "waybar"
 spawn-at-startup "wallpaper.sh"
 spawn-at-startup "xwayland-satellite"
 
+output "Acer Technologies VG271U M3 1322131231233" {
+    position x=0 y=0
+}
+
+output "Dell Inc. DELL P2317H V2G5172OAGJB" {
+    position x=-1080 y=-240
+    transform "270"
+}
+
+// may thought govern thought
+workspace "mtgt" {
+    open-on-output "Dell Inc. DELL P2317H V2G5172OAGJB"
+}
+
+window-rule {
+    match title="markdown-notes"
+    open-on-workspace "mtgt"
+}
+window-rule {
+    match title="markdown-journal"
+    open-on-workspace "mtgt"
+}
+
 environment {
     DISPLAY ":0"
 }
@@ -225,34 +248,31 @@ binds {
     Mod+I     { focus-window-or-workspace-up; }
     Mod+O     { focus-column-right; }
 
-    // Mod+Ctrl+E     { focus-monitor-down; }
-    // Mod+Ctrl+I     { focus-monitor-up; }
+    Mod+l     { focus-monitor-left; }
+    Mod+SemiColon { focus-monitor-right; }
 
-    Mod+1 { focus-workspace 1; }
-    Mod+2 { focus-workspace 2; }
-    Mod+3 { focus-workspace 3; }
-    Mod+4 { focus-workspace 4; }
-    Mod+L { focus-workspace 1; }
-    Mod+U { focus-workspace 2; }
-    Mod+Y { focus-workspace 3; }
-    Mod+SemiColon { focus-workspace 4; }
+    // Mod+1 { focus-workspace 1; }
+    // Mod+2 { focus-workspace 2; }
+    // Mod+3 { focus-workspace 3; }
+    // Mod+4 { focus-workspace 4; }
+    // Mod+L { focus-workspace 1; }
+    // Mod+U { focus-workspace 2; }
+    // Mod+Y { focus-workspace 3; }
+    // Mod+SemiColon { focus-workspace 4; }
 
     // move
     Mod+Ctrl+Shift+E { move-workspace-down; }
     Mod+Ctrl+Shift+I { move-workspace-up; }
-
-    Mod+Ctrl+Alt+Shift+E { move-workspace-to-monitor-down; }
-    Mod+Ctrl+Alt+Shift+I { move-workspace-to-monitor-up; }
-   
+ 
     Mod+Shift+N     { move-column-left; }
     Mod+Shift+E     { move-window-down-or-to-workspace-down; }
     Mod+Shift+I     { move-window-up-or-to-workspace-up; }
     Mod+Shift+O     { move-column-right; }
 
-    Mod+Shift+l { move-window-to-workspace 1; }
-    Mod+Shift+u { move-window-to-workspace 2; }
-    Mod+Shift+y { move-window-to-workspace 3; }
-    Mod+Shift+SemiColon { move-window-to-workspace 4; }
+    Mod+shift+l { move-window-to-monitor-left; }
+    Mod+shift+SemiColon { move-window-to-monitor-right; }
+    Mod+Ctrl+Shift+l { move-workspace-to-monitor-left; }
+    Mod+Ctrl+Shift+SemiColon { move-workspace-to-monitor-right; }
     
     // resize 
     Mod+Alt+N { set-column-width "-10%"; }

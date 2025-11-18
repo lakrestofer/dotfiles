@@ -39,8 +39,9 @@
       "4": "⚃",
       "5": "⚄",
       "6": "⚅",
+      "mtgt": "🧠",
       "default": "",
-      "special": "✮",
+      "special": "✮"
     },
     "show-special": true
   },

@@ -36,4 +36,4 @@ if [[ $input != *.md ]]; then
   exit 0
 fi
 
-ghostty -e zk edit $input
+ghostty --title="markdown-journal" -e zk edit $input
