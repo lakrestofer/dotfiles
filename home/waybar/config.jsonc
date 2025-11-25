@@ -15,7 +15,7 @@
   "padding-left": 8,
   "padding-right": 8,
   "modules-left": [
-    "niri/workspaces",
+    "niri/workspaces"
   ],
   "modules-center": [
     "clock"
@@ -40,6 +40,7 @@
       "5": "⚄",
       "6": "⚅",
       "mtgt": "🧠",
+      "anki": "🎓",
       "default": "",
       "special": "✮"
     },

@@ -8,3 +8,6 @@ words = [
     "unsong",
     "zet",
 ]
+ignore_patterns = [
+    "\[\[.*\]\]"
+]

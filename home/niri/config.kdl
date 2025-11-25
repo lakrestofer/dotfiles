@@ -2,6 +2,7 @@ spawn-at-startup "waybar"
 spawn-at-startup "wallpaper.sh"
 spawn-at-startup "xwayland-satellite"
 spawn-at-startup "open-journal.sh"
+spawn-at-startup "anki"
 
 output "Acer Technologies VG271U M3 1322131231233" {
     position x=0 y=0
@@ -30,13 +31,18 @@ workspace "mtgt" {
     open-on-output "Dell Inc. DELL P2317H V2G5172OAGJB"
 }
 
-window-rule {
-    match title="markdown-notes"
-    open-on-workspace "mtgt"
+workspace "anki" {
+    open-on-output "Dell Inc. DELL P2317H V2G5172OAGJB"
 }
+
 window-rule {
     match title="markdown-journal"
     open-on-workspace "mtgt"
+}
+
+window-rule {
+    match app-id="Anki"
+    open-on-workspace "anki"
 }
 
 environment {

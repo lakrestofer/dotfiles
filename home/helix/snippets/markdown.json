@@ -1,7 +1,7 @@
 {
   "today": {
     "prefix": "today",
-    "body": "## ${CURRENT_DATE} ${CURRENT_DAY_NAME}",
+    "body": "## ${CURRENT_DATE} ${CURRENT_DAY_NAME}\n- ${CURRENT_HOUR}:${CURRENT_MINUTE}\n  - ",
     "description": "add heading with today's date"
   },
   "clock": {
