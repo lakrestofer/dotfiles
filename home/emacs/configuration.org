@@ -1,10 +1,42 @@
 #+STARTUP: content
 * My emacs literate config - Foreword
+
 This is my configuration for emacs! It is written using org-babel which
 places the contents of various code blocks into their coresponding file.
 
 To tangle the contents I use org-babel-tangle (tangles current buffer) (which is
-bound to C-c C-v t).
+bound to C-c C-v t). This function is also run automatically when this
+buffer is saved.
+
+* Current state of this configuration
+
+- right now I'm not really using emacs for my daily needs.
+  - why?
+    - I'm really used to the "select -> action" flow of helix.
+    - I have a terminal centric interaction with my computer
+      - navigate to a project using cd
+      - direnv automatically puts me in an environment where I have
+        any dependency I would need.
+    - I want to use my window manager to manage my windows, not emacs.
+      - this can be solved by altering how emacs creates new windows
+        to instead create frames in some cases
+    - I have many times tried to get a comfy config going but always
+      burn out before I actually start using the config.
+    - It could also be that I need to adapt myself to the 'emacs way'.
+  - why do I still feel that I would even want to use emacs?
+    - the idea of investing in timeless tools.
+    - though It could be that most of my needs will be met when
+      plugins land in helix.
+      
+- open questions
+  - to aid in discovering my bindings, I need to fully understand how
+    the emacs keymap system works, and how I should interact with it
+    through meow, use-package and which-key.
+  - Right now I'm using eza aliased to cd to navigate around my
+    computer.
+    - For some reason I find it a bit 'clastrophobic' to do all my
+      interaction with my computer through emacs.
+
 * On editing this file
 
 - S-Tab will fold the headings which makes it easier to navigate the
@@ -40,6 +72,7 @@ bound to C-c C-v t).
     - toml
   - nix
   - [ ] setup nil language server
+    
 * Configuration
 
 With the goals set, may the actual configuration begin!
@@ -48,13 +81,13 @@ With the goals set, may the actual configuration begin!
 This will generate a header at the top of the init.el and the early-init.el
 #+begin_src emacs-lisp :tangle init.el  
 ;; -*- lexical-binding: t -*-
-;; This file has been generated from configuration.org file. DO NOT EDIT.
+;; This file has been generated from the configuration.org file. DO NOT EDIT.
 ;; Sources are available from https://github.com/lakrestofer/dotfiles/tree/main/.config/emacs
 #+end_src
 
 #+begin_src emacs-lisp :tangle early-init.el  
 ;; -*- lexical-binding: t -*-
-;; This file has been generated from configurations.org file. DO NOT EDIT.
+;; This file has been generated from the configurations.org file. DO NOT EDIT.
 ;; Sources are available from https://github.com/lakrestofer/dotfiles/tree/main/.config/emacs
 #+end_src
 ** Early init
@@ -88,7 +121,7 @@ garbage collector pausing execution for cleanup.
 (setq read-process-output-max (* 4 1024 1024)) ;; 4 mb
 #+end_src
 ** Package manager bootstrap
-Here we install elpaca and 
+Here we install elpaca and setup its integration with use-package
 #+begin_src emacs-lisp :tangle init.el
 (defvar elpaca-installer-version 0.11)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
@@ -210,6 +243,10 @@ set mono and variabled pitch fonts
 #+end_src
 
 ** Keybinds and movement
+
+To aid in keybind discovery we install which-key. This adds a
+interactive popup that becomes visible after a short delay.
+
 #+begin_src emacs-lisp :tangle init.el
 (use-package which-key
   :config
@@ -217,104 +254,107 @@ set mono and variabled pitch fonts
 #+end_src
 
 #+begin_src emacs-lisp :tangle init.el
+(defun meow-setup ()
+  (setq meow-mode-state-list
+        '((conf-mode . normal)
+          (fundamental-mode . normal)
+          (help-mode . motion)
+          (prog-mode . normal)
+          (text-mode . normal)))
+  (setq meow-cheatsheet-layout meow-cheatsheet-layout-colemak-dh)
+  (setq meow-cheatsheet-physical-layout meow-cheatsheet-physical-layout-iso)
+  (setq meow-expand-hint-remove-delay 3)
+  (setq meow-keypad-leader-dispatch "C-z")
+  (meow-motion-define-key
+   ;; Use e to move up, n to move down.
+   ;; Since special modes usually use n to move down, we only overwrite e here.
+   '("n" . meow-prev)
+   '("<escape>" . ignore))
+  (meow-leader-define-key
+   '("?" . meow-cheatsheet)
+   '("1" . meow-digit-argument)
+   '("2" . meow-digit-argument)
+   '("3" . meow-digit-argument)
+   '("4" . meow-digit-argument)
+   '("5" . meow-digit-argument)
+   '("6" . meow-digit-argument)
+   '("7" . meow-digit-argument)
+   '("8" . meow-digit-argument)
+   '("9" . meow-digit-argument)
+   '("0" . meow-digit-argument))
+  (meow-normal-define-key
+   ;; movement
+   '("n" . meow-left)
+   '("N" . meow-left-expand)
+   '("e" . meow-next)
+   '("E" . meow-next-expand)
+   '("i" . meow-prev)
+   '("I" . meow-prev-expand)
+   '("o" . meow-right)
+   '("O" . meow-right-expand)
+   '("f" . meow-find)
+   '("t" . meow-till)
+   ;; word movement
+   '("b" . meow-back-word)
+   '("B" . meow-back-symbol)
+   '("w" . meow-next-word)
+   '("W" . meow-next-symbol)
+   ;; arguments
+   '("0" . meow-expand-0)
+   '("1" . meow-expand-1)
+   '("2" . meow-expand-2)
+   '("3" . meow-expand-3)
+   '("4" . meow-expand-4)
+   '("5" . meow-expand-5)
+   '("6" . meow-expand-6)
+   '("7" . meow-expand-7)
+   '("8" . meow-expand-8)
+   '("9" . meow-expand-9)
+   '("-" . negative-argument)
+   '(";" . meow-reverse)
+   ;; selection
+   '("," . meow-inner-of-thing)
+   '("." . meow-bounds-of-thing)
+   '("[" . meow-beginning-of-thing)
+   '("]" . meow-end-of-thing)
+   '("g" . meow-cancel-selection)
+   '("h" . meow-block)
+   '("H" . meow-to-block)
+   '("l" . meow-line)
+   ;; search
+   '("/" . meow-visit)
+   '("v" . meow-search)
+   ;; to insert mode
+   '("a" . meow-append)
+   '("A" . meow-open-below)
+   '("c" . meow-change)
+   '("s" . meow-insert)
+   '("S" . meow-open-above)
+   '("k" . meow-insert)
+   '("K" . meow-open-above)
+   ;; other
+   '("G" . meow-grab)
+   '("j" . meow-join)
+   '("d" . meow-kill)
+   '("x" . meow-delete)
+   '("X" . meow-backward-delete)
+   '("L" . meow-goto-line)
+   '("m" . meow-mark-word)
+   '("M" . meow-mark-symbol)
+   '("p" . meow-yank)
+   '("q" . meow-quit)
+   '("r" . meow-replace)
+   '("u" . meow-undo)
+   '("U" . meow-undo-in-selection)
+   '("y" . meow-save)
+   '("z" . meow-pop-selection)
+   '("'" . repeat)
+   '("<escape>" . ignore)))
+#+end_src
+
+#+begin_src emacs-lisp :tangle init.el
 (use-package meow
   :config
-  (defun meow-setup ()
-    (setq meow-mode-state-list
-          '((conf-mode . normal)
-            (fundamental-mode . normal)
-            (help-mode . motion)
-            (prog-mode . normal)
-            (text-mode . normal)))
-    (setq meow-cheatsheet-layout meow-cheatsheet-layout-colemak-dh)
-    (setq meow-cheatsheet-physical-layout meow-cheatsheet-physical-layout-iso)
-    (setq meow-expand-hint-remove-delay 3)
-    (setq meow-keypad-leader-dispatch "C-z")
-    (meow-motion-define-key
-     ;; Use e to move up, n to move down.
-     ;; Since special modes usually use n to move down, we only overwrite e here.
-     '("n" . meow-prev)
-     '("<escape>" . ignore))
-    (meow-leader-define-key
-     '("?" . meow-cheatsheet)
-     '("1" . meow-digit-argument)
-     '("2" . meow-digit-argument)
-     '("3" . meow-digit-argument)
-     '("4" . meow-digit-argument)
-     '("5" . meow-digit-argument)
-     '("6" . meow-digit-argument)
-     '("7" . meow-digit-argument)
-     '("8" . meow-digit-argument)
-     '("9" . meow-digit-argument)
-     '("0" . meow-digit-argument))
-    (meow-normal-define-key
-     ;; movement
-     '("n" . meow-left)
-     '("N" . meow-left-expand)
-     '("e" . meow-next)
-     '("E" . meow-next-expand)
-     '("i" . meow-prev)
-     '("I" . meow-prev-expand)
-     '("o" . meow-right)
-     '("O" . meow-right-expand)
-     '("f" . meow-find)
-     '("t" . meow-till)
-     ;; word movement
-     '("b" . meow-back-word)
-     '("B" . meow-back-symbol)
-     '("w" . meow-next-word)
-     '("W" . meow-next-symbol)
-     ;; arguments
-     '("0" . meow-expand-0)
-     '("1" . meow-expand-1)
-     '("2" . meow-expand-2)
-     '("3" . meow-expand-3)
-     '("4" . meow-expand-4)
-     '("5" . meow-expand-5)
-     '("6" . meow-expand-6)
-     '("7" . meow-expand-7)
-     '("8" . meow-expand-8)
-     '("9" . meow-expand-9)
-     '("-" . negative-argument)
-     '(";" . meow-reverse)
-     ;; selection
-     '("," . meow-inner-of-thing)
-     '("." . meow-bounds-of-thing)
-     '("[" . meow-beginning-of-thing)
-     '("]" . meow-end-of-thing)
-     '("g" . meow-cancel-selection)
-     '("h" . meow-block)
-     '("H" . meow-to-block)
-     '("l" . meow-line)
-     ;; search
-     '("/" . meow-visit)
-     '("v" . meow-search)
-     ;; to insert mode
-     '("a" . meow-append)
-     '("A" . meow-open-below)
-     '("c" . meow-change)
-     '("s" . meow-insert)
-     '("S" . meow-open-above)
-     '("k" . meow-insert)
-     '("K" . meow-open-above)
-     ;; other
-     '("G" . meow-grab)
-     '("j" . meow-join)
-     '("d" . meow-kill)
-     '("x" . meow-delete)
-     '("X" . meow-backward-delete)
-     '("L" . meow-goto-line)
-     '("m" . meow-mark-word)
-     '("M" . meow-mark-symbol)
-     '("p" . meow-yank)
-     '("q" . meow-quit)
-     '("r" . meow-replace)
-     '("u" . meow-undo)
-     '("U" . meow-undo-in-selection)
-     '("y" . meow-save)
-     '("z" . meow-pop-selection)
-     '("'" . repeat)
-     '("<escape>" . ignore)))
   (meow-setup)
   (meow-global-mode 1))
 #+end_src
@@ -374,8 +414,7 @@ quick. There exist alternatives thought
  ("o" . windmove-right)
  ("s" . my-split-right)
  ("h" . my-split-down)
- ("q" . my-delete-window)
- )
+ ("q" . my-delete-window))
 
 #+end_src
 
@@ -504,9 +543,9 @@ We also load vertico, which provides alternate completion ui for the minibuffer
   (vertico-mode))
 #+end_src
 
-*** emacs completion system    
+*** emacs completion system
 
-when the default completion system generates/is given completion
+When the default completion system generates/is given completion
 candidates we are able to affect the ordering of them.
 
 orderless is a package that provides one such style of ordering
@@ -519,7 +558,7 @@ orderless is a package that provides one such style of ordering
   (completion-category-overrides '((file (styles partial-completion)))))
 #+end_src
 
-some ordering functions use our usage history to determine how to
+Some ordering functions use our usage history to determine how to
 order candidates. To persist this between restarts, we enable
 savehist-mode
 
@@ -586,13 +625,12 @@ completions. The Cape package provides some such functions
   (add-hook 'completion-at-point-functions #'cape-dabbrev)
   (add-hook 'completion-at-point-functions #'cape-abbrev)
   (add-hook 'completion-at-point-functions #'cape-file)
-  (add-hook 'completion-at-point-functions #'cape-elisp-block)
-  )
+  (add-hook 'completion-at-point-functions #'cape-elisp-block))
 #+end_src
 
 *** Snippets
 
-emacs has a builtin concept of [[info:emacs#Abbrevs][abbreviations]] and [[info:emacs#Dynamic Abbrevs][dynamic abbreviations]]
+Emacs has a builtin concept of [[info:emacs#Abbrevs][abbreviations]] and [[info:emacs#Dynamic Abbrevs][dynamic abbreviations]]
 
 #+begin_src emacs-lisp :tangle init.el
 (use-package abbrev-mode
@@ -686,7 +724,7 @@ emacs has a builtin concept of [[info:emacs#Abbrevs][abbreviations]] and [[info:
   (setq split-width-threshold 0)
   (setq split-height-threshold nil)
   (setq org-roam-directory "~/vault/notes-org")
-  :bind (:prefix-map org-roam-prefix-map
+  :bind (:prefix-map org-roam
                      :prefix "C-z n"
                      :prefix-docstring "org roam bindings"
                      ("l" . org-roam-buffer-toggle)
