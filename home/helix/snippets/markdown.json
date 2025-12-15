@@ -4,8 +4,8 @@
     "body": "## ${CURRENT_DATE} ${CURRENT_DAY_NAME}\n- ${CURRENT_HOUR}:${CURRENT_MINUTE}\n  - ",
     "description": "add heading with today's date"
   },
-  "clock": {
-    "prefix": "clock",
+  "now": {
+    "prefix": "now",
     "body": "${CURRENT_HOUR}:${CURRENT_MINUTE}",
     "description": "the current time"
   },

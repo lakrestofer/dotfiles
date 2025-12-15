@@ -2,6 +2,22 @@
 config.cargo.buildScripts.enable = true
 
 [[language]]
+name = "zig"
+scope = "source.zig"
+injection-regex = "zig"
+file-types = ["zig", "zon"]
+roots = ["build.zig"]
+auto-format = true
+comment-tokens = ["//", "///", "//!"]
+language-servers = [
+  "zls",
+  { name = "hx-lsp", only-features = ["completion", "code-action"] },
+  # "codebook",
+]
+indent = { tab-width = 4, unit = "    " }
+formatter = { command = "zig", args = ["fmt", "--stdin"] }
+
+[[language]]
 name = "scheme"
 language-servers = ["steel-language-server"]
 formatter = { command = "raco", args = ["fmt"] }
@@ -13,7 +29,14 @@ args = []
 [[language]]
 name = "c"
 auto-format = true
-language-servers = ["typos", "clangd"]
+language-servers = [
+  "typos",
+  "clangd",
+  { name = "hx-lsp", only-features = [
+    "completion",
+    "code-action",
+  ] },
+]
 
 [[language]]
 name = "markdown"
@@ -84,7 +107,7 @@ scope = "source.rs"
 injection-regex = "rs|rust"
 file-types = ["rs"]
 roots = ["cargo.toml"]
-language-servers = ["rust-analyzer", "typos"]
+language-servers = ["rust-analyzer", "typos", "hx-lsp"]
 
 [[language]]
 name = "svelte"

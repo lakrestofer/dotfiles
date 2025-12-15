@@ -87,6 +87,7 @@
 
   environment.systemPackages =
     (with pkgs; [
+      mindustry-wayland
       terminalist
       # python tooling
       uv
