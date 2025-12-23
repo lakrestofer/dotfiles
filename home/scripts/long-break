@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+
+# timer fo 25 minutes
+notify-send "5 minute break"
+bb timer --name "long-break" $((15 * 60)) "time to start working again!"

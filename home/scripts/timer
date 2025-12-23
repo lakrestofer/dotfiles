@@ -1,8 +1,154 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 set -e
 set -u
 set -o pipefail
 
-sleep "$1"
-mpv ~/vault/data/sound/bowl-light.mp3
-notify-send "Timer complete!"
+STATUS_DIR="/tmp/timers"
+mkdir -p "$STATUS_DIR"
+
+# Handle "status" command
+if [[ "${1:-}" == "status" ]]; then
+    # Show specific timer status
+    if [[ -n "${2:-}" ]]; then
+        timer_id="$2"
+        status_file="$STATUS_DIR/$timer_id"
+
+        if [[ ! -f "$status_file" ]]; then
+            echo "Timer '$timer_id' not found"
+            exit 1
+        fi
+
+        IFS=$'\t' read -r start_time duration pid message < "$status_file"
+
+        # Check if process is still running
+        if ! kill -0 "$pid" 2>/dev/null; then
+            echo "Timer '$timer_id' completed or stopped"
+            rm -f "$status_file"
+            exit 0
+        fi
+
+        current_time=$(date +%s)
+        elapsed=$((current_time - start_time))
+        remaining=$((duration - elapsed))
+
+        if [[ $remaining -le 0 ]]; then
+            echo "Timer '$timer_id' completed"
+            exit 0
+        fi
+
+        elapsed_min=$((elapsed / 60))
+        elapsed_sec=$((elapsed % 60))
+        remaining_min=$((remaining / 60))
+        remaining_sec=$((remaining % 60))
+        total_min=$((duration / 60))
+        total_sec=$((duration % 60))
+
+        printf "Timer: %s\n" "$timer_id"
+        printf "Message: %s\n" "$message"
+        printf "Elapsed: %dm %ds / %dm %ds\n" $elapsed_min $elapsed_sec $total_min $total_sec
+        printf "Remaining: %dm %ds\n" $remaining_min $remaining_sec
+        exit 0
+    fi
+
+    # Show all timers
+    if [[ -z "$(ls -A "$STATUS_DIR" 2>/dev/null)" ]]; then
+        echo "No timers running"
+        exit 0
+    fi
+
+    for status_file in "$STATUS_DIR"/*; do
+        timer_id=$(basename "$status_file")
+        IFS=$'\t' read -r start_time duration pid message < "$status_file"
+
+        # Check if process is still running
+        if ! kill -0 "$pid" 2>/dev/null; then
+            rm -f "$status_file"
+            continue
+        fi
+
+        current_time=$(date +%s)
+        elapsed=$((current_time - start_time))
+        remaining=$((duration - elapsed))
+
+        if [[ $remaining -le 0 ]]; then
+            continue
+        fi
+
+        elapsed_min=$((elapsed / 60))
+        elapsed_sec=$((elapsed % 60))
+        remaining_min=$((remaining / 60))
+        remaining_sec=$((remaining % 60))
+        total_min=$((duration / 60))
+        total_sec=$((duration % 60))
+
+        printf "[%s] %s\n" "$timer_id" "$message"
+        printf "  Elapsed: %dm %ds / %dm %ds\n" $elapsed_min $elapsed_sec $total_min $total_sec
+        printf "  Remaining: %dm %ds\n\n" $remaining_min $remaining_sec
+    done
+    exit 0
+fi
+
+# Handle "abort" command
+if [[ "${1:-}" == "abort" ]]; then
+    if [[ -z "${2:-}" ]]; then
+        echo "Usage: timer abort <timer-id>"
+        exit 1
+    fi
+
+    timer_id="$2"
+    status_file="$STATUS_DIR/$timer_id"
+
+    if [[ ! -f "$status_file" ]]; then
+        echo "Timer '$timer_id' not found"
+        exit 1
+    fi
+
+    IFS=$'\t' read -r start_time duration pid message < "$status_file"
+
+    if kill "$pid" 2>/dev/null; then
+        echo "Timer '$timer_id' aborted"
+    else
+        echo "Timer '$timer_id' already stopped"
+    fi
+
+    rm -f "$status_file"
+    exit 0
+fi
+
+# Parse --name flag
+timer_id=""
+if [[ "${1:-}" == "--name" ]]; then
+    timer_id="$2"
+    shift 2
+else
+    timer_id=$(uuidgen)
+fi
+
+time=$1
+message="${2:='Timer complete'}"
+
+status_file="$STATUS_DIR/$timer_id"
+
+# Remove existing named timer if it exists
+if [[ -f "$status_file" ]]; then
+    IFS=$'\t' read -r start_time duration old_pid old_message < "$status_file"
+    kill "$old_pid" 2>/dev/null || true
+    rm -f "$status_file"
+fi
+
+# Write status file with current process info (tab-delimited)
+printf "%s\t%s\t%s\t%s\n" "$(date +%s)" "$time" "$$" "$message" > "$status_file"
+
+echo "Timer started: $timer_id"
+
+sleep "$time"
+
+# Clean up status file
+rm -f "$status_file"
+
+# play chime
+echo "Playing chime..."
+mpv --really-quiet ~/vault/data/sound/bowl-light.mp3
+
+# show message
+notify-send "$message"

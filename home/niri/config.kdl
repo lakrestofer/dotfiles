@@ -42,6 +42,9 @@ window-rule {
 
 window-rule {
     match app-id="Anki"
+     // will only apply this rule at startup, if we create any other anki
+     // windows after this, they will be created like any other window.
+    exclude at-startup=false
     open-on-workspace "anki"
 }
 

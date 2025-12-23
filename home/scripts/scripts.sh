@@ -10,6 +10,4 @@ if [[ -z $script ]]; then
   exit 1
 fi
 
-notify-send "Running script"
-
 exec $script
