@@ -3,7 +3,7 @@ theme = "gruvbox_light_trans"
 
 [editor]
 # cursorline = true
-bufferline = "always"
+bufferline = "multiple"
 scrolloff = 3
 mouse = true
 middle-click-paste = true
@@ -12,45 +12,43 @@ shell = ["sh", "-c"]
 line-number = "relative"
 gutters = ["diagnostics", "line-numbers", "diff"]
 auto-completion = true
+path-completion = true
 auto-format = true
 idle-timeout = 400
 completion-trigger-len = 2
+completion-replace = true
 auto-info = true
-true-color = true
+color-modes = true
+trim-trailing-whitespace = true
 # rulers = [80]
 end-of-line-diagnostics = "disable"
+
+[editor.statusline]
+# left = ["mode", "spinner", "spacer", "version-control", "file-name"]
+left = [
+  "mode",
+  "spinner",
+  "file-name",
+  "read-only-indicator",
+  "file-modification-indicator",
+]
+center = ["diagnostics", "workspace-diagnostics"]
+right = ["selections", "register", "position", "file-type"]
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
+[editor.lsp]
+display-messages = true
+display-progress-messages = true
+display-inlay-hints = true
+auto-signature-help = true
+snippets = true
 
 [editor.cursor-shape]
 insert = "bar"
 normal = "block"
 select = "underline"
-
-[editor.smart-tab]
-enable = true
-supersede-menu = true
-
-[editor.indent-guides]
-render = false
-character = "|" # Some characters that work well: "▏", "┆", "┊", "⸽"
-skip-levels = 1
-
-[editor.statusline]
-left = ["mode", "spinner", "spacer", "version-control", "file-name"]
-center = ["diagnostics", "workspace-diagnostics"]
-right = ["selections", "position", "file-type"]
-mode.normal = "NORMAL"
-mode.insert = "INSERT"
-mode.select = "SELECT"
-
-[editor.inline-diagnostics]
-cursor-line = "warning" # show warnings and errors on the cursorline inline
-other-lines = "disable"
-
-[editor.lsp]
-display-messages = true
-display-inlay-hints = false
-auto-signature-help = false
-snippets = true
 
 
 [editor.file-picker]
@@ -63,13 +61,16 @@ git-exclude = true
 # max-depth = "None"
 
 [editor.auto-pairs]
-# '(' = ')'
-# '{' = '}'
-# '[' = ']'
-# '"' = '"'
-# "'" = "'"
-# '`' = '`'
-# '<' = '>'
+'(' = ')'
+'{' = '}'
+'[' = ']'
+'"' = '"'
+"'" = "'"
+'`' = '`'
+'<' = '>'
+
+[editor.auto-save]
+after-delay = { enable = true }
 
 [editor.search]
 smart-case = true
@@ -77,6 +78,32 @@ wrap-around = true
 
 [editor.whitespace]
 render = "none"
+
+[editor.indent-guides]
+render = true
+character = "┊" # Some characters that work well: "▏", "┆", "┊", "⸽"
+skip-levels = 0
+
+[editor.smart-tab]
+enable = true
+supersede-menu = true
+
+[editor.inline-diagnostics]
+cursor-line = "warning" # show warnings and errors on the cursorline inline
+other-lines = "disable"
+
+############################################################
+## Custom keybind section
+############################################################
+
+# Since I'm using the colemakdh layout the default vim-like hjkl bindings
+# do not work for me.
+#
+# To fix this i do a global rotation over all keybinds
+# hjkl -> neio
+# neio -> hjkl
+#
+# I also add some custom keybinds.
 
 [keys.normal]
 # unset keys
@@ -97,21 +124,26 @@ k = "insert_mode"
 K = "insert_at_line_start"
 l = "open_below"
 L = "open_above"
-A-l = "expand_selection"
-A-k = "shrink_selection"
-A-h = "select_next_sibling"
 h = "search_next"
 H = "search_prev"
 E = "join_selections"
 I = "keep_selections"
-A-n = ":buffer-previous"
-A-o = ":buffer-next"
+
+A-S-n = ":buffer-previous"
+A-S-o = ":buffer-next"
 C-o = "jump_forward"
 C-n = "jump_backward"
+
 "ret" = "goto_definition"
-C-A-r = [":reload-all"]
-space.B = ":echo %sh{git blame -L %{cursor_line},+1 %{buffer_name}}"
+C-A-r = ":reload-all"
 C-y = "yank_joined"
+
+# A-f = "move_parent_node_end"
+# A-b = "move_parent_node_start"
+A-i = "expand_selection"
+A-e = "shrink_selection"
+A-n = "select_prev_sibling"
+A-o = "select_next_sibling"
 
 [keys.normal.z]
 # unset
@@ -180,6 +212,14 @@ v = "vsplit_new"
 # commands that deal work lsp stuff
 [keys.normal.space.l]
 c = ":lsp-workspace-command"
+
+[keys.normal.C-space]
+n = "@:o <C-r>%<C-w>"
+x = "@:sh rm <C-r>%"
+r = "@:sh mv <C-r>% <C-r>%"
+c = "@:sh cp <C-r>% <C-r>%"
+e = "@:sh ghostty -e yazi <C-r>% <ret>"
+b = ":echo %sh{git blame -L %{cursor_line},+1 %{buffer_name}}"
 
 [keys.normal.space.w]
 #unset

@@ -141,7 +141,7 @@ printf "%s\t%s\t%s\t%s\n" "$(date +%s)" "$time" "$$" "$message" > "$status_file"
 
 echo "Timer started: $timer_id"
 
-sleep "$time"
+sleep $(($time * 60))
 
 # Clean up status file
 rm -f "$status_file"

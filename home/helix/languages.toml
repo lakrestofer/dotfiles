@@ -80,7 +80,13 @@ auto-format = true
 
 [[language]]
 name = "toml"
-language-servers = ["taplo"]
+language-servers = [
+  "taplo",
+  { name = "hx-lsp", only-features = [
+    "completion",
+    "code-action",
+  ] },
+]
 auto-format = true
 
 [[language]]

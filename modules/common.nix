@@ -82,11 +82,14 @@
   virtualisation.docker.enable = true;
   environment.localBinInPath = true;
 
-  # hardware.keyboard.qmk.enable = true;
+  hardware.keyboard.qmk.enable = true;
+  hardware.keyboard.qmk.keychronSupport = true;
   services.udev.packages = [ pkgs.via ];
 
   environment.systemPackages =
     (with pkgs; [
+      via
+      qmk
       mindustry-wayland
       terminalist
       # python tooling

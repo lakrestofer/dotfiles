@@ -22,7 +22,7 @@ output "Dell Inc. DELL P2317H V2G5172OAGJB" {
             // top 64
             // bottom 64
         }
-        
+
     }
 }
 
@@ -39,6 +39,11 @@ window-rule {
     match title="markdown-journal"
     open-on-workspace "mtgt"
 }
+window-rule {
+    match app-id="org.pwmt.zathura"
+    default-column-width { proportion 0.5; }
+}
+
 
 window-rule {
     match app-id="Anki"
@@ -257,7 +262,7 @@ binds {
     XF86AudioMicMute      allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
     XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl s 10%+"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl s 10%-"; }
-    
+
     // ========================================================================
     // WINDOW MANIPULATION
     // ========================================================================
@@ -287,7 +292,7 @@ binds {
     // move
     Mod+Ctrl+Shift+E { move-workspace-down; }
     Mod+Ctrl+Shift+I { move-workspace-up; }
- 
+
     Mod+Shift+N     { move-column-left; }
     Mod+Shift+E     { move-window-down-or-to-workspace-down; }
     Mod+Shift+I     { move-window-up-or-to-workspace-up; }
@@ -297,8 +302,8 @@ binds {
     Mod+shift+SemiColon { move-window-to-monitor-right; }
     Mod+Ctrl+Shift+l { move-workspace-to-monitor-left; }
     Mod+Ctrl+Shift+SemiColon { move-workspace-to-monitor-right; }
-    
-    // resize 
+
+    // resize
     Mod+Alt+N { set-column-width "-10%"; }
     Mod+Alt+O { set-column-width "+10%"; }
     Mod+Alt+E { set-window-height "-10%"; }
