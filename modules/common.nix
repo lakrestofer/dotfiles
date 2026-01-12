@@ -183,7 +183,8 @@
       eza
       zoxide
       wl-clipboard
-      inputs.helix.packages.${system}.default
+      # inputs.helix.packages.${system}.default
+      (inputs.helix.packages.${system}.helix.override { enableSteel = true; })
       hyprpolkitagent
       git
       # tmux
