@@ -92,7 +92,7 @@ input {
         accel-speed 0.2
         accel-profile "adaptive"
         // scroll-method "two-finger"
-        disabled-on-external-mouse
+        // disabled-on-external-mouse
     }
 
     mouse {
