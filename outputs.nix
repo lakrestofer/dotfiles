@@ -2,6 +2,8 @@
   kmonad,
   nixpkgs-unstable,
   nixos-hardware,
+  elephant,
+  walker,
   ...
 }@inputs:
 let
@@ -44,6 +46,7 @@ in
           ./modules/media.nix
           ./modules/graphical_session.nix
           ./modules/games.nix
+          walker.nixosModules.default
           nixos-hardware.nixosModules.common-cpu-amd
           nixos-hardware.nixosModules.common-cpu-amd-pstate
           nixos-hardware.nixosModules.common-gpu-amd
@@ -68,6 +71,8 @@ in
           ./modules/networking.nix
           ./modules/media.nix
           ./modules/graphical_session.nix
+
+          elephant.nixosModules.default
           nixos-hardware.nixosModules.lenovo-thinkpad-t14
           nixos-hardware.nixosModules.common-cpu-intel
         ];

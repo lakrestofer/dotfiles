@@ -86,7 +86,7 @@ in
     enable = true;
     font.name = "CozetteHiDpi Medium 10";
     theme = {
-      name = "Gruvbox-Dark";
+      name = "Gruvbox-Light";
       package = pkgs-unstable.gruvbox-gtk-theme;
     };
     iconTheme = {
@@ -95,12 +95,12 @@ in
     };
     gtk3.extraConfig = {
       Settings = ''
-        gtk-application-prefer-dark-theme=1
+        gtk-application-prefer-dark-theme=0
       '';
     };
     gtk4.extraConfig = {
       Settings = ''
-        gtk-application-prefer-dark-theme=1
+        gtk-application-prefer-dark-theme=0
       '';
     };
   };
