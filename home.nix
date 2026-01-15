@@ -14,6 +14,7 @@ let
   qutePath = "${configRoot}/qutebrowser";
   ghosttyPath = "${configRoot}/ghostty";
   zathuraPath = "${configRoot}/zathura";
+  walkerPath = "${configRoot}/walker";
   waybarPath = "${configRoot}/waybar";
   hyprPath = "${configRoot}/hypr";
   makoPath = "${configRoot}/mako";
@@ -42,6 +43,7 @@ in
   # user packages (only installed per user)
   home.packages = [ ];
   xdg.configFile."swaylock".source = linkConf swaylockPath;
+  xdg.configFile."walker".source = linkConf walkerPath;
   xdg.configFile."helix".source = linkConf helixPath;
   xdg.configFile."codebook".source = linkConf codebookPath;
   xdg.configFile."hypr".source = linkConf hyprPath;

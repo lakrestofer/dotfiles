@@ -9,7 +9,11 @@
     helix.url = "github:lakrestofer/helix/steel-event-system";
     spbased.url = "github:lakrestofer/spbased";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
     elephant.url = "github:abenz1267/elephant";
-    walker.url = "github:abenz1267/walker";
+    walker = {
+      url = "github:abenz1267/walker";
+      inputs.elephant.follows = "elephant";
+    };
   };
 }

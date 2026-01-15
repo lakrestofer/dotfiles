@@ -2,7 +2,9 @@ spawn-at-startup "waybar"
 spawn-at-startup "wallpaper.sh"
 spawn-at-startup "xwayland-satellite"
 spawn-at-startup "open-journal.sh"
-spawn-at-startup "anki"
+// spawn-at-startup "anki"
+// spawn-at-startup "elephant"
+// spawn-at-startup "launch-walker-daemon.sh"
 
 output "Acer Technologies VG271U M3 1322131231233" {
     position x=0 y=0
@@ -247,6 +249,7 @@ binds {
     // Mod+Ctrl+E hotkey-overlay-title="Open emacs" repeat=false { spawn "emacsclient" "-c"; }
     Mod+W hotkey-overlay-title="Open firefox" repeat=false { spawn "firefox-devedition"; }
     Mod+Space hotkey-overlay-title="Run an Application" repeat=false { spawn "fuzzel"; }
+    // Mod+Space hotkey-overlay-title="Run an Application" repeat=false { spawn "walker"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" repeat=false { spawn "swaylock"; }
 
     Mod+F1 hotkey-overlay-title="show collection of often used scripts" repeat=false { spawn "scripts.sh"; }

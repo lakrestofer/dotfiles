@@ -47,6 +47,7 @@ in
           ./modules/graphical_session.nix
           ./modules/games.nix
           walker.nixosModules.default
+          ./modules/launcher.nix
           nixos-hardware.nixosModules.common-cpu-amd
           nixos-hardware.nixosModules.common-cpu-amd-pstate
           nixos-hardware.nixosModules.common-gpu-amd
