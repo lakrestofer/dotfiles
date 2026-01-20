@@ -41,7 +41,7 @@ mode.select = "SELECT"
 [editor.lsp]
 display-messages = true
 display-progress-messages = true
-display-inlay-hints = true
+display-inlay-hints = false
 auto-signature-help = true
 snippets = true
 

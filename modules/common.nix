@@ -88,6 +88,7 @@
 
   environment.systemPackages =
     (with pkgs; [
+      audacity
       via
       qmk
       mindustry-wayland
