@@ -1,0 +1,18 @@
+{
+  "banner": {
+    "prefix": "banner",
+    "body": [
+      "////////////////////////////////////////////////////////////",
+      "// ${1:sectionname}",
+      "////////////////////////////////////////////////////////////"
+    ],
+    "description": "Section divider"
+  },
+  "small-banner": {
+    "prefix": "sbanner",
+    "body": [
+      "// ======= ${1:sectionname} =======",
+    ],
+    "description": "Small section divider"
+  }
+}

@@ -45,7 +45,6 @@ in
           ./modules/networking.nix
           ./modules/media.nix
           ./modules/graphical_session.nix
-          ./modules/games.nix
           walker.nixosModules.default
           ./modules/launcher.nix
           nixos-hardware.nixosModules.common-cpu-amd

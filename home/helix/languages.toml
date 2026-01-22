@@ -62,7 +62,8 @@ language-servers = [
   "emmet-ls",
   "typescript-language-server",
   "tailwindcss-ls",
-  "lsp-ai",
+  { name = "hx-lsp", only-features = ["completion", "code-action"] },
+  # "lsp-ai",
 ]
 formatter = { command = "prettier", args = ["--parser", "typescript"] }
 auto-format = true
@@ -96,6 +97,10 @@ language-servers = [
   "emmet-ls",
   "typescript-language-server",
   "tailwindcss-ls",
+  { name = "hx-lsp", only-features = [
+    "completion",
+    "code-action",
+  ] },
 ]
 formatter = { command = "prettier", args = ["--parser", "typescript"] }
 auto-format = true
