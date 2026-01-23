@@ -179,6 +179,7 @@
       typescript-language-server
       ripgrep
       zathura
+      sioyek
       util-linux
       brightnessctl
       eza
