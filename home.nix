@@ -9,6 +9,7 @@ let
   configRoot = "${config.home.homeDirectory}/dotfiles/home";
   dataRoot = "${config.home.homeDirectory}/dotfiles/data";
   helixPath = "${configRoot}/helix";
+  sioyekPath = "${configRoot}/sioyek";
   codebookPath = "${configRoot}/codebook";
   alacrittyPath = "${configRoot}/alacritty";
   qutePath = "${configRoot}/qutebrowser";
@@ -43,6 +44,7 @@ in
   # user packages (only installed per user)
   home.packages = [ ];
   xdg.configFile."swaylock".source = linkConf swaylockPath;
+  xdg.configFile."sioyek".source = linkConf sioyekPath;
   xdg.configFile."walker".source = linkConf walkerPath;
   xdg.configFile."helix".source = linkConf helixPath;
   xdg.configFile."codebook".source = linkConf codebookPath;
