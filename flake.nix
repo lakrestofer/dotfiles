@@ -16,5 +16,9 @@
       url = "github:abenz1267/walker";
       inputs.elephant.follows = "elephant";
     };
+    foundryvtt = {
+      url = "github:reckenrode/nix-foundryvtt";
+      # inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 }
