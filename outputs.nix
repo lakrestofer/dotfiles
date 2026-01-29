@@ -48,7 +48,7 @@ in
           ./modules/games.nix
           walker.nixosModules.default
           ./modules/launcher.nix
-          ./modules/foundry_vtt.nix
+          # ./modules/foundry_vtt.nix
           inputs.foundryvtt.nixosModules.foundryvtt
           nixos-hardware.nixosModules.common-cpu-amd
           nixos-hardware.nixosModules.common-cpu-amd-pstate

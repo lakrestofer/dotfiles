@@ -88,6 +88,8 @@
 
   environment.systemPackages =
     (with pkgs; [
+      rclone
+      flyctl
       audacity
       via
       qmk
