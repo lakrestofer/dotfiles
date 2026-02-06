@@ -11,6 +11,8 @@
     spbased.url = "github:lakrestofer/spbased";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
+    claude-code.url = "github:sadjow/claude-code-nix";
+
     elephant.url = "github:abenz1267/elephant";
     walker = {
       url = "github:abenz1267/walker";

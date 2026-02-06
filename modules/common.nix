@@ -112,7 +112,7 @@
       p7zip
       unrar
       todoist
-      claude-code
+      inputs.claude-code.packages.${system}.default
       iwe
       strongswan
       nmap
