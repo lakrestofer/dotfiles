@@ -88,6 +88,7 @@
 
   environment.systemPackages =
     (with pkgs; [
+      ferritin
       rclone
       flyctl
       audacity

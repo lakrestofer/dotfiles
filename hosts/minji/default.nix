@@ -10,7 +10,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   # hardware.amdgpu.opencl.enable = true;
 
-  programs.adb.enable = true;
+  # programs.adb.enable = true;
 
   networking.hostName = "minji"; # Define your hostname.
 

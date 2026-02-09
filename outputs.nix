@@ -2,8 +2,7 @@
   kmonad,
   nixpkgs-unstable,
   nixos-hardware,
-  elephant,
-  walker,
+  # walker,
   ...
 }@inputs:
 let
@@ -46,8 +45,6 @@ in
           ./modules/media.nix
           ./modules/graphical_session.nix
           ./modules/games.nix
-          walker.nixosModules.default
-          ./modules/launcher.nix
           # ./modules/foundry_vtt.nix
           inputs.foundryvtt.nixosModules.foundryvtt
           nixos-hardware.nixosModules.common-cpu-amd
@@ -75,7 +72,6 @@ in
           ./modules/media.nix
           ./modules/graphical_session.nix
 
-          elephant.nixosModules.default
           nixos-hardware.nixosModules.lenovo-thinkpad-t14
           nixos-hardware.nixosModules.common-cpu-intel
         ];
