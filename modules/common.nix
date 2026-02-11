@@ -88,6 +88,8 @@
 
   environment.systemPackages =
     (with pkgs; [
+      husky
+      typescript-go
       fd
       rclone
       flyctl

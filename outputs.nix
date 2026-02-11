@@ -45,8 +45,6 @@ in
           ./modules/media.nix
           ./modules/graphical_session.nix
           ./modules/games.nix
-          # ./modules/foundry_vtt.nix
-          inputs.foundryvtt.nixosModules.foundryvtt
           nixos-hardware.nixosModules.common-cpu-amd
           nixos-hardware.nixosModules.common-cpu-amd-pstate
           nixos-hardware.nixosModules.common-gpu-amd
