@@ -27,6 +27,7 @@ let
   lazygitPath = "${configRoot}/lazygit";
   yaziPath = "${configRoot}/yazi";
   zshRoot = "${configRoot}/zsh";
+  agentPath = "${configRoot}/agent";
   # function aliases
   linkConf = config.lib.file.mkOutOfStoreSymlink;
   system = "x86_64-linux";
@@ -65,6 +66,7 @@ in
   home.file.".zshrc".source = linkConf "${zshRoot}/zshrc.zsh";
   home.file.".zprofile".source = linkConf "${zshRoot}/zprofile.zsh";
   home.file.".p10k.zsh".source = linkConf "${zshRoot}/p10k.zsh";
+  home.file.".pi/agent".source = linkConf agentPath;
 
   # git
   programs.git = {

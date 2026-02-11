@@ -1,0 +1,31 @@
+{
+  "name": "lakrestofer",
+  "description": "pi agent configuration",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lakrestofer/dotfiles"
+  },
+  "readme": "README.md",
+  "type": "module",
+  "keywords": [
+    "pi-package",
+    "pi-extension",
+    "pi-skill"
+  ],
+  "pi": {
+    "extensions": [
+      "./extensions"
+    ],
+    "skills": [
+      "./skills"
+    ],
+    "prompts": [
+      "./prompts"
+    ]
+  },
+  "peerDependencies": {
+    "@mariozechner/pi-coding-agent": "*",
+    "@mariozechner/pi-ai": "*",
+    "@mariozechner/pi-tui": "*"
+  }
+}
