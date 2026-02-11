@@ -67,11 +67,11 @@ Example output:
   ]
 }`;
 
-const CODEX_MODEL_ID = "gpt-5.1-codex-mini";
+// const CODEX_MODEL_ID = "gpt-5.1-codex-mini";
 const HAIKU_MODEL_ID = "claude-haiku-4-5";
 
 /**
- * Prefer Codex mini for extraction when available, otherwise fallback to haiku or the current model.
+ * Prefer Haiku for extraction
  */
 async function selectExtractionModel(
 	currentModel: Model<Api>,
@@ -155,9 +155,11 @@ class QnAComponent implements Component {
 		const editorTheme: EditorTheme = {
 			borderColor: this.dim,
 			selectList: {
-				selectedBg: (s: string) => `\x1b[44m${s}\x1b[0m`,
-				matchHighlight: this.cyan,
-				itemSecondary: this.gray,
+				selectedText: this.bold,
+				selectedPrefix: this.cyan,
+				description: s => s,
+				scrollInfo: this.gray,
+				noMatch: this.dim,
 			},
 		};
 

@@ -5,9 +5,9 @@
     "": {
       "name": "lakrestofer",
       "peerDependencies": {
-        "@mariozechner/pi-ai": "*",
-        "@mariozechner/pi-coding-agent": "*",
-        "@mariozechner/pi-tui": "*",
+        "@mariozechner/pi-ai": "0.52.9",
+        "@mariozechner/pi-coding-agent": "0.52.9",
+        "@mariozechner/pi-tui": "0.52.9",
       },
     },
   },
