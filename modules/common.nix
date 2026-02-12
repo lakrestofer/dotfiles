@@ -92,6 +92,10 @@
       husky
       typescript-go
       fd
+      babashka
+      clojure
+      clojure-lsp
+      mesa-demos
       rclone
       flyctl
       audacity
