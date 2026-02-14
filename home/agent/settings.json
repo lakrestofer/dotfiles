@@ -2,5 +2,5 @@
   "lastChangelogVersion": "0.52.12",
   "theme": "light",
   "defaultProvider": "anthropic",
-  "defaultModel": "claude-opus-4-5-20251101"
+  "defaultModel": "claude-opus-4-6"
 }
