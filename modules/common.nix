@@ -88,6 +88,7 @@
 
   environment.systemPackages =
     (with pkgs; [
+      tmux
       husky
       typescript-go
       fd

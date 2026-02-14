@@ -53,30 +53,27 @@ import {
 	truncateToWidth,
 	visibleWidth,
 } from "@mariozechner/pi-tui";
+import {
+	type TodoFrontMatter,
+	type TodoRecord,
+	TODO_ID_PREFIX,
+	formatTodoId,
+	normalizeTodoId,
+	validateTodoId,
+	displayTodoId,
+	isTodoClosed,
+	sortTodos,
+} from "./common/todos.js";
 
 const TODO_DIR_NAME = ".pi/todos";
 const TODO_PATH_ENV = "PI_TODO_PATH";
 const TODO_SETTINGS_NAME = "settings.json";
-const TODO_ID_PREFIX = "TODO-";
 const TODO_ID_PATTERN = /^[a-f0-9]{8}$/i;
 const DEFAULT_TODO_SETTINGS = {
 	gc: true,
 	gcDays: 7,
 };
 const LOCK_TTL_MS = 30 * 60 * 1000;
-
-interface TodoFrontMatter {
-	id: string;
-	title: string;
-	tags: string[];
-	status: string;
-	created_at: string;
-	assigned_to_session?: string;
-}
-
-interface TodoRecord extends TodoFrontMatter {
-	body: string;
-}
 
 interface LockInfo {
 	id: string;
@@ -146,53 +143,10 @@ type TodoToolDetails =
 			error?: string;
 		};
 
-function formatTodoId(id: string): string {
-	return `${TODO_ID_PREFIX}${id}`;
-}
-
-function normalizeTodoId(id: string): string {
-	let trimmed = id.trim();
-	if (trimmed.startsWith("#")) {
-		trimmed = trimmed.slice(1);
-	}
-	if (trimmed.toUpperCase().startsWith(TODO_ID_PREFIX)) {
-		trimmed = trimmed.slice(TODO_ID_PREFIX.length);
-	}
-	return trimmed;
-}
-
-function validateTodoId(id: string): { id: string } | { error: string } {
-	const normalized = normalizeTodoId(id);
-	if (!normalized || !TODO_ID_PATTERN.test(normalized)) {
-		return { error: "Invalid todo id. Expected TODO-<hex>." };
-	}
-	return { id: normalized.toLowerCase() };
-}
-
-function displayTodoId(id: string): string {
-	return formatTodoId(normalizeTodoId(id));
-}
-
-function isTodoClosed(status: string): boolean {
-	return ["closed", "done"].includes(status.toLowerCase());
-}
-
 function clearAssignmentIfClosed(todo: TodoFrontMatter): void {
 	if (isTodoClosed(getTodoStatus(todo))) {
 		todo.assigned_to_session = undefined;
 	}
-}
-
-function sortTodos(todos: TodoFrontMatter[]): TodoFrontMatter[] {
-	return [...todos].sort((a, b) => {
-		const aClosed = isTodoClosed(a.status);
-		const bClosed = isTodoClosed(b.status);
-		if (aClosed !== bClosed) return aClosed ? 1 : -1;
-		const aAssigned = !aClosed && Boolean(a.assigned_to_session);
-		const bAssigned = !bClosed && Boolean(b.assigned_to_session);
-		if (aAssigned !== bAssigned) return aAssigned ? -1 : 1;
-		return (a.created_at || "").localeCompare(b.created_at || "");
-	});
 }
 
 function buildTodoSearchText(todo: TodoFrontMatter): string {

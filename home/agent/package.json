@@ -7,6 +7,9 @@
   },
   "readme": "README.md",
   "type": "module",
+  "scripts": {
+    "check": "bunx tsc"
+  },
   "keywords": [
     "pi-package",
     "pi-extension",
@@ -24,8 +27,9 @@
     ]
   },
   "peerDependencies": {
-    "@mariozechner/pi-coding-agent": "0.52.9",
-    "@mariozechner/pi-ai": "0.52.9",
-    "@mariozechner/pi-tui": "0.52.9"
+    "@mariozechner/pi-coding-agent": "^0.52.12",
+    "@mariozechner/pi-ai": "^0.52.12",
+    "@mariozechner/pi-tui": "^0.52.12",
+    "@sinclair/typebox": "^0.34.48"
   }
 }
