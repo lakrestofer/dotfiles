@@ -18,9 +18,8 @@ import type { ExtensionAPI, ExtensionContext } from "@mariozechner/pi-coding-age
 import { Key } from "@mariozechner/pi-tui";
 import { extractTodoItems, isSafeCommand, markCompletedSteps, type TodoItem } from "./utils.js";
 
-// Tools
+// Tools allowed in plan mode (read-only subset)
 const PLAN_MODE_TOOLS = ["read", "bash", "grep", "find", "ls", "questionnaire"];
-const NORMAL_MODE_TOOLS = ["read", "bash", "edit", "write"];
 
 // Type guard for assistant messages
 function isAssistantMessage(m: AgentMessage): m is AssistantMessage {
@@ -39,6 +38,7 @@ export default function planModeExtension(pi: ExtensionAPI): void {
 	let planModeEnabled = false;
 	let executionMode = false;
 	let todoItems: TodoItem[] = [];
+	let savedActiveTools: string[] = []; // Tools to restore when exiting plan mode
 
 	pi.registerFlag("plan", {
 		description: "Start in plan mode (read-only exploration)",
@@ -79,10 +79,13 @@ export default function planModeExtension(pi: ExtensionAPI): void {
 		todoItems = [];
 
 		if (planModeEnabled) {
+			// Save current tools before entering plan mode
+			savedActiveTools = pi.getActiveTools();
 			pi.setActiveTools(PLAN_MODE_TOOLS);
 			ctx.ui.notify(`Plan mode enabled. Tools: ${PLAN_MODE_TOOLS.join(", ")}`);
 		} else {
-			pi.setActiveTools(NORMAL_MODE_TOOLS);
+			// Restore previously saved tools
+			pi.setActiveTools(savedActiveTools.length > 0 ? savedActiveTools : pi.getAllTools().map((t) => t.name));
 			ctx.ui.notify("Plan mode disabled. Full access restored.");
 		}
 		updateStatus(ctx);
@@ -93,6 +96,7 @@ export default function planModeExtension(pi: ExtensionAPI): void {
 			enabled: planModeEnabled,
 			todos: todoItems,
 			executing: executionMode,
+			savedTools: savedActiveTools,
 		});
 	}
 
@@ -228,7 +232,8 @@ After completing a step, include a [DONE:n] tag in your response.`,
 				);
 				executionMode = false;
 				todoItems = [];
-				pi.setActiveTools(NORMAL_MODE_TOOLS);
+				// Restore previously saved tools
+				pi.setActiveTools(savedActiveTools.length > 0 ? savedActiveTools : pi.getAllTools().map((t) => t.name));
 				updateStatus(ctx);
 				persistState(); // Save cleared state so resume doesn't restore old execution mode
 			}
@@ -268,7 +273,8 @@ After completing a step, include a [DONE:n] tag in your response.`,
 		if (choice?.startsWith("Execute")) {
 			planModeEnabled = false;
 			executionMode = todoItems.length > 0;
-			pi.setActiveTools(NORMAL_MODE_TOOLS);
+			// Restore previously saved tools
+			pi.setActiveTools(savedActiveTools.length > 0 ? savedActiveTools : pi.getAllTools().map((t) => t.name));
 			updateStatus(ctx);
 
 			const execMessage =
@@ -298,12 +304,15 @@ After completing a step, include a [DONE:n] tag in your response.`,
 		// Restore persisted state
 		const planModeEntry = entries
 			.filter((e: { type: string; customType?: string }) => e.type === "custom" && e.customType === "plan-mode")
-			.pop() as { data?: { enabled: boolean; todos?: TodoItem[]; executing?: boolean } } | undefined;
+			.pop() as
+			| { data?: { enabled: boolean; todos?: TodoItem[]; executing?: boolean; savedTools?: string[] } }
+			| undefined;
 
 		if (planModeEntry?.data) {
 			planModeEnabled = planModeEntry.data.enabled ?? planModeEnabled;
 			todoItems = planModeEntry.data.todos ?? todoItems;
 			executionMode = planModeEntry.data.executing ?? executionMode;
+			savedActiveTools = planModeEntry.data.savedTools ?? savedActiveTools;
 		}
 
 		// On resume: re-scan messages to rebuild completion state
@@ -333,6 +342,10 @@ After completing a step, include a [DONE:n] tag in your response.`,
 		}
 
 		if (planModeEnabled) {
+			// Save current tools if not already saved (e.g., when starting fresh with --plan flag)
+			if (savedActiveTools.length === 0) {
+				savedActiveTools = pi.getActiveTools();
+			}
 			pi.setActiveTools(PLAN_MODE_TOOLS);
 		}
 		updateStatus(ctx);
