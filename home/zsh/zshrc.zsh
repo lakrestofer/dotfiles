@@ -67,7 +67,6 @@ export FZF_DEFAULT_OPTS='
 --style=minimal
 --color=16
 '
-    
 # system plugins
 source ~/.zshplugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zshplugins/zsh-autosuggestions/zsh-autosuggestions.zsh

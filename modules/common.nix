@@ -88,6 +88,7 @@
 
   environment.systemPackages =
     (with pkgs; [
+      dasel
       tmux
       husky
       typescript-go
