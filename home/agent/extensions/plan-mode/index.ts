@@ -16,23 +16,32 @@ import type { AgentMessage } from "@mariozechner/pi-agent-core";
 import type { AssistantMessage, TextContent } from "@mariozechner/pi-ai";
 import type { ExtensionAPI, ExtensionContext } from "@mariozechner/pi-coding-agent";
 import { Key } from "@mariozechner/pi-tui";
-import { extractTodoItems, isSafeCommand, markCompletedSteps, type TodoItem } from "./utils.js";
+import { extractTodoItems, getTextContent, isAssistantMessage, isSafeCommand, markCompletedSteps, type TodoItem } from "./utils.js";
 
 // Tools allowed in plan mode (read-only subset)
 const PLAN_MODE_TOOLS = ["read", "bash", "grep", "find", "ls", "questionnaire"];
 
-// Type guard for assistant messages
-function isAssistantMessage(m: AgentMessage): m is AssistantMessage {
-	return m.role === "assistant" && Array.isArray(m.content);
-}
 
-// Extract text content from an assistant message
-function getTextContent(message: AssistantMessage): string {
-	return message.content
-		.filter((block): block is TextContent => block.type === "text")
-		.map((block) => block.text)
-		.join("\n");
-}
+const PLAN_MODE_PROMPT = `[PLAN MODE ACTIVE]
+You are in plan mode - a read-only exploration mode for safe code analysis.
+
+Restrictions:
+- You can only use: read, bash, grep, find, ls, questionnaire
+- You CANNOT use: edit, write (file modifications are disabled)
+- Bash is restricted to an allowlist of read-only commands
+
+Ask clarifying questions using the questionnaire tool.
+Use brave-search skill via bash for web research.
+
+Create a detailed numbered plan under a "Plan:" header:
+
+Plan:
+1. First step description
+2. Second step description
+...
+
+Do NOT attempt to make changes - just describe what you would do.`;
+
 
 export default function planModeExtension(pi: ExtensionAPI): void {
 	let planModeEnabled = false;
@@ -165,25 +174,7 @@ export default function planModeExtension(pi: ExtensionAPI): void {
 			return {
 				message: {
 					customType: "plan-mode-context",
-					content: `[PLAN MODE ACTIVE]
-You are in plan mode - a read-only exploration mode for safe code analysis.
-
-Restrictions:
-- You can only use: read, bash, grep, find, ls, questionnaire
-- You CANNOT use: edit, write (file modifications are disabled)
-- Bash is restricted to an allowlist of read-only commands
-
-Ask clarifying questions using the questionnaire tool.
-Use brave-search skill via bash for web research.
-
-Create a detailed numbered plan under a "Plan:" header:
-
-Plan:
-1. First step description
-2. Second step description
-...
-
-Do NOT attempt to make changes - just describe what you would do.`,
+					content: PLAN_MODE_PROMPT,
 					display: false,
 				},
 			};

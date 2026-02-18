@@ -1,3 +1,7 @@
+import type { AgentMessage } from "@mariozechner/pi-agent-core";
+import type { AssistantMessage, TextContent } from "@mariozechner/pi-ai";
+import type { ExtensionAPI, ExtensionContext } from "@mariozechner/pi-coding-agent";
+
 /**
  * Utility functions for plan mode.
  * Re-exports shared todo utilities and adds plan-mode specific functions.
@@ -107,4 +111,18 @@ export function isSafeCommand(command: string): boolean {
 	const isDestructive = DESTRUCTIVE_PATTERNS.some((p) => p.test(command));
 	const isSafe = SAFE_PATTERNS.some((p) => p.test(command));
 	return !isDestructive && isSafe;
+}
+
+
+// Type guard for assistant messages
+export function isAssistantMessage(m: AgentMessage): m is AssistantMessage {
+	return m.role === "assistant" && Array.isArray(m.content);
+}
+
+// Extract text content from an assistant message
+export function getTextContent(message: AssistantMessage): string {
+	return message.content
+		.filter((block): block is TextContent => block.type === "text")
+		.map((block) => block.text)
+		.join("\n");
 }
