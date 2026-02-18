@@ -18,6 +18,17 @@ indent = { tab-width = 4, unit = "    " }
 formatter = { command = "zig", args = ["fmt", "--stdin"] }
 
 [[language]]
+name = "java"
+scope = "source.java"
+injection-regex = "java"
+file-types = ["java", "jav", "pde", "jrag"]
+roots = ["pom.xml", "build.gradle", "build.gradle.kts"]
+language-servers = ["jdtls"]
+indent = { tab-width = 2, unit = "  " }
+comment-tokens = ["//"]
+block-comment-tokens = { start = "/*", end = "*/" }
+
+[[language]]
 name = "scheme"
 language-servers = ["steel-language-server"]
 formatter = { command = "raco", args = ["fmt"] }

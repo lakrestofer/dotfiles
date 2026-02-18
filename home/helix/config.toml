@@ -1,5 +1,5 @@
 theme = "gruvbox_light_trans"
-# theme = "gruvbox_trans"
+# theme = "base16_transparent"
 
 [editor]
 # cursorline = true
@@ -220,6 +220,7 @@ r = "@:sh mv <C-r>% <C-r>%"
 c = "@:sh cp <C-r>% <C-r>%"
 e = "@:sh ghostty -e yazi <C-r>% <ret>"
 b = ":echo %sh{git blame -L %{cursor_line},+1 %{buffer_name}}"
+p = "@:sh echo <C-r>% | wl-copy <ret>"
 
 [keys.normal.space.w]
 #unset
