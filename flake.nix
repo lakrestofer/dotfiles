@@ -16,7 +16,7 @@
   outputs =
     inputs:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [ (inputs.import-tree ./flake-parts-modules) ];
+      imports = [ (inputs.import-tree ./modules) ];
       systems = [
         "x86_64-linux"
       ];
