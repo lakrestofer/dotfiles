@@ -21,25 +21,6 @@
         cargoHash = "sha256-dcGInrfWftClvzrxYZvrazm+IWWRfOZmxDJPKwu7GwM=";
       };
     })
-    (final: prev: {
-      terminalist = pkgs.rustPlatform.buildRustPackage {
-        name = "terminalist";
-        src = builtins.fetchGit {
-          url = "https://github.com/romaintb/terminalist";
-          ref = "main";
-          rev = "fb0ef9adc7d017430a2c6efcb640ec58a6669b1c";
-        };
-        buildInputs = with pkgs; [ openssl ];
-        nativeBuildInputs = [ pkgs.pkg-config ];
-        # cargoHash = pkgs.lib.fakeHash;
-        cargoHash = "sha256-6dqzzUXchlFJdLGM9W148SEF9XgaT32s06/aFi9XbVk=";
-      };
-    })
-    (final: prev: {
-      spotify-player = prev.spotify-player.override {
-        withAudioBackend = "pulseaudio";
-      };
-    })
   ];
 
   hardware.graphics = {
@@ -88,6 +69,7 @@
 
   environment.systemPackages =
     (with pkgs; [
+      wayscriber
       dasel
       tmux
       husky
@@ -103,7 +85,6 @@
       via
       qmk
       mindustry-wayland
-      terminalist
       # python tooling
       uv
       python3
@@ -115,7 +96,7 @@
 
       codebook
       bun
-      spotify-player
+      # spotify-player
       texliveMedium
       hx-lsp
       p7zip
