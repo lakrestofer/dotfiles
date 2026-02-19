@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, self, ... }:
 {
   flake.nixosConfigurations.minji =
     let
@@ -31,14 +31,15 @@
       };
       modules = [
         inputs.niri.nixosModules.niri
-        ./hosts/minji # desktop
-        ./modules/common.nix # base configuration
-        ./modules/fincei.nix
-        ./modules/nix_settings.nix
-        ./modules/networking.nix
-        ./modules/media.nix
-        ./modules/graphical_session.nix
-        ./modules/games.nix
+        ../hosts/minji # desktop
+        self.nixosModules.commonModule
+        self.nixosModules.usersModule
+        self.nixosModules.nixSettingsModule
+        self.nixosModules.networkingModule
+        self.nixosModules.mediaModule
+        self.nixosModules.graphicalSessionModule
+        self.nixosModules.gamesModule
+
         inputs.nixos-hardware.nixosModules.common-cpu-amd
         inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
         inputs.nixos-hardware.nixosModules.common-gpu-amd

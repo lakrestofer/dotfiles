@@ -26,12 +26,12 @@
       modules = [
         inputs.niri.nixosModules.niri
         ../hosts/selbeiskami # thinkpad t14 gen 2 configuration
-        ../modules/common.nix # base configuration
-        ../modules/fincei.nix
-        ../modules/nix_settings.nix
-        ../modules/networking.nix
-        ../modules/media.nix
-        ../modules/graphical_session.nix
+        self.nixosModules.commonModule
+        self.nixosModules.usersModule
+        self.nixosModules.graphicalSessionModule
+        self.nixosModules.nixSettingsModule
+        self.nixosModules.networkingModule
+        self.nixosModules.mediaModule
 
         inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14
         inputs.nixos-hardware.nixosModules.common-cpu-intel
