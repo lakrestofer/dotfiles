@@ -44,7 +44,7 @@
 
           home-manager.extraSpecialArgs = specialArgs;
           home-manager.users.fincei.imports = [
-            (import ../../../home.nix)
+            self.homeModules.finceiModule
           ];
         }
       ];
