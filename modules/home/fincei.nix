@@ -3,37 +3,30 @@
 
   flake.homeModules.finceiModule =
     {
+      lib,
       config,
       pkgs-unstable,
       ...
     }:
     let
+      inherit (config.lib.file) mkOutOfStoreSymlink;
+      inherit (lib) map mergeAttrsList;
+
       # paths
-      configRoot = "${config.home.homeDirectory}/dotfiles/home";
-      dataRoot = "${config.home.homeDirectory}/dotfiles/data";
-      helixPath = "${configRoot}/helix";
-      sioyekPath = "${configRoot}/sioyek";
-      codebookPath = "${configRoot}/codebook";
-      alacrittyPath = "${configRoot}/alacritty";
-      qutePath = "${configRoot}/qutebrowser";
-      ghosttyPath = "${configRoot}/ghostty";
-      zathuraPath = "${configRoot}/zathura";
-      walkerPath = "${configRoot}/walker";
-      waybarPath = "${configRoot}/waybar";
-      hyprPath = "${configRoot}/hypr";
-      makoPath = "${configRoot}/mako";
-      fuzzelPath = "${configRoot}/fuzzel";
-      niriPath = "${configRoot}/niri";
-      swaylockPath = "${configRoot}/swaylock";
+      configRoot = "${config.home.homeDirectory}/dotfiles/modules/home";
+
       scriptPath = "${configRoot}/scripts";
-      emacsPath = "${configRoot}/emacs";
-      lazygitPath = "${configRoot}/lazygit";
-      yaziPath = "${configRoot}/yazi";
-      zshRoot = "${configRoot}/zsh";
       agentPath = "${configRoot}/agent";
-      # function aliases
+
+      zshRoot = "${configRoot}/zsh";
+
+      # utils
+      # links ~/dotfiles/home/${name} to ~/config/${name}
+      linkConfFiles = map (name: {
+        ${name}.source = mkOutOfStoreSymlink "${configRoot}/${name}";
+      });
+
       linkConf = config.lib.file.mkOutOfStoreSymlink;
-      system = "x86_64-linux";
     in
     {
       # basic options
@@ -47,24 +40,28 @@
       ];
       # user packages (only installed per user)
       home.packages = [ ];
-      xdg.configFile."swaylock".source = linkConf swaylockPath;
-      xdg.configFile."sioyek".source = linkConf sioyekPath;
-      xdg.configFile."walker".source = linkConf walkerPath;
-      xdg.configFile."helix".source = linkConf helixPath;
-      xdg.configFile."codebook".source = linkConf codebookPath;
-      xdg.configFile."hypr".source = linkConf hyprPath;
-      xdg.configFile."ghostty".source = linkConf ghosttyPath;
-      xdg.configFile."alacritty".source = linkConf alacrittyPath;
-      xdg.configFile."zathura".source = linkConf zathuraPath;
-      xdg.configFile."waybar".source = linkConf waybarPath;
-      xdg.configFile."yazi".source = linkConf yaziPath;
-      xdg.configFile."qutebrowser".source = linkConf qutePath;
-      xdg.configFile."fuzzel".source = linkConf fuzzelPath;
-      xdg.configFile."niri".source = linkConf niriPath;
-      xdg.configFile."mako".source = linkConf makoPath;
-      xdg.configFile."emacs".source = linkConf emacsPath;
-      xdg.configFile."lazygit".source = linkConf lazygitPath;
-      xdg.dataFile."fincei_data".source = linkConf dataRoot;
+      xdg.configFile = mergeAttrsList (linkConfFiles [
+        "helix"
+        "sioyek"
+        "codebook"
+        "alacritty"
+        "qutebrowser"
+        "ghostty"
+        "zathura"
+        "walker"
+        "waybar"
+        "hypr"
+        "mako"
+        "fuzzel"
+        "niri"
+        "swaylock"
+        "scripts"
+        "emacs"
+        "lazygit"
+        "yazi"
+        "agent"
+      ]);
+
       home.file.".local/bin".source = linkConf scriptPath;
       home.file.".zshrc".source = linkConf "${zshRoot}/zshrc.zsh";
       home.file.".zprofile".source = linkConf "${zshRoot}/zprofile.zsh";
@@ -75,8 +72,12 @@
       programs.git = {
         enable = true;
         lfs.enable = true;
-        userEmail = "lakrestofer@gmail.com";
-        userName = "lakrestofer";
+        settings = {
+          user = {
+            email = "lakrestofer@gmail.com";
+            name = "lakrestofer";
+          };
+        };
       };
 
       # notification service
