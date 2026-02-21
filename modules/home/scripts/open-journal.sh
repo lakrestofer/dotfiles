@@ -1,8 +1,15 @@
 #!/bin/sh
 
+set -e
+set -o pipefail
 
-set -e # exit if any step has a nonzero exit code
-set -o pipefail # including in the middle of a pipe
+# Check if a journal window is already open
+journal_window_id=$(niri msg --json windows | jq -r '.[] | select(.title == "markdown-journal") | .id' | head -1)
+
+if [ -n "$journal_window_id" ]; then
+  niri msg action focus-window --id "$journal_window_id"
+  exit 0
+fi
 
 cd $ZK_NOTEBOOK_DIR
 
