@@ -1,0 +1,79 @@
+position = "Bottom"
+outputs = "All"
+
+[modules]
+left = ["Workspaces"]
+center = ["Clock"]
+right = ["Tray"]
+
+[workspaces]
+# workspace_names = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"]
+visibility_mode = "All"
+enable_workspace_filling = true
+max_workspaces = 5
+
+
+[appearance]
+font_name = "Monaspace Neon"
+style = "Solid"
+
+
+## system: "base16"
+## name: "Gruvbox light, hard"
+## author: "Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)"
+## variant: "light"
+## palette:
+##   base00: "#f9f5d7" # ----
+##   base01: "#ebdbb2" # ---
+##   base02: "#d5c4a1" # --
+##   base03: "#bdae93" # -
+##   base04: "#665c54" # +
+##   base05: "#504945" # ++
+##   base06: "#3c3836" # +++
+##   base07: "#282828" # ++++
+##   base08: "#9d0006" # red
+##   base09: "#af3a03" # orange
+##   base0A: "#b57614" # yellow
+##   base0B: "#79740e" # green
+##   base0C: "#427b58" # aqua/cyan
+##   base0D: "#076678" # blue
+##   base0E: "#8f3f71" # purple
+##   base0F: "#d65d0e" # brown
+
+workspace_colors = ["#427b58", "#427b58"]
+# special_workspace_colors = ["#79740e", "#427b58"]
+
+
+[appearance.background_color]
+base = "#ebdbb2"
+strong = "#ebdbb2"
+weak = "#d5c4a1"
+text = "#282828"
+
+[appearance.primary_color]
+base = "#b57614"
+# strong = "#448888"
+# weak = "#448855"
+# text = "#ffffff"
+[appearance.secondary_color]
+base = "#b57614"
+# strong = "#448888"
+# weak = "#448855"
+# text = "#ffffff"
+#
+[appearance.success_color]
+base = "#448877"
+# strong = "#448888"
+# weak = "#448855"
+# text = "#ffffff"
+[appearance.danger_color]
+base = "#9d0006"
+# strong = "#448888"
+weak = "#af3a03"
+# text = "#ffffff"
+#
+[appearance.text_color]
+base = "#282828"
+# strong = "#448888"
+weak = "#665c54"
+# text = "#ffffff"

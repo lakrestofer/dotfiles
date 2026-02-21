@@ -7,6 +7,17 @@
   flake.nixosModules.commonModule =
     { pkgs, ... }:
     {
+      imports = [
+        self.nixosModules.usersModule
+        self.nixosModules.nixSettingsModule
+        self.nixosModules.networkingModule
+        self.nixosModules.mediaModule
+        self.nixosModules.graphicalSessionModule
+        self.nixosModules.gamesModule
+        self.nixosModules.statusBarModule
+        self.nixosModules.themeModule
+      ];
+
       nixpkgs.overlays = [
         (final: prev: {
           # lsp for custom snippets and code actions

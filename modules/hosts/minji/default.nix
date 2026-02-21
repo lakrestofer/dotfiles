@@ -36,13 +36,6 @@
         self.nixosModules.minjiHardwareModule
 
         self.nixosModules.commonModule
-        self.nixosModules.usersModule
-        self.nixosModules.nixSettingsModule
-        self.nixosModules.networkingModule
-        self.nixosModules.mediaModule
-        self.nixosModules.graphicalSessionModule
-        self.nixosModules.gamesModule
-        self.nixosModules.statusBarModule
 
         inputs.nixos-hardware.nixosModules.common-cpu-amd
         inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
@@ -61,7 +54,6 @@
           ];
         }
         inputs.stylix.nixosModules.stylix
-        self.nixosModules.themeModule
       ];
     };
 

@@ -21,6 +21,7 @@
       # programs.ashell.enable = true;
       xdg.configFile = mergeAttrsList (linkConfFiles [
         "waybar"
+        "ashell"
       ]);
 
       stylix.targets.waybar.enable = false;
@@ -34,6 +35,7 @@
         with pkgs;
         [
           waybar
+          ashell
         ]
       );
 

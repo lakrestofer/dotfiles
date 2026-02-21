@@ -25,14 +25,11 @@
       };
       modules = [
         inputs.niri.nixosModules.niri
+
         self.nixosModules.selbeiskamiModule
         self.nixosModules.selbeiskamiHardwareModule
+
         self.nixosModules.commonModule
-        self.nixosModules.usersModule
-        self.nixosModules.graphicalSessionModule
-        self.nixosModules.nixSettingsModule
-        self.nixosModules.networkingModule
-        self.nixosModules.mediaModule
 
         inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14
         inputs.nixos-hardware.nixosModules.common-cpu-intel
