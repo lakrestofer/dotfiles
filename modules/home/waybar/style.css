@@ -1,143 +1,139 @@
-@define-color bg_main #1d2021;
-@define-color bg_main_tooltip #282828;
-
-@define-color bg_hover rgba(256, 256, 256, 0.3);
-@define-color bg_active rgba(256, 256, 256, 1);
-
-@define-color border_main #3c3836;
-
-@define-color content_main white;
-@define-color content_inactive rgba(255, 255, 255, 0.25);
+/* Gruvbox light, hard */
+@define-color bg #ebdbb2;
+@define-color bg_weak #d5c4a1;
+@define-color fg #282828;
+@define-color fg_weak #665c54;
+@define-color accent #b57614;
+@define-color aqua #427b58;
+@define-color blue #076678;
+@define-color green #79740e;
+@define-color orange #af3a03;
+@define-color purple #8f3f71;
+@define-color danger #9d0006;
 
 * {
-	text-shadow: none;
-	box-shadow: none;
-	border: none;
-	border-radius: 0;
-	/* font-family: "CozetteVector"; */
-	font-family: "Fira Code";
-	/* font-family: "HackNerdFont"; */
-	font-size: 20px;
-	color: white;
-
-}
-
-window {
-	/* padding-left: 30px; */
-	/* padding-right: 30px; */
+  text-shadow: none;
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+  font-family: "Monaspace Neon";
+  font-size: 16px;
+  color: @fg;
 }
 
 window#waybar {
-	/* padding-left: 30px; */
-	/* padding-right: 30px; */
-	background: rgba(0, 0, 0, 0);
-	/* border: 2px solid @border_main; */
-	/* border-radius: 8px; */
+  background: @bg;
 }
 
-
 tooltip {
-	/* background: @bg_main_tooltip; */
-	border-radius: 5px;
-	border-width: 1px;
-	border-style: solid;
-	border-color: @border_main;
+  background: @bg_weak;
+  border-radius: 4px;
+  border: 1px solid @fg_weak;
 }
 
 tooltip label {
-	/* color: @content_main; */
+  color: @fg;
 }
 
-
+/* ── Bottom bar: Workspaces ── */
 #workspaces {
-	color: white;
-	/* font-size: 1em; */
-	/* font-weight: "bold"; */
-	margin-right: 1.5px;
-	margin-left: 1.5px;
+  margin-left: 4px;
 }
 
 #workspaces button {
-	padding: 3px;
-	color: @content_inactive;
-	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+  padding: 2px 8px;
+  color: @fg_weak;
+  background: transparent;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
 }
 
-#workspaces button.active {
-	color: @content_main;
-	/* border-bottom: 3px solid white; */
-}
-
+#workspaces button.active,
 #workspaces button.focused {
-	color: @bg_active;
+  color: @aqua;
+  border-bottom: 2px solid @aqua;
 }
 
 #workspaces button.urgent {
-	background: rgba(255, 200, 0, 0.35);
-	border-bottom: 3px dashed @warning_color;
-	color: @warning_color;
+  color: @danger;
+  border-bottom: 2px solid @danger;
 }
 
 #workspaces button:hover {
-	background: @bg_hover;
-	color: @content_main;
+  background: @bg_weak;
+  color: @fg;
 }
 
-#taskbar {}
-
-#taskbar button {
-	min-width: 130px;
-	/* border-bottom: 3px solid rgba(255, 255, 255, 0.3); */
-	margin-left: 2px;
-	margin-right: 2px;
-	padding-left: 8px;
-	padding-right: 8px;
-	color: white;
-	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+/* ── Bottom bar: Clock ── */
+#clock {
+  padding: 0 1rem;
+  color: @accent;
 }
 
-#taskbar button.active {
-	border-bottom: 3px solid white;
-	/* background: @bg_active; */
+/* ── Bottom bar: Tray ── */
+#tray {
+  margin-right: 4px;
+  padding: 0 8px;
 }
 
-#taskbar button:hover {
-	border-bottom: 3px solid white;
-	background: @bg_hover;
-	/* color: @content_main; */
+#tray > .passive {
+  opacity: 0.6;
 }
 
-#clock,
-#tray,
-#cpu,
-#memory,
-#battery,
-#network,
+#tray > .needs-attention {
+  color: @danger;
+}
+
+/* ── Top bar: System info ── */
+#cpu {
+  padding: 0 10px;
+  color: @blue;
+}
+
+#memory {
+  padding: 0 10px;
+  color: @aqua;
+}
+
+#temperature {
+  padding: 0 10px;
+  color: @fg_weak;
+}
+
+#temperature.critical {
+  color: @danger;
+}
+
+/* ── Top bar: Window title ── */
+#window {
+  padding: 0 1rem;
+  color: @fg;
+}
+
+window#waybar.empty #window {
+  color: @fg_weak;
+}
+
+/* ── Top bar: Audio & Network ── */
 #pulseaudio {
-	margin: 6px 6px 6px 0px;
-	padding-left: 1rem;
-	padding-right: 1rem;
-	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+  padding: 0 10px;
+  color: @purple;
 }
 
-#tray>.passive {
-	border-bottom: none;
+#network {
+  padding: 0 10px;
+  color: @fg;
 }
 
-#tray>.active {
-	border-bottom: 3px solid white;
+#pulseaudio:hover,
+#network:hover {
+  background: @bg_weak;
 }
 
-#tray>.needs-attention {
-	border-bottom: 3px solid;
+#pulseaudio.muted {
+  color: @fg_weak;
 }
 
-#tray>widget {}
-
-#tray>widget:hover {
-	background: @bg_hover;
-}
-
-#pulseaudio:hover {
-	background: @bg_hover;
+#network.disconnected {
+  color: @fg_weak;
 }

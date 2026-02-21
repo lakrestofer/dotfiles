@@ -17,7 +17,6 @@ max_workspaces = 5
 font_name = "Monaspace Neon"
 style = "Solid"
 
-
 ## system: "base16"
 ## name: "Gruvbox light, hard"
 ## author: "Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)"
