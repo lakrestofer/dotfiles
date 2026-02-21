@@ -44,6 +44,7 @@
             self.homeModules.finceiModule
           ];
         }
+        inputs.stylix.nixosModules.stylix
       ];
     };
 
