@@ -40,6 +40,7 @@
         self.homeModules.fuzzelModule
         self.homeModules.makoModule
         self.homeModules.yaziModule
+        self.homeModules.statusBarModule
       ];
       # user packages (only installed per user)
       home.packages = [ ];
@@ -49,7 +50,6 @@
         "codebook"
         "ghostty"
         "zathura"
-        "waybar"
         "niri"
         "scripts"
         "lazygit"

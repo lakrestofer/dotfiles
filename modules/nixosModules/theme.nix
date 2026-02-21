@@ -28,7 +28,6 @@
       stylix.targets.gtk.enable = true;
 
       stylix.targets.helix.enable = false;
-      stylix.targets.waybar.enable = false;
       stylix.targets.zathura.enable = false;
       stylix.targets.niri.enable = false;
 

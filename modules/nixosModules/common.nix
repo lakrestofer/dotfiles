@@ -141,7 +141,6 @@
           clang
           clangStdenv
           calibre
-          waybar
           inputs.spbased.packages.${system}.default
           git-filter-repo
           vscode

@@ -42,6 +42,7 @@
         self.nixosModules.mediaModule
         self.nixosModules.graphicalSessionModule
         self.nixosModules.gamesModule
+        self.nixosModules.statusBarModule
 
         inputs.nixos-hardware.nixosModules.common-cpu-amd
         inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
