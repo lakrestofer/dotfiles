@@ -81,7 +81,8 @@
       "clock"
     ],
     "modules-right": [
-      "tray"
+      "tray",
+      "custom/syncthing"
     ],
     "niri/workspaces": {
       "format": "{icon}",
@@ -93,6 +94,13 @@
     "tray": {
       "icon-size": 18,
       "spacing": 6
-    }
+    },
+    "custom/syncthing": {
+      "exec": "~/.local/bin/syncthing_status.py",
+      "return-type": "json",
+      "interval": 30,
+      "tooltip": true,
+      "on-click": "xdg-open http://localhost:8384"
+    },
   }
 ]

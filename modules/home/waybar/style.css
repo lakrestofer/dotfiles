@@ -137,3 +137,25 @@ window#waybar.empty #window {
 #network.disconnected {
   color: @fg_weak;
 }
+
+/* ── Top bar: Syncthing ── */
+#custom-syncthing {
+  padding: 0 10px;
+  color: @green;
+}
+
+#custom-syncthing.syncing {
+  color: @accent;
+}
+
+#custom-syncthing.error {
+  color: @danger;
+}
+
+#custom-syncthing.offline {
+  color: @fg_weak;
+}
+
+#custom-syncthing:hover {
+  background: @bg_weak;
+}

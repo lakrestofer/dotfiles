@@ -7,7 +7,14 @@ if [[ $ZSH_EVAL_CONTEXT != *:file ]]; then
 fi
 
 env=$(uv python find --script "$1")
-gum log --level info "Environment found: " "$env"
 activate_path="${env%/*}/activate"
 
+if [[ ! -f "$activate_path" ]]; then
+  gum log --level info "Environment not found, creating..."
+  uv sync --script "$1"
+  env=$(uv python find --script "$1")
+  activate_path="${env%/*}/activate"
+fi
+
+gum log --level info "Environment found: " "$env"
 source "$activate_path"

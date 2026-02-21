@@ -104,6 +104,7 @@
           uv
           python3
           ruff
+          ty
 
           # audio tooling
           pulseaudio
