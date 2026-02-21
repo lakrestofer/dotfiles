@@ -1,4 +1,4 @@
-{ ... }:
+{ self, ... }:
 {
 
   flake.homeModules.finceiModule =
@@ -36,7 +36,10 @@
       programs.home-manager.enable = true; # allow home manager to manage itself
       # imports
       imports = [
-        # ./home/zsh
+        self.homeModules.themeModule
+        self.homeModules.fuzzelModule
+        self.homeModules.makoModule
+        self.homeModules.yaziModule
       ];
       # user packages (only installed per user)
       home.packages = [ ];
@@ -44,22 +47,13 @@
         "helix"
         "sioyek"
         "codebook"
-        "alacritty"
-        "qutebrowser"
         "ghostty"
         "zathura"
-        "walker"
         "waybar"
-        "hypr"
-        "mako"
-        "fuzzel"
         "niri"
-        "swaylock"
         "scripts"
-        "emacs"
         "lazygit"
-        "yazi"
-        "agent"
+        # "yazi"
       ]);
 
       home.file.".local/bin".source = linkConf scriptPath;
@@ -77,41 +71,6 @@
             email = "lakrestofer@gmail.com";
             name = "lakrestofer";
           };
-        };
-      };
-
-      # notification service
-      services.mako = {
-        enable = true;
-      };
-      # Systemwide application themeing
-      qt = {
-        enable = true;
-        platformTheme.name = "gtk";
-        style = {
-          name = "gtk2";
-        };
-      };
-      gtk = {
-        enable = true;
-        font.name = "CozetteHiDpi Medium 10";
-        theme = {
-          name = "Gruvbox-Light";
-          package = pkgs-unstable.gruvbox-gtk-theme;
-        };
-        iconTheme = {
-          name = "Gruvbox-Plus-Dark";
-          package = pkgs-unstable.gruvbox-plus-icons;
-        };
-        gtk3.extraConfig = {
-          Settings = ''
-            gtk-application-prefer-dark-theme=0
-          '';
-        };
-        gtk4.extraConfig = {
-          Settings = ''
-            gtk-application-prefer-dark-theme=0
-          '';
         };
       };
     };

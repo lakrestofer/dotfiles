@@ -1,5 +1,10 @@
-font-family = "Hack Nerd Font"
-font-size = 12
+font-family = "Monaspace Neon"
+# font-family = "Monaspace Argon"
+# font-family = "Monaspace Xenon"
+# font-family = "Monaspace Radon"
+# font-family = "Monaspace Krypton"
+font-size = 13
+font-feature = "+liga"
 font-synthetic-style= bold-italic
 alpha-blending=linear-corrected
 # working-directory = "inherit"

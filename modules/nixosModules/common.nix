@@ -31,6 +31,8 @@
         enable32Bit = true;
       };
 
+      # qt.style = "adwaita";
+
       services.gvfs.enable = true;
       services.udisks2.enable = true;
 
@@ -113,7 +115,7 @@
           typos
           typos-lsp
           steel
-          inkscape
+          # inkscape
           postgres-language-server
           pavucontrol
           mpv
@@ -203,6 +205,7 @@
 
       fonts = {
         packages = with pkgs; [
+          monaspace
           nerd-fonts.gohufont
           nerd-fonts.hack
           ubuntu-classic
@@ -213,14 +216,14 @@
           fira-code
           cozette
         ];
-        fontconfig = {
-          useEmbeddedBitmaps = true;
-          defaultFonts = {
-            serif = [ "Liberation Serif" ];
-            sansSerif = [ "Ubuntu" ];
-            monospace = [ "Ubuntu Mono" ];
-          };
-        };
+        # fontconfig = {
+        #   useEmbeddedBitmaps = true;
+        #   defaultFonts = {
+        #     serif = [ "Liberation Serif" ];
+        #     sansSerif = [ "Ubuntu" ];
+        #     monospace = [ "Ubuntu Mono" ];
+        #   };
+        # };
       };
 
       # environment variables

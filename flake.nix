@@ -7,11 +7,17 @@
 
     niri.url = "github:sodiboo/niri-flake";
     home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
     helix.url = "github:helix-editor/helix";
     spbased.url = "github:lakrestofer/spbased";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     claude-code.url = "github:sadjow/claude-code-nix";
     sprite-cli.url = "github:jamiebrynes7/sprite-cli-nix";
+
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
   outputs =
     inputs:

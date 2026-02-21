@@ -68,6 +68,7 @@ layer-rule {
 }
 
 overview {
+    // backdrop-color "#000000"
     workspace-shadow {
         off
     }
@@ -178,22 +179,22 @@ layout {
     // `draw-border-with-background`.
     focus-ring {
         // off
-        width 4
+        width 2
         urgent-color "#fb4934"
-        active-color "#d79921"
+        active-color "#D79921"
     }
     border {
-        off
+        // off
         width 2
         urgent-color "#fb4934"
         // active-color "#d79921"
         // inactive-color "#808080"
-        active-color "#f9f5d7"
-        inactive-color "#f9f5d7"
+        active-color "#d79921"
+        inactive-color "#d79921"
     }
     shadow {
         // Uncomment the next line to enable shadows.
-        // on
+        off
         // draw-behind-window true
         softness 30
         spread 5
