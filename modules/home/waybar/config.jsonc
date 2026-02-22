@@ -10,7 +10,7 @@
     "margin-right": 0,
     "margin-left": 0,
     "modules-left": [
-      "cpu",
+      "custom/cpuhistory",
       "memory",
       "temperature"
     ],
@@ -62,6 +62,13 @@
       "format-wifi": "󰖩 {essid}",
       "format-ethernet": "󰈀 {ifname}",
       "format-disconnected": "󰖪 disconnected"
+    },
+    "custom/cpuhistory": {
+      "exec": "~/.local/bin/cpu_history.py -d 60",
+      "format": "<span color='#FFA500'> 󰻠 </span>{}",
+      "interval": 1,
+      "return-type": "json",
+      "on-click": "~/.config/waybar/scripts/cpu_history.py toggle"
     }
   },
   {

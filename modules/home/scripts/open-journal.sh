@@ -13,6 +13,10 @@ fi
 
 cd $ZK_NOTEBOOK_DIR
 
-today=$(date '+%Y-%m')
+journal_path=$(zk list "journal/$(date '+%Y-%m')" --format='{{path}}' -q)
 
-ghostty --title="markdown-journal" -e zk edit "journal/$today"
+if [ -z "$journal_path" ]; then
+  journal_path=$(zk new journal --print-path)
+fi
+
+ghostty --title="markdown-journal" -e hx + "$journal_path"
