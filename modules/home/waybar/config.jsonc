@@ -19,7 +19,8 @@
     ],
     "modules-right": [
       "pulseaudio",
-      "network"
+      "network",
+      "battery"
     ],
     "cpu": {
       "interval": 5,
@@ -33,29 +34,49 @@
       "tooltip-format": "RAM - {used:0.1f}GiB used"
     },
     "temperature": {
+      "thermal-zone": 1,
       // "hwmon-path-abs": "/sys/devices/platform/coretemp.0/hwmon",
-      "input-filename": "temp2_input",
+      // "input-filename": "temp2_input",
       "critical-threshold": 75,
       "format-critical": "󰔏 {temperatureC}°C",
       "format": "󰔏 {temperatureC}°C"
     },
     "niri/window": {
       "format": "{title}",
-      "max-length": 80,
+      "max-length": 30,
       "icon": true,
       "icon-size": 18,
       "separate-outputs": true
+    },
+    "wlr/taskbar": {
+      "format": "{icon}",
+      "icon-size": 14,
+      // "icon-theme": "Numix-Circle",
+      "tooltip-format": "{title}",
+      "on-click": "activate",
+      "on-click-middle": "close",
+      "ignore-list": [
+        "Alacritty"
+      ],
+      "app_ids-mapping": {
+        "firefoxdeveloperedition": "firefox-developer-edition"
+      },
+      "rewrite": {
+        "Firefox Web Browser": "Firefox",
+        "Foot Server": "Terminal",
+        ".*(steam_app_[0-9]+).*": "Game"
+      }
     },
     "pulseaudio": {
       "max-volume": 150,
       "scroll-step": 10,
       "format": "{icon} {volume}%",
       "format-icons": [
-        "",
-        "",
-        ""
+        "󰕿",
+        "󰖀",
+        "󰕾"
       ],
-      "format-muted": "",
+      "format-muted": "󰖁",
       "on-click": "ghostty -e pulsemixer"
     },
     "network": {
@@ -63,9 +84,33 @@
       "format-ethernet": "󰈀 {ifname}",
       "format-disconnected": "󰖪 disconnected"
     },
+    "battery": {
+      "interval": 60,
+      "states": {
+        "warning": 30,
+        "critical": 15
+      },
+      "format": "{icon} {capacity}%",
+      "format-charging": "󰂄 {capacity}%",
+      "format-plugged": "󰚥 {capacity}%",
+      "format-icons": [
+        "󰂎",
+        "󰁺",
+        "󰁻",
+        "󰁼",
+        "󰁽",
+        "󰁾",
+        "󰁿",
+        "󰂀",
+        "󰂁",
+        "󰂂",
+        "󰁹"
+      ],
+      "tooltip-format": "{timeTo}"
+    },
     "custom/cpuhistory": {
-      "exec": "~/.local/bin/cpu_history.py -d 60",
-      "format": "<span color='#FFA500'> 󰻠 </span>{}",
+      "exec": "~/.local/bin/cpu_history.py -d 30",
+      "format": "<span color='#FFA500'>󰻠 </span>{}",
       "interval": 1,
       "return-type": "json",
       "on-click": "~/.config/waybar/scripts/cpu_history.py toggle"
@@ -82,7 +127,8 @@
     "margin-right": 0,
     "margin-left": 0,
     "modules-left": [
-      "niri/workspaces"
+      "niri/workspaces",
+      "wlr/taskbar"
     ],
     "modules-center": [
       "clock"

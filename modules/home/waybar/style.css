@@ -21,6 +21,7 @@
   color: @fg;
 }
 
+
 window#waybar {
   background: @bg;
 }
@@ -35,7 +36,7 @@ tooltip label {
   color: @fg;
 }
 
-/* ── Bottom bar: Workspaces ── */
+/* -- Bottom bar: Workspaces -- */
 #workspaces {
   margin-left: 4px;
 }
@@ -64,27 +65,27 @@ tooltip label {
   color: @fg;
 }
 
-/* ── Bottom bar: Clock ── */
+/* -- Bottom bar: Clock -- */
 #clock {
   padding: 0 1rem;
   color: @accent;
 }
 
-/* ── Bottom bar: Tray ── */
+/* -- Bottom bar: Tray -- */
 #tray {
   margin-right: 4px;
   padding: 0 8px;
 }
 
-#tray > .passive {
+#tray>.passive {
   opacity: 0.6;
 }
 
-#tray > .needs-attention {
+#tray>.needs-attention {
   color: @danger;
 }
 
-/* ── Top bar: System info ── */
+/* -- Top bar: System info -- */
 #cpu {
   padding: 0 10px;
   color: @blue;
@@ -104,7 +105,7 @@ tooltip label {
   color: @danger;
 }
 
-/* ── Top bar: Window title ── */
+/* -- Top bar: Window title -- */
 #window {
   padding: 0 1rem;
   color: @fg;
@@ -114,7 +115,7 @@ window#waybar.empty #window {
   color: @fg_weak;
 }
 
-/* ── Top bar: Audio & Network ── */
+/* -- Top bar: Audio & Network -- */
 #pulseaudio {
   padding: 0 10px;
   color: @purple;
@@ -138,7 +139,31 @@ window#waybar.empty #window {
   color: @fg_weak;
 }
 
-/* ── Top bar: Syncthing ── */
+/* -- Top bar: Battery -- */
+#battery {
+  padding: 0 10px;
+  color: @green;
+}
+
+#battery.warning {
+  color: @accent;
+}
+
+#battery.critical {
+  color: @danger;
+}
+
+#battery.charging {
+  color: @aqua;
+}
+
+/* - Top bar: Cpuhist */
+
+#custom-cpuhistory {
+  padding: 0 10px;
+}
+
+/* -- Bottom bar: Syncthing -- */
 #custom-syncthing {
   padding: 0 10px;
   color: @green;
