@@ -103,69 +103,69 @@ function evaluateRules(
 // ============================================================================
 
 export default function(pi: ExtensionAPI) {
-	pi.on("tool_call", async (event: ToolCallEvent, ctx: ExtensionContext) => {
-		const ruleCtx: RuleContext = {
-			projectRoot: ctx.cwd,
-		};
+	// pi.on("tool_call", async (event: ToolCallEvent, ctx: ExtensionContext) => {
+	// 	const ruleCtx: RuleContext = {
+	// 		projectRoot: ctx.cwd,
+	// 	};
 
-		const decision = evaluateRules(event.toolName, event.input, ruleCtx);
+	// 	const decision = evaluateRules(event.toolName, event.input, ruleCtx);
 
-		if (decision.action === "allow") {
-			return;
-		}
+	// 	if (decision.action === "allow") {
+	// 		return;
+	// 	}
 
-		if (decision.action === "deny") {
-			return {
-				block: true,
-				reason: decision.reason ?? "Blocked by rule",
-			};
-		}
+	// 	if (decision.action === "deny") {
+	// 		return {
+	// 			block: true,
+	// 			reason: decision.reason ?? "Blocked by rule",
+	// 		};
+	// 	}
 
-		if (decision.action === "prompt") {
-			if (!ctx.hasUI) {
-				return {
-					block: true,
-					reason: decision.reason ?? "Blocked (no UI for confirmation)",
-				};
-			}
+	// 	if (decision.action === "prompt") {
+	// 		if (!ctx.hasUI) {
+	// 			return {
+	// 				block: true,
+	// 				reason: decision.reason ?? "Blocked (no UI for confirmation)",
+	// 			};
+	// 		}
 
-			const toolDisplay = formatToolCall(event.toolName, event.input);
-			const reasonText = decision.reason ? `\n${decision.reason}` : "";
-			const title = `Tool: ${event.toolName}${reasonText}\n\n${toolDisplay}`;
+	// 		const toolDisplay = formatToolCall(event.toolName, event.input);
+	// 		const reasonText = decision.reason ? `\n${decision.reason}` : "";
+	// 		const title = `Tool: ${event.toolName}${reasonText}\n\n${toolDisplay}`;
 
-			const choice = await ctx.ui.select(title, [
-				"Allow",
-				"Deny",
-				"Deny with suggestion",
-			]);
+	// 		const choice = await ctx.ui.select(title, [
+	// 			"Allow",
+	// 			"Deny",
+	// 			"Deny with suggestion",
+	// 		]);
 
-			if (choice === "Allow" || choice === undefined) {
-				return;
-			}
+	// 		if (choice === "Allow" || choice === undefined) {
+	// 			return;
+	// 		}
 
-			if (choice === "Deny") {
-				return {
-					block: true,
-					reason: decision.reason ?? "Denied by user",
-				};
-			}
+	// 		if (choice === "Deny") {
+	// 			return {
+	// 				block: true,
+	// 				reason: decision.reason ?? "Denied by user",
+	// 			};
+	// 		}
 
-			if (choice === "Deny with suggestion") {
-				const suggestion = await ctx.ui.input(
-					"Suggestion for the LLM:",
-					"e.g., Try a different approach..."
-				);
+	// 		if (choice === "Deny with suggestion") {
+	// 			const suggestion = await ctx.ui.input(
+	// 				"Suggestion for the LLM:",
+	// 				"e.g., Try a different approach..."
+	// 			);
 
-				const reason = suggestion
-					? `Denied by user. Suggestion: ${suggestion}`
-					: decision.reason ?? "Denied by user";
+	// 			const reason = suggestion
+	// 				? `Denied by user. Suggestion: ${suggestion}`
+	// 				: decision.reason ?? "Denied by user";
 
-				return {
-					block: true,
-					reason,
-				};
-			}
-		}
-	});
+	// 			return {
+	// 				block: true,
+	// 				reason,
+	// 			};
+	// 		}
+	// 	}
+	// });
 }
 

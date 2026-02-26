@@ -3,4 +3,4 @@
 set -e # exit if any step has a nonzero exit code
 set -o pipefail # including in the middle of a pipe
 
-bunx @mariozechner/pi-coding-agent@0.52.12
+bunx @mariozechner/pi-coding-agent@0.55.1

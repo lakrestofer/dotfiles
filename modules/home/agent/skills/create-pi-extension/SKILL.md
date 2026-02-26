@@ -1,11 +1,12 @@
 ---
-name: extension-creator
+name: create-pi-extension
 description: Guide for creating pi extensions. Use when users want to create, modify, or debug extensions that extend pi's behavior with custom tools, commands, event handlers, or UI components.
 ---
 
 # Extension Creator
 
-Extensions are TypeScript modules that extend pi's behavior via custom tools, commands, event handlers, and UI.
+Extensions are TypeScript modules that extend pi's behavior via custom
+tools, commands, event handlers, and UI.
 
 ## Source Repository
 
@@ -57,20 +58,20 @@ Always refer to the source for up-to-date API details.
 
 When building extensions, read these source files:
 
-| Need | File |
-|------|------|
-| Extension API, events | `packages/coding-agent/src/core/extension.ts` |
-| Built-in tool examples | `packages/coding-agent/src/core/tools/*.ts` |
-| TUI components | `packages/tui/src/components/*.ts` |
-| Working examples | `examples/extensions/*.ts` |
-| Full documentation | `packages/coding-agent/docs/extensions.md` |
+| Need                   | File                                          |
+| ---------------------- | --------------------------------------------- |
+| Extension API, events  | `packages/coding-agent/src/core/extension.ts` |
+| Built-in tool examples | `packages/coding-agent/src/core/tools/*.ts`   |
+| TUI components         | `packages/tui/src/components/*.ts`            |
+| Working examples       | `examples/extensions/*.ts`                    |
+| Full documentation     | `packages/coding-agent/docs/extensions.md`    |
 
 ## Extension Locations
 
-| Location | Scope |
-|----------|-------|
-| `~/.pi/agent/extensions/*.ts` | Global |
-| `.pi/extensions/*.ts` | Project-local |
+| Location                      | Scope         |
+| ----------------------------- | ------------- |
+| `~/.pi/agent/extensions/*.ts` | Global        |
+| `.pi/extensions/*.ts`         | Project-local |
 
 Test with `pi -e ./my-extension.ts`. Use `/reload` to hot-reload.
 
@@ -131,4 +132,5 @@ import { Text, Container, SelectList } from "@mariozechner/pi-tui";  // TUI comp
 3. Look at similar examples in `examples/extensions/`
 4. Implement the extension
 5. Test with `pi -e ./extension.ts`
-6. Move to `~/.pi/agent/extensions/` or `.pi/extensions/` for auto-discovery
+6. Move to `~/.pi/agent/extensions/` or `.pi/extensions/` for
+   auto-discovery
