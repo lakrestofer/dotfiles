@@ -84,6 +84,7 @@
 
       environment.systemPackages =
         (with pkgs; [
+          neomutt
           wayscriber
           dasel
           tmux

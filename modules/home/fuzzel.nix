@@ -5,7 +5,7 @@
     {
       programs.fuzzel.enable = true;
       programs.fuzzel.settings.main = {
-        dpi-aware = true;
+        dpi-aware = false;
         icons-enabled = false;
         match-mode = "fuzzy";
         sort-result = "yes";
