@@ -24,6 +24,16 @@
         # border-color=#d79921FF
         border-radius = 0;
         anchor = "top-center";
+        "mode=brooo" = {
+          anchor = "center";
+          width = 500;
+          height = 200;
+          border-size = 20;
+          border-color = "#9d0006";
+          padding = 20;
+          max-visible = 1;
+          history = 0;
+        };
       };
 
     };
