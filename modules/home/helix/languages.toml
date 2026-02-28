@@ -23,7 +23,7 @@ scope = "source.java"
 injection-regex = "java"
 file-types = ["java", "jav", "pde", "jrag"]
 roots = ["pom.xml", "build.gradle", "build.gradle.kts"]
-language-servers = ["jdtls"]
+language-servers = [""]
 indent = { tab-width = 2, unit = "  " }
 comment-tokens = ["//"]
 block-comment-tokens = { start = "/*", end = "*/" }
